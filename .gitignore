@@ -17,5 +17,4 @@ obj/Debug/net7.0/GeoWalle.GlobalUsings.g.cs
 obj/Debug/net7.0/GeoWalle.pdb
 obj/Debug/net7.0/ref/GeoWalle.dll
 obj/Debug/net7.0/refint/GeoWalle.dll
-GeoWalle.csproj
 .gitignore
