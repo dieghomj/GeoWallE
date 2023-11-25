@@ -1,4 +1,5 @@
 using System.Collections;
+using SintaxFacts;
 
 public sealed class Lexer : IEnumerable<SyntaxToken>
 {
@@ -24,7 +25,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
     /// <returns></returns>
     private char Current => Peek(0);
     /// <summary>
-    /// retorna el caracter en la siguiente posicion.
+    /// Retorna el caracter en la siguiente posicion.
     /// </summary> <summary>
     /// 
     /// </summary>
@@ -48,7 +49,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
 
 
     /// <summary>
-    /// Analiza sintactimenta la linea de codigo y retorna el siguiente token.
+    /// Analiza lexicamente la linea de codigo y retorna el siguiente token.
     /// </summary>
     /// <returns></returns>
     public SyntaxToken Lex()
@@ -73,16 +74,29 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
             _kind = SyntaxKind.EndOfFileToken;
             return new SyntaxToken(_kind,_start,null,null);
         }
+        else if(char.IsLetter(Current))
+        {
+            ReadKeyword();
+        }
 
-        //El metodo GetText() deberia retornar el texto para todo token que tenga un texto fijo. Por ejemplos los operadores ( +, -, =, ...) 
-        // var text = SyntaxFacts.GetText();
-        
+
         var length = _position - _start;
-        
-        //Esto asignacion solo deberia ocurrir si text es null
-        var text = _text.Substring(_start,length);
+        //El metodo GetText() deberia retornar el texto para todo token que tenga un texto fijo. Por ejemplos los operadores ( +, -, =, ...) 
+        var text = SyntaxFacts.GetText(_kind);
+ 
+        if(text == null)
+            text = _text.Substring(_start,length);
 
         return new SyntaxToken(_kind, _start, text, _value);
+    }
+
+    private void ReadKeyword()
+    {
+        while (char.IsLetter(Current))
+            Next();
+        var length = _position - _start;
+        var text = _text.Substring(_start, length);
+        _kind = SyntaxFacts.GetKeyWordKind(text);
     }
 
     private void ReadNumber()
