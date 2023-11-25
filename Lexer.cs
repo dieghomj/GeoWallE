@@ -1,5 +1,5 @@
 using System.Collections;
-using SintaxFacts;
+using System.Security.Principal;
 
 public sealed class Lexer : IEnumerable<SyntaxToken>
 {
@@ -46,8 +46,6 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
             return '\0';
         return _text[index];
     }
-
-
     /// <summary>
     /// Analiza lexicamente la linea de codigo y retorna el siguiente token.
     /// </summary>
@@ -60,28 +58,34 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
         _value = null;
 
 
-        if(char.IsWhiteSpace(Current))
+        if(Current == '\0')
+        {
+            _kind = SyntaxKind.EndOfFileToken;
+        }
+        else if(char.IsWhiteSpace(Current))
         {
             Next();
             _kind = SyntaxKind.WhiteSpaceToken;
-            return new SyntaxToken(_kind,_start," "," ");
         }
         else if(char.IsDigit(Current))
         {
             ReadNumber();
-        }else if(Current == '\0')
-        {
-            _kind = SyntaxKind.EndOfFileToken;
-            return new SyntaxToken(_kind,_start,null,null);
         }
-        else if(char.IsLetter(Current))
+        else if(char.IsLetter(Current) || Current == '_')
         {
             ReadKeyword();
         }
+        else if(SyntaxFacts.OperatorTokens.ContainsKey(Current.ToString()))
+        {
+            ReadOperator();
+
+        }
+        else 
+            System.Console.WriteLine("GG");
 
 
         var length = _position - _start;
-        //El metodo GetText() deberia retornar el texto para todo token que tenga un texto fijo. Por ejemplos los operadores ( +, -, =, ...) 
+        //El metodo GetText() deberia retornar el texto =para todo token que tenga un texto fijo. Por ejemplos los operadores ( +, -, =, ...) 
         var text = SyntaxFacts.GetText(_kind);
  
         if(text == null)
@@ -90,9 +94,21 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
         return new SyntaxToken(_kind, _start, text, _value);
     }
 
+    private void ReadOperator()
+    {
+        var operatorText = Current.ToString();
+        while (SyntaxFacts.OperatorTokens.ContainsKey(operatorText + LookAhead))
+        {
+            operatorText += LookAhead;
+            Next();
+        }
+        Next();
+        _kind = SyntaxFacts.OperatorTokens[operatorText];
+    }
+
     private void ReadKeyword()
     {
-        while (char.IsLetter(Current))
+        while (char.IsLetterOrDigit(Current) || Current == '_')
             Next();
         var length = _position - _start;
         var text = _text.Substring(_start, length);
