@@ -21,18 +21,17 @@ public enum SyntaxKind
     GreaterEqualToken,
     LessEqualToken,
     LessToken,
-    GreaterToken,S
+    GreaterToken,
     AmpersandToken,
     PipeToken,
     EqualsToken,
     BangToken,
 
     //Keywords
-    TrueKeyword,
-    FalseKeyword,
     LetKeyword,
     InKeyword,
     IfKeyword,
     ElseKeyword,
     PredefinedFunctionKeyword,
+    ThenKeyword,
 }
