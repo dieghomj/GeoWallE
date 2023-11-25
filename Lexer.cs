@@ -1,5 +1,4 @@
 using System.Collections;
-using SintaxFacts;
 
 public sealed class Lexer : IEnumerable<SyntaxToken>
 {
