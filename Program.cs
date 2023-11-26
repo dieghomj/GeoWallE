@@ -8,4 +8,3 @@
     foreach(var t in new Lexer(line))
         System.Console.WriteLine(t);
 }
-    

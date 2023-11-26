@@ -1,6 +1,7 @@
 public enum SyntaxKind
 {
     EndOfFileToken,
+    EndOfStatementToken,
     BadToken,
     WhiteSpaceToken,
     NumberToken,

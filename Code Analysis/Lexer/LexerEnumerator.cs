@@ -33,6 +33,9 @@ public class LexerEnumerator : IEnumerator<SyntaxToken>
         isNotMoved = false;
         _current = _lex.Lex();
 
+        if(_current.Kind == SyntaxKind.WhiteSpaceToken)
+            return MoveNext();
+
         if( _current.Kind == SyntaxKind.EndOfFileToken)
         {
             isAtEnd = true;
