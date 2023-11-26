@@ -1,5 +1,4 @@
 using System.Collections;
-
 public sealed class Lexer : IEnumerable<SyntaxToken>
 {
     private readonly string _text;
@@ -74,7 +73,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
         {
             ReadKeyword();
         }
-        else if(SyntaxFacts.OperatorTokens.ContainsKey(Current.ToString()))
+        else if(Operators.OperatorTokens.ContainsKey(Current.ToString()))
         {
             ReadOperator();
 
@@ -85,7 +84,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
 
         var length = _position - _start;
         //El metodo GetText() deberia retornar el texto =para todo token que tenga un texto fijo. Por ejemplos los operadores ( +, -, =, ...) 
-        var text = SyntaxFacts.GetText(_kind);
+        var text = Operators.GetText(_kind);
  
         if(text == null)
             text = _text.Substring(_start,length);
@@ -96,13 +95,13 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
     private void ReadOperator()
     {
         var operatorText = Current.ToString();
-        while (SyntaxFacts.OperatorTokens.ContainsKey(operatorText + LookAhead))
+        while (Operators.OperatorTokens.ContainsKey(operatorText + LookAhead))
         {
             operatorText += LookAhead;
             Next();
         }
         Next();
-        _kind = SyntaxFacts.OperatorTokens[operatorText];
+        _kind = Operators.OperatorTokens[operatorText];
     }
 
     private void ReadKeyword()
