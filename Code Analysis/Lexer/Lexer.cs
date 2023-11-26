@@ -37,6 +37,8 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
     /// <returns>
     /// Retorna _text[_position+offset] y en caso de no ser posible retorna '\0'.
     /// </returns>
+    /// 
+    /// completing
     private char Peek(int offset)
     {
         int index = _position + offset;

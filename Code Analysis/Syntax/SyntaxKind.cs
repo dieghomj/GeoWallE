@@ -5,6 +5,7 @@ public enum SyntaxKind
     BadToken,
     WhiteSpaceToken,
     NumberToken,
+    StringToken,
     IdentifierToken,
     OpenParenthesisToken,
     CloseParenthesisToken,
@@ -35,4 +36,6 @@ public enum SyntaxKind
     ElseKeyword,
     PredefinedFunctionKeyword,
     ThenKeyword,
+
+    //Expressions
 }
