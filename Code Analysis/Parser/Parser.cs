@@ -106,7 +106,7 @@ public class Parser
             case SyntaxKind.IdentifierToken:
             {
                 if(Peek(1).Kind == SyntaxKind.OpenParenthesisToken)
-                    return ParseFunctionCallExpression();
+                    return ParseFunctionExpression();
                 else 
                     return ParseNameExpression();
             }
@@ -122,6 +122,8 @@ public class Parser
                 return ParseNumberLiteral();
         }             
     }
+
+
 
     private Expression ParseNameExpression()
     {
@@ -167,6 +169,10 @@ public class Parser
 
 
     private Expression ParsePredefinedFunction()
+    {
+        throw new NotImplementedException();
+    }
+    private Expression ParseFunctionExpression()
     {
         throw new NotImplementedException();
     }
