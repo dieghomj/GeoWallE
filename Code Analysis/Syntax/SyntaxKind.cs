@@ -9,7 +9,7 @@ public enum SyntaxKind
     IdentifierToken,
     OpenParenthesisToken,
     CloseParenthesisToken,
-    
+
     //Operators
     PlusToken,
     MinusToken,
@@ -33,9 +33,24 @@ public enum SyntaxKind
     LetKeyword,
     InKeyword,
     IfKeyword,
-    ElseKeyword,
-    PredefinedFunctionKeyword,
     ThenKeyword,
+    ElseKeyword,
+    ConstantKeyword,
+    PredefinedFunctionKeyword,
 
     //Expressions
+    LiteralExpression,
+    NameExpression,
+    UnaryExpression,
+    BinaryExpression,
+    ParenthesizedExpression,
+    AssignmentExpression,
+    LetInExpression,
+    IfElseExpression,
+    FunctionCallExpression,
+    FunctionDeclarationExpression,
+    PredefinedFunctionExpression,
+
+    // Binary Expression
+    SumExpression
 }
