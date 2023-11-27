@@ -52,6 +52,6 @@ public enum SyntaxKind
     PredefinedFunctionExpression,
 
     // Binary Expression
-    AdditionExpression
+    AdditionExpression,
     SubtractionExpression
 }
