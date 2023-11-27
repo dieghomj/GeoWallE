@@ -9,6 +9,6 @@ public class SyntaxTree
 
     public object Evaluate()
     {
-        return Root.Evaluate();
+        throw new NotImplementedException();
     }
 }
