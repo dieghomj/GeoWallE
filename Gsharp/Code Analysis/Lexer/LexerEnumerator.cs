@@ -2,8 +2,8 @@ using System.Collections;
 
 public class LexerEnumerator : IEnumerator<SyntaxToken>
 {
-    private bool isNotMoved;
-    SyntaxToken _current;
+    private bool isNotMoved = true;
+    SyntaxToken _current = null!;
     Lexer _lex;
     private bool isAtEnd;
 
@@ -16,7 +16,7 @@ public class LexerEnumerator : IEnumerator<SyntaxToken>
     {
         get
         {
-            if(isAtEnd || isNotMoved)
+            if (isAtEnd || isNotMoved)
                 throw new Exception("is not possible to get the current enumerator");
             return _current;
         }
@@ -24,19 +24,17 @@ public class LexerEnumerator : IEnumerator<SyntaxToken>
 
     object IEnumerator.Current => Current;
 
-    public void Dispose()
-    {
-    }
+    public void Dispose() { }
 
     public bool MoveNext()
     {
         isNotMoved = false;
         _current = _lex.Lex();
 
-        if(_current.Kind == SyntaxKind.WhiteSpaceToken)
+        if (_current.Kind == SyntaxKind.WhiteSpaceToken)
             return MoveNext();
 
-        if( _current.Kind == SyntaxKind.EndOfFileToken)
+        if (_current.Kind == SyntaxKind.EndOfFileToken)
         {
             isAtEnd = true;
             return false;
@@ -45,7 +43,5 @@ public class LexerEnumerator : IEnumerator<SyntaxToken>
         return true;
     }
 
-    public void Reset()
-    {
-    }
+    public void Reset() { }
 }

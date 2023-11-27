@@ -1,5 +1,6 @@
 public enum SyntaxKind
 {
+    // Tokens
     EndOfFileToken,
     EndOfStatementToken,
     BadToken,
@@ -10,7 +11,7 @@ public enum SyntaxKind
     OpenParenthesisToken,
     CloseParenthesisToken,
 
-    //Operators
+    // Operator Tokens
     PlusToken,
     MinusToken,
     StarToken,
@@ -29,16 +30,33 @@ public enum SyntaxKind
     EqualsToken,
     BangToken,
 
-    //Keywords
+    // Keywords
     LetKeyword,
     InKeyword,
     IfKeyword,
     ThenKeyword,
     ElseKeyword,
     ConstantKeyword,
+    ColorKeyword,
+    RestoreKeyword,
+    ImportKeyword,
+    DrawKeyword,
+    LineKeyword,
+    SegmentKeyword,
+    RayKeyword,
+    ArcKeyword,
+    CircleKeyword,
+    MeasureKeyword,
+    IntersectKeyword,
+    CountKeyword,
+    RandomsKeyword,
+    PointsKeyword,
+    SamplesKeyword,
+    PointKeyword,
+    SequenceKeyword,
     PredefinedFunctionKeyword,
 
-    //Expressions
+    // Expressions
     LiteralExpression,
     NameExpression,
     UnaryExpression,
@@ -53,5 +71,5 @@ public enum SyntaxKind
 
     // Binary Expression
     AdditionExpression,
-    SubtractionExpression
+    SubtractionExpression,
 }

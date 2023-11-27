@@ -1,4 +1,5 @@
 using System.Collections;
+
 public sealed class Lexer : IEnumerable<SyntaxToken>
 {
     private readonly string _text;
@@ -15,17 +16,18 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
     /// <summary>
     /// Pasa el puntero a la siguiente posicion.
     /// </summary>
-    private void Next() => _position++; 
+    private void Next() => _position++;
 
     /// <summary>
     /// Da el caracter en la posicion actual.
     /// </summary>
     /// <returns></returns>
     private char Current => Peek(0);
+
     /// <summary>
     /// Retorna el caracter en la siguiente posicion.
     /// </summary> <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns></returns>
     private char LookAhead => Peek(1);
@@ -37,7 +39,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
     /// <returns>
     /// Retorna _text[_position+offset] y en caso de no ser posible retorna '\0'.
     /// </returns>
-    /// 
+    ///
     /// completing
     private char Peek(int offset)
     {
@@ -46,50 +48,47 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
             return '\0';
         return _text[index];
     }
+
     /// <summary>
     /// Analiza lexicamente la linea de codigo y retorna el siguiente token.
     /// </summary>
     /// <returns></returns>
     public SyntaxToken Lex()
     {
-        
         _start = _position;
         _kind = SyntaxKind.BadToken;
         _value = null;
 
-
-        if(Current == '\0')
+        if (Current == '\0')
         {
             _kind = SyntaxKind.EndOfFileToken;
         }
-        else if(char.IsWhiteSpace(Current))
+        else if (char.IsWhiteSpace(Current))
         {
             Next();
             _kind = SyntaxKind.WhiteSpaceToken;
         }
-        else if(char.IsDigit(Current))
+        else if (char.IsDigit(Current))
         {
             ReadNumber();
         }
-        else if(char.IsLetter(Current) || Current == '_')
+        else if (char.IsLetter(Current) || Current == '_')
         {
             ReadKeyword();
         }
-        else if(Operators.OperatorTokens.ContainsKey(Current.ToString()))
+        else if (Operators.OperatorTokens.ContainsKey(Current.ToString()))
         {
             ReadOperator();
-
         }
-        else 
+        else
             System.Console.WriteLine("GG");
 
-
         var length = _position - _start;
-        //El metodo GetText() deberia retornar el texto =para todo token que tenga un texto fijo. Por ejemplos los operadores ( +, -, =, ...) 
+        //El metodo GetText() deberia retornar el texto =para todo token que tenga un texto fijo. Por ejemplos los operadores ( +, -, =, ...)
         var text = Operators.GetText(_kind);
- 
-        if(text == null)
-            text = _text.Substring(_start,length);
+
+        if (text == null)
+            text = _text.Substring(_start, length);
 
         return new SyntaxToken(_kind, _start, text, _value);
     }

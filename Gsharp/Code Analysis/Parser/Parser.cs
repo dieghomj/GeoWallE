@@ -3,6 +3,7 @@ public class Parser
     private readonly SyntaxToken[] _tokens;
     private string _text;
     private int _position;
+
     public Parser(string text)
     {
         _text = text;
@@ -14,7 +15,7 @@ public class Parser
     {
         var index = _position + offset;
         if (index >= _tokens.Length)
-            return _tokens[_tokens.Length];
+            return _tokens[_tokens.Length - 1];
         return _tokens[index];
     }
 
@@ -30,7 +31,8 @@ public class Parser
 
     private SyntaxToken Match(SyntaxKind kind)
     {
-        if (Current.Kind == kind) return NextToken();
+        if (Current.Kind == kind)
+            return NextToken();
 
         Console.WriteLine($"Error: Unexpected token <{Current.Text}");
         return new SyntaxToken(kind, Current.Position, Current.Text, null);
@@ -55,42 +57,43 @@ public class Parser
             case SyntaxKind.PredefinedFunctionKeyword:
                 return ParsePredefinedFunction();
             default:
-                Console.WriteLine($"Error:  Only assignment and call expression can be used as statement");
+                Console.WriteLine(
+                    $"Error:  Only assignment and call expression can be used as statement"
+                );
                 return null;
         }
     }
 
     private Expression ParseExpression()
     {
-        return ParseBinaryExpression();            
+        return ParseBinaryExpression();
     }
 
     private Expression ParseBinaryExpression(int parentPrecedence = 0)
     {
         Expression left;
         var unaryPrecedence = UnaryOperator.GetPrecedence(Current.Kind);
-        if(unaryPrecedence != 0 && unaryPrecedence > parentPrecedence)
+        if (unaryPrecedence != 0 && unaryPrecedence > parentPrecedence)
         {
             var operand = ParseBinaryExpression(unaryPrecedence);
             var op = NextToken();
-            left = ParseUnaryOperator(op,operand);
+            left = ParseUnaryOperator(op, operand);
         }
-        else 
+        else
             left = ParserPrimaryExpression();
-        
-        while(true)
+
+        while (true)
         {
             var binaryPrecedence = BinaryOperator.GetPrecedence(Current.Kind);
-            if(binaryPrecedence != 0 || binaryPrecedence > parentPrecedence)
+            if (binaryPrecedence != 0 || binaryPrecedence > parentPrecedence)
                 break;
-            
+
             var right = ParseBinaryExpression(binaryPrecedence);
             var op = NextToken();
             left = ParseBinaryOperator(left, op, right);
         }
 
         return left;
-        
     }
 
     private Expression ParserPrimaryExpression()
@@ -105,9 +108,9 @@ public class Parser
 
             case SyntaxKind.IdentifierToken:
             {
-                if(Peek(1).Kind == SyntaxKind.OpenParenthesisToken)
+                if (Peek(1).Kind == SyntaxKind.OpenParenthesisToken)
                     return ParseFunctionExpression();
-                else 
+                else
                     return ParseNameExpression();
             }
             case SyntaxKind.LetKeyword:
@@ -120,10 +123,8 @@ public class Parser
 
             default:
                 return ParseNumberLiteral();
-        }             
+        }
     }
-
-
 
     private Expression ParseNameExpression()
     {
@@ -134,6 +135,7 @@ public class Parser
     {
         throw new NotImplementedException();
     }
+
     private Expression ParseStringLiteral()
     {
         throw new NotImplementedException();
@@ -143,6 +145,7 @@ public class Parser
     {
         throw new NotImplementedException();
     }
+
     private Expression ParseAssignmentExpression()
     {
         throw new NotImplementedException();
@@ -152,30 +155,32 @@ public class Parser
     {
         throw new NotImplementedException();
     }
+
     private Expression ParseBinaryOperator(Expression left, SyntaxToken op, Expression right)
     {
         throw new NotImplementedException();
     }
+
     private Expression ParseIfElseExpression()
     {
         throw new NotImplementedException();
     }
-
 
     private Expression ParseLetInExpression()
     {
         throw new NotImplementedException();
     }
 
-
     private Expression ParsePredefinedFunction()
     {
         throw new NotImplementedException();
     }
+
     private Expression ParseFunctionExpression()
     {
         throw new NotImplementedException();
     }
+
     private Expression ParseFunctionCallExpression()
     {
         throw new NotImplementedException();
