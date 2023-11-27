@@ -18,3 +18,8 @@ obj/Debug/net7.0/GeoWalle.pdb
 obj/Debug/net7.0/ref/GeoWalle.dll
 obj/Debug/net7.0/refint/GeoWalle.dll
 .gitignore
+bin/Debug/net7.0/GeoWallE.deps.json
+bin/Debug/net7.0/GeoWallE.dll
+bin/Debug/net7.0/GeoWallE.exe
+bin/Debug/net7.0/GeoWallE.pdb
+bin/Debug/net7.0/GeoWallE.runtimeconfig.json
