@@ -8,6 +8,4 @@ public abstract class BinaryExpression : Expression
 
     public Expression Left { get; }
     public Expression Right { get; }
-    public override SyntaxKind Kind => SyntaxKind.BinaryExpression;
 }
-
