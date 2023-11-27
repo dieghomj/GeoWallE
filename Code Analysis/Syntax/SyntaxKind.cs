@@ -51,5 +51,6 @@ public enum SyntaxKind
     FunctionDeclarationExpression,
     PredefinedFunctionExpression,
 
-    //Expressions
+    // Binary Expression
+    SumExpression
 }

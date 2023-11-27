@@ -1,16 +1,10 @@
-public class UnaryExpression : Expression
+public abstract class UnaryExpression : Expression
 {
-    public UnaryExpression(Expression operand, Func<object> evaluate, Func<Type> bind)
+    protected UnaryExpression(Expression operand)
     {
         Operand = operand;
-        Evaluate = evaluate;
-        Bind = bind;
     }
 
-    public override Func<object> Evaluate { get; }
-    public override Func<Type> Bind { get; }
-    public Expression Operand;
-    public override Type Type => Bind();
-
+    public Expression Operand { get; }
     public override SyntaxKind Kind => SyntaxKind.UnaryExpression;
 }

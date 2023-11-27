@@ -10,9 +10,8 @@ public class LiteralExpression : Expression
     public SyntaxToken LiteralToken { get; }
     public object Value { get; }
 
-    public override Func<object> Evaluate => () => Value;
-
-    public override Func<Type> Bind => () => Type;
-
-    public override Type Type => Value.GetType();
+    protected override GType Bind(Dictionary<VariableSymbol, GType> visibleVariables)
+    {
+        throw new NotImplementedException();
+    }
 }

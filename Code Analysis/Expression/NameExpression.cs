@@ -1,4 +1,3 @@
-
 public class NameExpression : Expression
 {
     public NameExpression(SyntaxToken identifierToken)
@@ -10,9 +9,8 @@ public class NameExpression : Expression
 
     public SyntaxToken IdentifierToken { get; }
 
-    public override Func<object> Evaluate => throw new NotImplementedException();
-
-    public override Func<Type> Bind => throw new NotImplementedException();
-
-    public override Type Type => throw new NotImplementedException();
+    protected override GType Bind(Dictionary<VariableSymbol, GType> visibleVariables)
+    {
+        throw new NotImplementedException();
+    }
 }

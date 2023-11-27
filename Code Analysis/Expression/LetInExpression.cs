@@ -1,18 +1,17 @@
 public class LetInExpression : Expression
 {
-    public LetInExpression(List<Expression> assignments, Expression expression)
+    public LetInExpression(List<Expression> instructions, Expression expression)
     {
-        Assignments = assignments;
+        Instructions = instructions;
         Expression = expression;
     }
 
-    public override SyntaxKind Kind => SyntaxKind.LetInExpression;
-    public IEnumerable<Expression> Assignments { get; }
+    public IEnumerable<Expression> Instructions { get; }
     public Expression Expression { get; }
+    public override SyntaxKind Kind => SyntaxKind.LetInExpression;
 
-    public override Func<object> Evaluate => throw new NotImplementedException();
-
-    public override Func<Type> Bind => throw new NotImplementedException();
-
-    public override Type Type => throw new NotImplementedException();
+    protected override GType Bind(Dictionary<VariableSymbol, GType> visibleVariables)
+    {
+        throw new NotImplementedException();
+    }
 }
