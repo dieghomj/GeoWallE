@@ -60,7 +60,7 @@ public class Parser
                 Console.WriteLine(
                     $"Error:  Only assignment and call expression can be used as statement"
                 );
-                return null;
+                return null!;
         }
     }
 
