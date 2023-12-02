@@ -80,7 +80,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
         {
             ReadString();
         }
-        else if (Operators.OperatorTokens.ContainsKey(Current.ToString()))
+        else if (Operators.IsOperatorPrefix(Current.ToString()))
         {
             ReadOperator();
         }
@@ -162,14 +162,16 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
 
     private void ReadOperator()
     {
-        var operatorText = Current.ToString();
-        while (Operators.OperatorTokens.ContainsKey(operatorText + LookAhead))
+        string operatorText = Current.ToString();
+        while (Operators.IsOperatorPrefix(operatorText + LookAhead))
         {
             operatorText += LookAhead;
             Next();
         }
         Next();
-        _kind = Operators.OperatorTokens[operatorText];
+
+        if (Operators.OperatorTokens.ContainsKey(operatorText))
+            _kind = Operators.OperatorTokens[operatorText];
     }
 
     public IEnumerator<SyntaxToken> GetEnumerator()

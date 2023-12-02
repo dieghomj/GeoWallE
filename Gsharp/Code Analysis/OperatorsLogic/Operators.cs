@@ -28,4 +28,25 @@ public static class Operators
         else
             return null;
     }
+
+    /// <summary>
+    /// Verifica si una candena es prefijo de algun operador
+    /// </summary>
+    /// <param name="prefix"></param>
+    /// <returns> Verdadero si y solo si prefix es un prefijo de algun operador</returns>
+    public static bool IsOperatorPrefix(string prefix)
+    {
+        foreach (var operatorString in OperatorTokens.Keys)
+        {
+            string operatorPrefix = "";
+            for (int i = 0; i < operatorString.Length; ++i)
+            {
+                operatorPrefix += operatorString[i];
+                if (operatorPrefix == prefix)
+                    return true;
+            }
+        }
+
+        return false;
+    }
 }
