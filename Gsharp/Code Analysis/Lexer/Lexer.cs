@@ -76,12 +76,19 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
         {
             ReadKeyword();
         }
+        else if (Current == '\"')
+        {
+            ReadString();
+        }
         else if (Operators.OperatorTokens.ContainsKey(Current.ToString()))
         {
             ReadOperator();
         }
         else
-            System.Console.WriteLine("GG");
+        {
+            System.Console.WriteLine("LEXICAL ERROR");
+            Next();
+        }
 
         var length = _position - _start;
         //El metodo GetText() deberia retornar el texto =para todo token que tenga un texto fijo. Por ejemplos los operadores ( +, -, =, ...)
@@ -91,6 +98,66 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
             text = _text.Substring(_start, length);
 
         return new SyntaxToken(_kind, _start, text, _value);
+    }
+
+    private void ReadNumber()
+    {
+        while (char.IsDigit(Current) || Current == '.')
+            Next();
+
+        var length = _position - _start;
+        var text = _text.Substring(_start, length);
+
+        //Si no se puede parsear como un numero explota.
+        if (!double.TryParse(text, out var value))
+        {
+            Console.WriteLine($"! LEXICAL ERROR: `{text}` is not a NUMBER");
+        }
+
+        _value = value;
+        _kind = SyntaxKind.NumberToken;
+    }
+
+    private void ReadKeyword()
+    {
+        while (char.IsLetterOrDigit(Current) || Current == '_')
+            Next();
+
+        var length = _position - _start;
+        var text = _text.Substring(_start, length);
+
+        _kind = SyntaxFacts.GetKeyWordKind(text);
+    }
+
+    private void ReadString()
+    {
+        Next();
+        while (Current != '\"' && Current != '\0')
+        {
+            if (Current == '\\')
+                Next();
+            Next();
+        }
+
+        if (Current == '\0')
+        {
+            System.Console.WriteLine(("LEXICAL ERROR"));
+        }
+        else
+        {
+            Next();
+
+            var length = _position - _start - 2;
+
+            string value = _text.Substring(_start + 1, length);
+            value = value.Replace("\\\"", "\"");
+            value = value.Replace("\\t", "\t");
+            value = value.Replace("\\n", "\n");
+            value = value.Replace("\\\\", "\\");
+
+            _value = value;
+            _kind = SyntaxKind.StringToken;
+        }
     }
 
     private void ReadOperator()
@@ -103,32 +170,6 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
         }
         Next();
         _kind = Operators.OperatorTokens[operatorText];
-    }
-
-    private void ReadKeyword()
-    {
-        while (char.IsLetterOrDigit(Current) || Current == '_')
-            Next();
-        var length = _position - _start;
-        var text = _text.Substring(_start, length);
-        _kind = SyntaxFacts.GetKeyWordKind(text);
-    }
-
-    private void ReadNumber()
-    {
-        while (char.IsDigit(Current) || (Current == '.' && LookAhead != '.'))
-            Next();
-        var length = _position - _start;
-        var text = _text.Substring(_start, length);
-
-        //Si no se puede parser como un numero explota.
-        if (!double.TryParse(text, out var value))
-        {
-            Console.WriteLine($"! SYNTAX ERROR: `{text}` is not a NUMBER");
-        }
-
-        _value = value;
-        _kind = SyntaxKind.NumberToken;
     }
 
     public IEnumerator<SyntaxToken> GetEnumerator()

@@ -1,32 +1,42 @@
 public class BinaryOperator
 {
-    private static Dictionary<SyntaxKind,Func<object,object,object>> OperatorFunc = new Dictionary<SyntaxKind, Func<object, object, object>>
-    {
-        { SyntaxKind.PlusToken , Addition },
-        { SyntaxKind.MinusToken, Subtraction},
-        { SyntaxKind.StarToken, Multiplication},
-        { SyntaxKind.DivToken, Division},
-        { SyntaxKind.PercentToken, Remainder},
-        { SyntaxKind.CircumflexToken, Power},
-        { SyntaxKind.AmpersandToken, LogicalAnd},
-        { SyntaxKind.PipeToken, LogicalOr},
-        { SyntaxKind.EqualEqualToken,(a,b) => Equals(a,b)},
-        { SyntaxKind.BangEqualToken,(a,b) => !Equals(a,b)},
-        { SyntaxKind.GreaterEqualToken, GreaterEqual},
-        { SyntaxKind.LessEqualToken, LessEqual},
-        { SyntaxKind.GreaterToken, Greater},
-        { SyntaxKind.LessToken, Less},
-    };
+    private static Dictionary<SyntaxKind, Func<object, object, object>> OperatorFunc =
+        new Dictionary<SyntaxKind, Func<object, object, object>>
+        {
+            { SyntaxKind.PlusToken, Addition },
+            { SyntaxKind.MinusToken, Subtraction },
+            { SyntaxKind.StarToken, Multiplication },
+            { SyntaxKind.DivToken, Division },
+            { SyntaxKind.PercentToken, Remainder },
+            { SyntaxKind.CircumflexToken, Power },
+            { SyntaxKind.AmpersandToken, LogicalAnd },
+            { SyntaxKind.PipeToken, LogicalOr },
+            { SyntaxKind.EqualEqualToken, (a, b) => Equals(a, b) },
+            { SyntaxKind.BangEqualToken, (a, b) => !Equals(a, b) },
+            { SyntaxKind.GreaterEqualToken, GreaterEqual },
+            { SyntaxKind.LessEqualToken, LessEqual },
+            { SyntaxKind.GreaterToken, Greater },
+            { SyntaxKind.LessToken, Less },
+        };
 
-    private BinaryOperator(SyntaxKind syntaxKind, BinaryOperatorKind kind, Type type) 
-    : this(syntaxKind, kind, type, type, type) 
-    {
-    }
-    private BinaryOperator(SyntaxKind syntaxKind, BinaryOperatorKind kind, Type type, Type resultType) 
-    : this(syntaxKind, kind, type, type, resultType) 
-    {
-    }
-    public BinaryOperator(SyntaxKind kind, BinaryOperatorKind operatorKind, Type leftType, Type rightType, Type resultType)
+    private BinaryOperator(SyntaxKind syntaxKind, BinaryOperatorKind kind, Type type)
+        : this(syntaxKind, kind, type, type, type) { }
+
+    private BinaryOperator(
+        SyntaxKind syntaxKind,
+        BinaryOperatorKind kind,
+        Type type,
+        Type resultType
+    )
+        : this(syntaxKind, kind, type, type, resultType) { }
+
+    public BinaryOperator(
+        SyntaxKind kind,
+        BinaryOperatorKind operatorKind,
+        Type leftType,
+        Type rightType,
+        Type resultType
+    )
     {
         SyntaxKind = kind;
         OperatorKind = operatorKind;
@@ -35,11 +45,10 @@ public class BinaryOperator
         ResultType = resultType;
     }
 
-
     #region COChinas de pepe
     private static object Addition(object left, object right)
     {
-        throw new NotImplementedException();        
+        throw new NotImplementedException();
     }
 
     private static object Subtraction(object left, object right)
@@ -98,7 +107,7 @@ public class BinaryOperator
     }
     #endregion
 
-    private static BinaryOperator[] _operators = 
+    private static BinaryOperator[] _operators =
     {
         //Number Operators
         new BinaryOperator(SyntaxKind.PlusToken, BinaryOperatorKind.Addition, typeof(double)),
@@ -106,24 +115,65 @@ public class BinaryOperator
         new BinaryOperator(SyntaxKind.StarToken, BinaryOperatorKind.Multiplication, typeof(double)),
         new BinaryOperator(SyntaxKind.DivToken, BinaryOperatorKind.Division, typeof(double)),
         new BinaryOperator(SyntaxKind.PercentToken, BinaryOperatorKind.Remainder, typeof(double)),
-        new BinaryOperator(SyntaxKind.CircumflexToken, BinaryOperatorKind.Exponentiation, typeof(double)),
-        new BinaryOperator(SyntaxKind.EqualEqualToken, BinaryOperatorKind.Equals, typeof(double), typeof(bool)), 
-        new BinaryOperator(SyntaxKind.BangEqualToken, BinaryOperatorKind.NotEquals, typeof(double), typeof(bool)),
-        new BinaryOperator(SyntaxKind.GreaterToken, BinaryOperatorKind.Greater, typeof(double), typeof(bool)), 
-        new BinaryOperator(SyntaxKind.LessToken, BinaryOperatorKind.Less, typeof(double), typeof(bool)),
-        new BinaryOperator(SyntaxKind.GreaterEqualToken, BinaryOperatorKind.GreaterEqual, typeof(double), typeof(bool)), 
-        new BinaryOperator(SyntaxKind.LessEqualToken, BinaryOperatorKind.LessEqual, typeof(double), typeof(bool)),
-
+        new BinaryOperator(
+            SyntaxKind.CircumflexToken,
+            BinaryOperatorKind.Exponentiation,
+            typeof(double)
+        ),
+        new BinaryOperator(
+            SyntaxKind.EqualEqualToken,
+            BinaryOperatorKind.Equals,
+            typeof(double),
+            typeof(bool)
+        ),
+        new BinaryOperator(
+            SyntaxKind.BangEqualToken,
+            BinaryOperatorKind.NotEquals,
+            typeof(double),
+            typeof(bool)
+        ),
+        new BinaryOperator(
+            SyntaxKind.GreaterToken,
+            BinaryOperatorKind.Greater,
+            typeof(double),
+            typeof(bool)
+        ),
+        new BinaryOperator(
+            SyntaxKind.LessToken,
+            BinaryOperatorKind.Less,
+            typeof(double),
+            typeof(bool)
+        ),
+        new BinaryOperator(
+            SyntaxKind.GreaterEqualToken,
+            BinaryOperatorKind.GreaterEqual,
+            typeof(double),
+            typeof(bool)
+        ),
+        new BinaryOperator(
+            SyntaxKind.LessEqualToken,
+            BinaryOperatorKind.LessEqual,
+            typeof(double),
+            typeof(bool)
+        ),
         //String Operators
-        new BinaryOperator(SyntaxKind.EqualEqualToken, BinaryOperatorKind.Equals, typeof(string), typeof(bool)),
-        new BinaryOperator(SyntaxKind.BangEqualToken, BinaryOperatorKind.NotEquals, typeof(string), typeof(bool)),
-
+        new BinaryOperator(
+            SyntaxKind.EqualEqualToken,
+            BinaryOperatorKind.Equals,
+            typeof(string),
+            typeof(bool)
+        ),
+        new BinaryOperator(
+            SyntaxKind.BangEqualToken,
+            BinaryOperatorKind.NotEquals,
+            typeof(string),
+            typeof(bool)
+        ),
         //Bool Operators
         new BinaryOperator(SyntaxKind.AmpersandToken, BinaryOperatorKind.LogicalAnd, typeof(bool)),
         new BinaryOperator(SyntaxKind.PipeToken, BinaryOperatorKind.LogicalOr, typeof(bool)),
         new BinaryOperator(SyntaxKind.EqualEqualToken, BinaryOperatorKind.Equals, typeof(bool)),
         new BinaryOperator(SyntaxKind.BangEqualToken, BinaryOperatorKind.NotEquals, typeof(bool)),
-
     };
 
     public SyntaxKind SyntaxKind { get; }
@@ -134,12 +184,12 @@ public class BinaryOperator
 
     public static BinaryOperator Bind(SyntaxKind syntaxKind, Type leftType, Type rightType)
     {
-        foreach(var op in _operators)
+        foreach (var op in _operators)
         {
-            if(op.SyntaxKind == syntaxKind && op.LeftType == leftType && op.RightType == rightType) 
+            if (op.SyntaxKind == syntaxKind && op.LeftType == leftType && op.RightType == rightType)
                 return op;
         }
-        return null;
+        return null!;
     }
 
     public static int GetPrecedence(SyntaxKind kind)

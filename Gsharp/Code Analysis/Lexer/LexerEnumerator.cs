@@ -3,9 +3,9 @@ using System.Collections;
 public class LexerEnumerator : IEnumerator<SyntaxToken>
 {
     private bool isNotMoved = true;
-    SyntaxToken _current = null!;
-    Lexer _lex;
-    private bool isAtEnd;
+    private SyntaxToken _current = null!;
+    private readonly Lexer _lex;
+    private bool isAtEnd = false;
 
     public LexerEnumerator(Lexer lex)
     {
