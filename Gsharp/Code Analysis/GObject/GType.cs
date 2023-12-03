@@ -1,7 +1,9 @@
-public enum GType {
-    UNDEFINED,
-    NUMBER,
-    STRING,
-    SEQUENCY,
-    FIGURE
+public enum GType
+{
+    Undefined,
+    Number,
+    Measure,
+    String,
+    Sequence,
+    Figure
 }

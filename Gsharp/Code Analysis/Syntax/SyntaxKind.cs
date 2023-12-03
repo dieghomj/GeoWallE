@@ -8,8 +8,16 @@ public enum SyntaxKind
     NumberToken,
     StringToken,
     IdentifierToken,
+
+    // Symbol Tokens
+    OpenBracketToken,
+    CloseBracketToken,
     OpenParenthesisToken,
     CloseParenthesisToken,
+    SemicolonToken,
+    CommaToken,
+    EllipsisToken,
+    UnderscoreToken,
 
     // Operator Tokens
     PlusToken,

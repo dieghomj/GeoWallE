@@ -72,7 +72,10 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
         {
             ReadNumber();
         }
-        else if (char.IsLetter(Current) || Current == '_')
+        else if (
+            char.IsLetter(Current)
+            || (Current == '_' && (char.IsLetter(LookAhead) || LookAhead == '_'))
+        )
         {
             ReadKeyword();
         }
@@ -83,6 +86,10 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
         else if (Operators.IsOperatorPrefix(Current.ToString()))
         {
             ReadOperator();
+        }
+        else if (Symbols.IsSymbolPrefix(Current.ToString()))
+        {
+            ReadSymbol();
         }
         else
         {
@@ -172,6 +179,20 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
 
         if (Operators.OperatorTokens.ContainsKey(operatorText))
             _kind = Operators.OperatorTokens[operatorText];
+    }
+
+    private void ReadSymbol()
+    {
+        string symbolText = Current.ToString();
+        while (Symbols.IsSymbolPrefix(symbolText + LookAhead))
+        {
+            symbolText += LookAhead;
+            Next();
+        }
+        Next();
+
+        if (Symbols.SymbolTokens.ContainsKey(symbolText))
+            _kind = Symbols.SymbolTokens[symbolText];
     }
 
     public IEnumerator<SyntaxToken> GetEnumerator()
