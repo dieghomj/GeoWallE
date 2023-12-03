@@ -1,11 +1,11 @@
 public sealed class VariableSymbol
 {
-    internal VariableSymbol(string name, Type type)
+    internal VariableSymbol(string name, GType type)
     {
         Name = name;
         Type = type;
     }
 
     public string Name { get; }
-    public Type Type { get; }
+    public GType Type { get; }
 }
