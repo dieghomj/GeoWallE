@@ -1,7 +1,7 @@
 public enum GType {
-    UNDEFINED,
-    NUMBER,
-    STRING,
-    SEQUENCY,
-    FIGURE
+    Undefined,
+    Number,
+    String,
+    Sequence,
+    Figure
 }

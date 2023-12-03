@@ -74,7 +74,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
         }
         else if (char.IsLetter(Current) || Current == '_')
         {
-            ReadKeyword();
+            ReadKeywordOrIdentifier();
         }
         else if (Current == '\"')
         {
@@ -118,7 +118,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
         _kind = SyntaxKind.NumberToken;
     }
 
-    private void ReadKeyword()
+    private void ReadKeywordOrIdentifier()
     {
         while (char.IsLetterOrDigit(Current) || Current == '_')
             Next();
@@ -141,7 +141,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
 
         if (Current == '\0')
         {
-            System.Console.WriteLine(("LEXICAL ERROR"));
+            System.Console.WriteLine("!LEXICAL ERROR: Expected character <\">");
         }
         else
         {
@@ -163,7 +163,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
     private void ReadOperator()
     {
         string operatorText = Current.ToString();
-        while (Operators.IsOperatorPrefix(operatorText + LookAhead))
+        while ((operatorText+LookAhead).IsOperatorPrefix())
         {
             operatorText += LookAhead;
             Next();

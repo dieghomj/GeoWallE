@@ -5,7 +5,7 @@ public class Number : GObject
         Value = value;
     }
 
-    private GType Type = GType.NUMBER;
+    private GType Type = GType.Number;
     private double Value;
 
     public override GType GetGType() => Type;

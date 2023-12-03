@@ -34,7 +34,7 @@ public static class Operators
     /// </summary>
     /// <param name="prefix"></param>
     /// <returns> Verdadero si y solo si prefix es un prefijo de algun operador</returns>
-    public static bool IsOperatorPrefix(string prefix)
+    public static bool IsOperatorPrefix(this string prefix)
     {
         foreach (var operatorString in OperatorTokens.Keys)
         {
