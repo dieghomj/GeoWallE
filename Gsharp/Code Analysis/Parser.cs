@@ -1,3 +1,6 @@
+using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
+
 public class Parser
 {
     private readonly SyntaxToken[] _tokens;
@@ -38,30 +41,59 @@ public class Parser
         return new SyntaxToken(kind, Current.Position, Current.Text, null);
     }
 
-    public SyntaxTree Parse()
+    public List<Statement> Parse()
     {
-        var root = ParseStatement();
-        return new SyntaxTree(root);
+        List<Statement> statementsList = new List<Statement>();
+
+        while (Current.Kind == SyntaxKind.ImportKeyword)
+            statementsList.Add(ParseImportStatement());
+
+        while (Current.Kind != SyntaxKind.EndOfFileToken)
+        {
+            statementsList.Add(ParseStatement());
+            Match(SyntaxKind.EndOfStatementToken);
+        }
+
+        return statementsList;
     }
 
-    private Expression ParseStatement()
+    private Statement ParseImportStatement()
+    {
+        NextToken();
+        return new ImportStatement(ParseExpression());
+    }
+
+    private Statement ParseStatement()
     {
         switch (Current.Kind)
         {
-            case SyntaxKind.IdentifierToken:
-                return ParseNameExpression();
-            case SyntaxKind.LetKeyword:
-                return ParseLetInExpression();
-            case SyntaxKind.IfKeyword:
-                return ParseIfElseExpression();
-            case SyntaxKind.PredefinedFunctionKeyword:
-                return ParsePredefinedFunction();
+            case SyntaxKind.ColorKeyword:
+                return ParseColorStatement();
+            case SyntaxKind.RestoreKeyword:
+                NextToken();
+                return new RestoreStatement();
+            case SyntaxKind.DrawKeyword:
+                return ParseDrawStatement();
             default:
-                Console.WriteLine(
-                    $"Error:  Only assignment and call expression can be used as statement"
-                );
-                return null!;
+                return ParseExpression();
         }
+    }
+
+    private Statement ParseDrawStatement()
+    {
+        return new DrawStatement(ParseExpression());
+    }
+
+    private Statement ParseColorStatement()
+    {
+        NextToken();
+
+        if (SyntaxFacts.ColorList.Contains(Current.Kind))
+            return new ColorStatement(NextToken().Kind);
+
+        System.Console.WriteLine("!SYNTAX ERROR: Expected color");
+        NextToken();
+        return null;
     }
 
     private Expression ParseExpression()

@@ -92,8 +92,19 @@ public enum SyntaxKind
     NotEqualExpression,
     RemainderExpression,
 
-    //Unary Expressions
+    // Unary Expressions
     IdentityExpression,
     LogicalNegationExpression,
     NegationExpression,
+
+    // Colors
+    BlueKeyword,
+    RedKeyword,
+    YellowKeyword,
+    GreenKeyword,
+    CyanKeyword,
+    MagentaKeyword,
+    WhiteKeyword,
+    GrayKeyword,
+    BlackKeyword,
 }

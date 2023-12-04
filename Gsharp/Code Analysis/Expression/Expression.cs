@@ -1,4 +1,4 @@
-public abstract class Expression
+public abstract class Expression : Statement
 {
     public abstract SyntaxKind Kind { get; }
     public abstract GType Bind(Dictionary<string, GType> visibleVariables);

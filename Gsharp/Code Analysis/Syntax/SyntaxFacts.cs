@@ -24,7 +24,16 @@ public static class SyntaxFacts
         { "points", SyntaxKind.PointsKeyword },
         { "samples", SyntaxKind.SamplesKeyword },
         { "point", SyntaxKind.PointKeyword },
-        { "sequence", SyntaxKind.SequenceKeyword }
+        { "sequence", SyntaxKind.SequenceKeyword },
+        { "blue", SyntaxKind.BlueKeyword },
+        { "red", SyntaxKind.RedKeyword },
+        { "yellow", SyntaxKind.YellowKeyword },
+        { "green", SyntaxKind.GreenKeyword },
+        { "cyan", SyntaxKind.CyanKeyword },
+        { "magenta", SyntaxKind.MagentaKeyword },
+        { "white", SyntaxKind.WhiteKeyword },
+        { "gray", SyntaxKind.GrayKeyword },
+        { "black", SyntaxKind.BlackKeyword },
     };
 
     public static Dictionary<string, SyntaxKind> PredefinedFunctionKeywords =
@@ -42,6 +51,19 @@ public static class SyntaxFacts
             { "points", SyntaxKind.PredefinedFunctionKeyword },
             { "samples", SyntaxKind.PredefinedFunctionKeyword }
         };
+
+    public static List<SyntaxKind> ColorList = new List<SyntaxKind>
+    {
+        SyntaxKind.BlueKeyword,
+        SyntaxKind.RedKeyword,
+        SyntaxKind.YellowKeyword,
+        SyntaxKind.GreenKeyword,
+        SyntaxKind.CyanKeyword,
+        SyntaxKind.MagentaKeyword,
+        SyntaxKind.WhiteKeyword,
+        SyntaxKind.GrayKeyword,
+        SyntaxKind.BlackKeyword
+    };
 
     public static SyntaxKind GetKeyWordKind(string text)
     {
