@@ -72,4 +72,20 @@ public enum SyntaxKind
     // Binary Expression
     AdditionExpression,
     SubtractionExpression,
+    DivisionExpression,
+    EqualsExpression,
+    ExponentiationExpression,
+    GreaterEqualExpression,
+    LessEqualExpression,
+    LessExpression,
+    LogicalAndExpression,
+    LogicalOrExpression,
+    MultiplicationExpression,
+    NotEqualExpression,
+    RemainderExpression,
+
+    //Unary Expressions
+    IdentityExpression,
+    LogicalNegationExpression,
+    NegationExpression,
 }
