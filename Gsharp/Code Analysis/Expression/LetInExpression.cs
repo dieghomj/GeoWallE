@@ -10,8 +10,14 @@ public class LetInExpression : Expression
     public Expression Expression { get; }
     public override SyntaxKind Kind => SyntaxKind.LetInExpression;
 
-    protected override GType Bind(Dictionary<VariableSymbol, GType> visibleVariables)
+    public override GType Bind(Dictionary<string, GType> visibleVariables)
     {
         throw new NotImplementedException();
     }
+
+    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
+    {
+        throw new NotImplementedException();
+    }
+
 }

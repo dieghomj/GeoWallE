@@ -1,6 +1,6 @@
 <Project Sdk="Godot.NET.Sdk/4.2.0">
   <ItemGroup>
-    <ProjectReference Include="..\Gsharp\Gsharp.csproj" />
+    <ProjectReference Include="..\GInterfaces\GInterfaces.csproj" />
   </ItemGroup>
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
