@@ -10,8 +10,24 @@ public class LiteralExpression : Expression
     public SyntaxToken LiteralToken { get; }
     public object Value { get; }
 
-    protected override GType Bind(Dictionary<VariableSymbol, GType> visibleVariables)
+    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        throw new NotImplementedException();
+        var type = Bind(visibleVariables);
+        var value = Value ?? 0.0;
+        return new BoundLiteralExpression(value, type);
+    }
+
+    public override GType Bind(Dictionary<string, GType> visibleVariables)
+    {
+        switch(Value)
+        {
+            case int:
+            case double:
+                return GType.Number;
+            case string:
+                return GType.String;
+            default:
+                return GType.Undefined;
+        }
     }
 }

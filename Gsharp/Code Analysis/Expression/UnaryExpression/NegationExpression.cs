@@ -1,12 +1,15 @@
-public class NegationExpression : BinaryExpression
+public class NegationExpression : UnaryExpression
 {
-    public NegationExpression(Expression left, Expression right)
-        : base(left, right) { }
-
-    public override SyntaxKind Kind => throw new NotImplementedException();
-
-    protected override GType Bind(Dictionary<VariableSymbol, GType> visibleVariables)
+    public NegationExpression(Expression operand) : base(operand)
     {
-        throw new NotImplementedException();
+    }
+
+    public override SyntaxKind Kind => SyntaxKind.NegationExpression;
+
+    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
+    {
+        var operatorType = Bind(visibleVariables);
+        var operand = Operand.GetBoundExpression(visibleVariables);
+        return new BoundNegationExpression(operand);
     }
 }

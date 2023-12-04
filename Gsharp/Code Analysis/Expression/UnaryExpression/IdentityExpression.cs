@@ -1,10 +1,15 @@
+
 public class IdentityExpression : UnaryExpression
 {
     public IdentityExpression(Expression operand)
         : base(operand) { }
 
-    protected override GType Bind(Dictionary<VariableSymbol, GType> visibleVariables)
+    public override SyntaxKind Kind => SyntaxKind.IdentityExpression;
+
+    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        throw new NotImplementedException();
+        var operatorType = Bind(visibleVariables);
+        var operand = Operand.GetBoundExpression(visibleVariables);
+        return new BoundIdentityExpression(operand);
     }
 }

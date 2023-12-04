@@ -2,9 +2,12 @@ public class LogicalNegationExpression : UnaryExpression
 {
     public LogicalNegationExpression(Expression operand)
         : base(operand) { }
+    public override SyntaxKind Kind => SyntaxKind.LogicalNegationExpression;
 
-    protected override GType Bind(Dictionary<VariableSymbol, GType> visibleVariables)
+    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        throw new NotImplementedException();
+        var operatorType = Bind(visibleVariables);
+        var operand = Operand.GetBoundExpression(visibleVariables);
+        return new BoundLogicalNegationExpression(operand);
     }
 }

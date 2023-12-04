@@ -2,11 +2,16 @@ public class MultiplicationExpression : BinaryExpression
 {
     public MultiplicationExpression(Expression left, Expression right)
         : base(left, right) { }
+    public override SyntaxKind Kind => SyntaxKind.MultiplicationExpression;
 
-    public override SyntaxKind Kind => throw new NotImplementedException();
+    public override SyntaxKind OperatorKind => SyntaxKind.StarToken;
 
-    protected override GType Bind(Dictionary<VariableSymbol, GType> visibleVariables)
+    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        throw new NotImplementedException();
+        var resultType = Bind(visibleVariables);
+        var left = Left.GetBoundExpression(visibleVariables);
+        var right = Right.GetBoundExpression(visibleVariables);
+        return new BoundMultiplicationExpression(left, right, resultType);
+        
     }
 }
