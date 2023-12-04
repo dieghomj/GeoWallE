@@ -2,11 +2,16 @@ public class LogicalAndExpression : BinaryExpression
 {
     public LogicalAndExpression(Expression left, Expression right)
         : base(left, right) { }
+    public override SyntaxKind Kind => SyntaxKind.LogicalAndExpression;
 
-    public override SyntaxKind Kind => throw new NotImplementedException();
+    public override SyntaxKind OperatorKind => SyntaxKind.AmpersandToken;
 
-    protected override GType Bind(Dictionary<VariableSymbol, GType> visibleVariables)
+    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        throw new NotImplementedException();
+        var resultType = Bind(visibleVariables);
+        var left = Left.GetBoundExpression(visibleVariables);
+        var right = Right.GetBoundExpression(visibleVariables);
+        return new BoundLogicalAndExpression(left, right, resultType);
+        
     }
 }

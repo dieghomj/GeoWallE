@@ -1,4 +1,4 @@
-class Binder
+public class Binder
 {
     private Dictionary<string, GType> visibleVariables = new Dictionary<string, GType>();
     public Binder(Expression root)

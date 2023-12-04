@@ -1,5 +1,6 @@
 public abstract class Expression
 {
     public abstract SyntaxKind Kind { get; }
-    protected abstract GType Bind(Dictionary<VariableSymbol, GType> visibleVariables);
+    public abstract GType Bind(Dictionary<string, GType> visibleVariables);
+    public abstract BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables);
 }

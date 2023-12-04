@@ -1,3 +1,4 @@
+
 public class AdditionExpression : BinaryExpression
 {
     public AdditionExpression(Expression left, Expression right)
@@ -5,8 +6,14 @@ public class AdditionExpression : BinaryExpression
 
     public override SyntaxKind Kind => SyntaxKind.AdditionExpression;
 
-    protected override GType Bind(Dictionary<VariableSymbol, GType> visibleVariables)
+    public override SyntaxKind OperatorKind => SyntaxKind.PlusToken;
+
+    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        throw new NotImplementedException();
+        var resultType = Bind(visibleVariables);
+        var leftExpression = Left.GetBoundExpression(visibleVariables);
+        var rightExpression = Right.GetBoundExpression(visibleVariables);
+        return new BoundAdditionExpression(leftExpression,rightExpression,resultType);
     }
+
 }
