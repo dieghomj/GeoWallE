@@ -2,6 +2,11 @@ using GInterfaces;
 
 public class Point : Figure, IDrawable
 {
+    public override void DrawFigure()
+    {
+        throw new NotImplementedException();
+    }
+
     public override GType GetGType()
     {
         throw new NotImplementedException();
@@ -12,5 +17,4 @@ public class Point : Figure, IDrawable
         throw new NotImplementedException();
     }
 
-    public void Draw(Point point) => PanelDraw.AddFigure(this);
 }
