@@ -1,9 +1,7 @@
-using GInterfaces;
+using Gsharp;
 
-public abstract class Figure : GObject, IDrawable
+public abstract class Figure : GObject
 {
-    // public abstract void Draw();
-    public void Draw() => PanelDraw.AddFigure(this);
-
-    public abstract void DrawFigure();
+    public abstract GFigureKind Kind { get; }
+    public void DrawFigure() => Compiler.AddFigure(this);
 }

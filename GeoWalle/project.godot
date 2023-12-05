@@ -11,7 +11,8 @@ config_version=5
 [application]
 
 config/name="GeoWallE"
-config/features=PackedStringArray("4.2", "Mobile")
+run/main_scene="res://Main.tscn"
+config/features=PackedStringArray("4.2", "C#", "Mobile")
 config/icon="res://icon.svg"
 
 [dotnet]
@@ -20,4 +21,4 @@ project/assembly_name="GeoWallE"
 
 [rendering]
 
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"

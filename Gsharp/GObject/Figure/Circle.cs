@@ -1,6 +1,6 @@
-public class Point : Figure
+public class Circle : Figure
 {
-    public override GFigureKind Kind => GFigureKind.Point;
+    public override GFigureKind Kind => GFigureKind.Circle;
 
     public override GType GetGType()
     {
@@ -11,5 +11,4 @@ public class Point : Figure
     {
         throw new NotImplementedException();
     }
-
 }
