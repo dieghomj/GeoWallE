@@ -18,9 +18,7 @@ public partial class PanelDraw : Panel
         {GFigureKind.Circle, GDrawCircle},
 
     };
-
-
-
+    
     public override void _Ready()
     {
         panelDraw = this;
