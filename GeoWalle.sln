@@ -5,7 +5,11 @@ VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gsharp", "Gsharp\Gsharp.csproj", "{5DCF1A44-B2A7-4BD4-A815-B929FA53A388}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoWallE", "GeoWalle\GeoWallE.csproj", "{B7558C12-BA62-42F8-B205-CA11FECD2B4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoDebug", "GeoDebug\GeoDebug.csproj", "{D649A407-C17D-409C-BDA9-CC6CB82E5399}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoWallE", "GeoWallE\GeoWallE.csproj", "{C0522B05-EE43-4C0F-A202-AC9DA10F026C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GInterfaces", "GInterfaces\GInterfaces.csproj", "{8FCF40B3-2069-468A-8D56-E30B6EDFD0CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +21,18 @@ Global
 		{5DCF1A44-B2A7-4BD4-A815-B929FA53A388}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DCF1A44-B2A7-4BD4-A815-B929FA53A388}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DCF1A44-B2A7-4BD4-A815-B929FA53A388}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B7558C12-BA62-42F8-B205-CA11FECD2B4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B7558C12-BA62-42F8-B205-CA11FECD2B4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B7558C12-BA62-42F8-B205-CA11FECD2B4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B7558C12-BA62-42F8-B205-CA11FECD2B4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D649A407-C17D-409C-BDA9-CC6CB82E5399}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D649A407-C17D-409C-BDA9-CC6CB82E5399}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D649A407-C17D-409C-BDA9-CC6CB82E5399}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D649A407-C17D-409C-BDA9-CC6CB82E5399}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0522B05-EE43-4C0F-A202-AC9DA10F026C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0522B05-EE43-4C0F-A202-AC9DA10F026C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0522B05-EE43-4C0F-A202-AC9DA10F026C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0522B05-EE43-4C0F-A202-AC9DA10F026C}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{8FCF40B3-2069-468A-8D56-E30B6EDFD0CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FCF40B3-2069-468A-8D56-E30B6EDFD0CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FCF40B3-2069-468A-8D56-E30B6EDFD0CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FCF40B3-2069-468A-8D56-E30B6EDFD0CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

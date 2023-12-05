@@ -1,5 +1,12 @@
-public class Point : Figure
+using GInterfaces;
+
+public class Point : Figure, IDrawable
 {
+    public override void DrawFigure()
+    {
+        throw new NotImplementedException();
+    }
+
     public override GType GetGType()
     {
         throw new NotImplementedException();
@@ -10,8 +17,4 @@ public class Point : Figure
         throw new NotImplementedException();
     }
 
-    public override void Draw()
-    {
-        throw new NotImplementedException();
-    }
 }
