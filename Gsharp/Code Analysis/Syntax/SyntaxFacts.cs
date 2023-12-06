@@ -36,32 +36,32 @@ public static class SyntaxFacts
     };
 
     public static List<SyntaxKind> PredefinedFunctionKeywords =
-        new()
-        {
-            SyntaxKind.LineKeyword,
-            SyntaxKind.SegmentKeyword,
-            SyntaxKind.RayKeyword,
-            SyntaxKind.ArcKeyword,
-            SyntaxKind.CircleKeyword,
-            SyntaxKind.MeasureKeyword,
-            SyntaxKind.IntersectKeyword,
-            SyntaxKind.CountKeyword,
-            SyntaxKind.RandomsKeyword,
-            SyntaxKind.PointsKeyword,
-            SyntaxKind.SamplesKeyword,
-        };
-
-    public static List<SyntaxKind> ColorList = new List<SyntaxKind>
+    new()
     {
-        SyntaxKind.BlueKeyword,
-        SyntaxKind.RedKeyword,
-        SyntaxKind.YellowKeyword,
-        SyntaxKind.GreenKeyword,
-        SyntaxKind.CyanKeyword,
-        SyntaxKind.MagentaKeyword,
-        SyntaxKind.WhiteKeyword,
-        SyntaxKind.GrayKeyword,
-        SyntaxKind.BlackKeyword
+        SyntaxKind.LineKeyword,
+        SyntaxKind.SegmentKeyword,
+        SyntaxKind.RayKeyword,
+        SyntaxKind.ArcKeyword,
+        SyntaxKind.CircleKeyword,
+        SyntaxKind.MeasureKeyword,
+        SyntaxKind.IntersectKeyword,
+        SyntaxKind.CountKeyword,
+        SyntaxKind.RandomsKeyword,
+        SyntaxKind.PointsKeyword,
+        SyntaxKind.SamplesKeyword,
+    };
+
+    public static Dictionary<SyntaxKind,Color> ColorList = new Dictionary<SyntaxKind,Color>
+    {
+        {SyntaxKind.BlueKeyword,Color.Blue},
+        {SyntaxKind.RedKeyword,Color.Red},
+        {SyntaxKind.YellowKeyword,Color.Yellow},
+        {SyntaxKind.GreenKeyword,Color.Green},
+        {SyntaxKind.CyanKeyword,Color.Cyan},
+        {SyntaxKind.MagentaKeyword,Color.Magenta},
+        {SyntaxKind.WhiteKeyword,Color.White},
+        {SyntaxKind.GrayKeyword,Color.Gray},
+        {SyntaxKind.BlackKeyword,Color.Black} 
     };
 
     public static SyntaxKind GetKeyWordKind(string text)

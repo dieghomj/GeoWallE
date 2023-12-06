@@ -1,29 +1,26 @@
 public static class BinaryOperator
 {
-    private static Dictionary<SyntaxKind, Func<object, object, object>> OperatorFunc =
-        new Dictionary<SyntaxKind, Func<object, object, object>>
+    private static Dictionary<BinaryOperatorKind, Func<object, object, object>> OperatorFunc =
+        new Dictionary<BinaryOperatorKind, Func<object, object, object>>
         {
-            { SyntaxKind.PlusToken, Addition },
-            { SyntaxKind.MinusToken, Subtraction },
-            { SyntaxKind.StarToken, Multiplication },
-            { SyntaxKind.DivToken, Division },
-            { SyntaxKind.PercentToken, Remainder },
-            { SyntaxKind.CircumflexToken, Power },
-            { SyntaxKind.AmpersandToken, LogicalAnd },
-            { SyntaxKind.PipeToken, LogicalOr },
-            { SyntaxKind.EqualEqualToken, (a, b) => Equals(a, b) },
-            { SyntaxKind.BangEqualToken, (a, b) => !Equals(a, b) },
-            { SyntaxKind.GreaterEqualToken, GreaterEqual },
-            { SyntaxKind.LessEqualToken, LessEqual },
-            { SyntaxKind.GreaterToken, Greater },
-            { SyntaxKind.LessToken, Less },
+            { BinaryOperatorKind.Addition, Addition },
+            { BinaryOperatorKind.Subtraction, Subtraction },
+            { BinaryOperatorKind.Multiplication, Multiplication },
+            { BinaryOperatorKind.Division, Division },
+            { BinaryOperatorKind.Remainder, Remainder },
+            { BinaryOperatorKind.Exponentiation, Exponentiation },
+            { BinaryOperatorKind.LogicalAnd, LogicalAnd },
+            { BinaryOperatorKind.LogicalOr, LogicalOr },
+            { BinaryOperatorKind.Equals, (a, b) => Equals(a, b) },
+            { BinaryOperatorKind.NotEquals, (a, b) => !Equals(a, b) },
+            { BinaryOperatorKind.GreaterEqual, GreaterEqual },
+            { BinaryOperatorKind.LessEqual, LessEqual },
+            { BinaryOperatorKind.Greater, Greater },
+            { BinaryOperatorKind.Less, Less },
         };
 
-    private static Dictionary<
-        SyntaxKind,
-        Func<Expression, Expression, Expression>
-    > InstantiateFunc =
-        new()
+    private static Dictionary<SyntaxKind,Func<Expression, Expression, Expression> > InstantiateFunc =
+        new Dictionary<SyntaxKind, Func<Expression, Expression, Expression>>()
         {
             {
                 SyntaxKind.PlusToken,
@@ -83,7 +80,7 @@ public static class BinaryOperator
             },
         };
 
-    public static Func<object, object, object> GetOperatorFunc(SyntaxKind operatorKind) =>
+    public static Func<object, object, object> GetOperatorFunc(BinaryOperatorKind operatorKind) =>
         OperatorFunc[operatorKind];
 
     /// <summary>
@@ -134,7 +131,7 @@ public static class BinaryOperator
         }
     }
 
-    #region COChinas de pepe
+    #region Binary Evaluations
     private static object Addition(object left, object right)
     {
         throw new NotImplementedException();
@@ -160,7 +157,7 @@ public static class BinaryOperator
         throw new NotImplementedException();
     }
 
-    private static object Power(object left, object right)
+    private static object Exponentiation(object left, object right)
     {
         throw new NotImplementedException();
     }
