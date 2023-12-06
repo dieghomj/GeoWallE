@@ -1,7 +1,29 @@
-[gd_scene load_steps=3 format=3 uid="uid://biatmdd116wge"]
+[gd_scene load_steps=7 format=3 uid="uid://biatmdd116wge"]
 
+[ext_resource type="Theme" uid="uid://bs8amxpjs4o7v" path="res://WalleTheme.tres" id="1_6gyj5"]
 [ext_resource type="Script" path="res://PanelDraw.cs" id="1_60vda"]
 [ext_resource type="Script" path="res://Controller.cs" id="1_q7a7x"]
+[ext_resource type="StyleBox" uid="uid://dkg6wffasm7xt" path="res://labelStyle.stylebox" id="3_x4hj0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gx57b"]
+bg_color = Color(0.827451, 0.854902, 0.890196, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.721569, 0.831373, 0.913725, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x1mvh"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.721569, 0.831373, 0.913725, 1)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -10,46 +32,127 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_6gyj5")
 script = ExtResource("1_q7a7x")
 
-[node name="DrawZone" type="Panel" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.427083
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 0
+grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_60vda")
-metadata/_edit_use_anchors_ = true
+color = Color(0.133333, 0.176471, 0.196078, 1)
 
-[node name="RunButton" type="Button" parent="."]
-layout_mode = 0
-anchor_left = 0.303819
-anchor_top = 0.00462963
-anchor_right = 0.416667
-anchor_bottom = 0.0740741
+[node name="RunButton" type="Button" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.123047
+anchor_top = 0.00390625
+anchor_right = 0.246094
+anchor_bottom = 0.0729167
+action_mode = 0
 text = "RUN"
 metadata/_edit_use_anchors_ = true
 
-[node name="ComileButton" type="Button" parent="."]
+[node name="CompileButton" type="Button" parent="ColorRect"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.185764
-anchor_top = 0.00462963
-anchor_right = 0.298611
-anchor_bottom = 0.0740741
-text = "Compile
+anchor_left = 0.00390625
+anchor_top = 0.00390625
+anchor_right = 0.121094
+anchor_bottom = 0.0729167
+action_mode = 0
+text = "COMPILE
 "
 metadata/_edit_use_anchors_ = true
 
-[node name="CodeEdit" type="CodeEdit" parent="."]
+[node name="DrawZone" type="Panel" parent="ColorRect"]
+clip_contents = true
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.0771605
-anchor_right = 0.417535
-anchor_bottom = 1.0
+anchor_left = 0.432617
+anchor_top = 0.0768229
+anchor_right = 0.996094
+anchor_bottom = 0.835938
+grow_horizontal = 0
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gx57b")
+script = ExtResource("1_60vda")
 metadata/_edit_use_anchors_ = true
 
-[connection signal="button_down" from="RunButton" to="." method="_OnRunButtonButtonDown"]
+[node name="DebugConsole" type="Label" parent="ColorRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.430664
+anchor_top = 0.846354
+anchor_right = 0.996094
+anchor_bottom = 0.99349
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = ExtResource("3_x4hj0")
+text = "ERROR"
+metadata/_edit_use_anchors_ = true
+
+[node name="Editor" type="Panel" parent="ColorRect"]
+layout_mode = 0
+anchor_left = 0.00292969
+anchor_top = 0.0768229
+anchor_right = 0.422852
+anchor_bottom = 0.99349
+theme_override_styles/panel = SubResource("StyleBoxFlat_x1mvh")
+metadata/_edit_use_anchors_ = true
+
+[node name="TabBar" type="TabBar" parent="ColorRect/Editor"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.0355114
+offset_bottom = -2.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 12
+tab_count = 1
+scrolling_enabled = false
+drag_to_rearrange_enabled = true
+tab_0/title = "newGeo.geo"
+metadata/_edit_use_anchors_ = true
+
+[node name="CodeEdit" type="CodeEdit" parent="ColorRect/Editor"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.00232558
+anchor_top = 0.0353107
+anchor_right = 0.997674
+anchor_bottom = 0.998588
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/background_color = Color(0.160784, 0.207843, 0.231373, 1)
+theme_override_colors/completion_background_color = Color(0.152941, 0.2, 0.223529, 1)
+theme_override_colors/completion_selected_color = Color(0.207843, 0.262745, 0.290196, 1)
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_colors/selection_color = Color(0, 0.737255, 0.831373, 0.439216)
+theme_override_colors/current_line_color = Color(1, 1, 1, 0.0862745)
+theme_override_colors/caret_color = Color(0, 0.737255, 0.831373, 1)
+theme_override_colors/caret_background_color = Color(0, 0.737255, 0.831373, 0.439216)
+theme_override_colors/brace_mismatch_color = Color(0.988235, 0.254902, 0.219608, 1)
+theme_override_colors/line_number_color = Color(1, 1, 1, 0.266667)
+theme_override_colors/word_highlighted_color = Color(1, 1, 1, 0.266667)
+theme_override_font_sizes/font_size = 12
+text = "point p1;
+Draw p1 \"Hello World!\";"
+scroll_smooth = true
+caret_blink = true
+highlight_all_occurrences = true
+highlight_current_line = true
+draw_tabs = true
+draw_spaces = true
+symbol_lookup_on_click = true
+line_folding = true
+gutters_draw_line_numbers = true
+gutters_draw_fold_gutter = true
+code_completion_enabled = true
+auto_brace_completion_enabled = true
+auto_brace_completion_highlight_matching = true
+metadata/_edit_use_anchors_ = true
+
+[connection signal="button_down" from="ColorRect/RunButton" to="." method="_OnRunButtonButtonDown"]
