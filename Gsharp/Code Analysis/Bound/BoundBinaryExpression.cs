@@ -6,7 +6,6 @@ public abstract class BoundBinaryExpression : BoundExpression
         Right = right;
         ResultType = resultType;
     }
-    //Aqui creo que OperatorKind se deberia cambiar por OperatorToken o cambiar SyntaxKind por algun otro enum algo que describa mejor a OperatorKind
     public abstract BinaryOperatorKind OperatorKind { get; }
     public BoundExpression Left { get; }
     public BoundExpression Right { get; }
