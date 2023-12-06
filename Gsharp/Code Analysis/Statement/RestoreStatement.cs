@@ -2,7 +2,7 @@ public class RestoreStatement : Statement
 {
     public RestoreStatement() { }
 
-    public override void Bind()
+    public override void BindStatement(Dictionary<string, GType> visibleVariables)
     {
         throw new NotImplementedException();
     }

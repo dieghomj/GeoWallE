@@ -7,7 +7,7 @@ public class ImportStatement : Statement
         Path = path;
     }
 
-    public override void Bind()
+    public override void BindStatement(Dictionary<string, GType> visibleVariables)
     {
         throw new NotImplementedException();
     }

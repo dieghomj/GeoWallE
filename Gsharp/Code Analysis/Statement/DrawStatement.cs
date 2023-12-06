@@ -7,7 +7,7 @@ public class DrawStatement : Statement
         Figure = figure;
     }
 
-    public override void Bind()
+    public override void BindStatement(Dictionary<string, GType> visibleVariables)
     {
         throw new NotImplementedException();
     }

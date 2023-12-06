@@ -7,7 +7,7 @@ public class ColorStatement : Statement
         Color = color;
     }
 
-    public override void Bind()
+    public override void BindStatement(Dictionary<string, GType> visibleVariables)
     {
         throw new NotImplementedException();
     }

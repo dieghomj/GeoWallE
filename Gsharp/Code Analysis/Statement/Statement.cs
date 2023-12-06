@@ -1,3 +1,3 @@
 public abstract class Statement { 
-    public abstract void Bind();
+    public abstract void BindStatement(Dictionary<string, GType> visibleVariables);
 }
