@@ -2,7 +2,7 @@ public class LessExpression : BinaryExpression
 {
     public LessExpression(Expression left, Expression right)
         : base(left, right) { }
-    public override SyntaxKind Kind => SyntaxKind.LessExpression;
+    public override ExpressionKind Kind => ExpressionKind.LessExpression;
 
     public override SyntaxKind OperatorKind => SyntaxKind.LessToken;
 
@@ -12,6 +12,6 @@ public class LessExpression : BinaryExpression
         var left = Left.GetBoundExpression(visibleVariables);
         var right = Right.GetBoundExpression(visibleVariables);
         return new BoundLessExpression(left, right, resultType);
-        
+
     }
 }

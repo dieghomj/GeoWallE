@@ -4,7 +4,7 @@ public class EqualsExpression : BinaryExpression
     public EqualsExpression(Expression left, Expression right)
         : base(left, right) { }
     public override SyntaxKind OperatorKind => SyntaxKind.EqualEqualToken;
-    public override SyntaxKind Kind => SyntaxKind.EqualsExpression;
+    public override ExpressionKind Kind => ExpressionKind.EqualsExpression;
     public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {
         var resultType = Bind(visibleVariables);

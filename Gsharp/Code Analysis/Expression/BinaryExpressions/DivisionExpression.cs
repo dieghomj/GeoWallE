@@ -3,7 +3,7 @@ public class DivisionExpression : BinaryExpression
     public DivisionExpression(Expression left, Expression right)
         : base(left, right) { }
     public override SyntaxKind OperatorKind => SyntaxKind.DivToken;
-    public override SyntaxKind Kind => SyntaxKind.DivisionExpression;
+    public override ExpressionKind Kind => ExpressionKind.DivisionExpression;
     public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {
         var resultType = Bind(visibleVariables);

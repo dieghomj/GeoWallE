@@ -2,9 +2,9 @@ public class LogicalOrExpression : BinaryExpression
 {
     public LogicalOrExpression(Expression left, Expression right)
         : base(left, right) { }
-    public override SyntaxKind Kind => SyntaxKind.LogicalOrExpression;
+    public override ExpressionKind Kind => ExpressionKind.LogicalOrExpression;
 
-    public override SyntaxKind OperatorKind => SyntaxKind.PipeToken;
+    public override SyntaxKind OperatorKind => SyntaxKind.BangToken;
 
     public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {
@@ -14,12 +14,4 @@ public class LogicalOrExpression : BinaryExpression
         return new BoundLogicalOrExpression(left, right, resultType);
         
     }
-}
-
-public class BoundLogicalOrExpression : BoundBinaryExpression
-{
-    public BoundLogicalOrExpression(BoundExpression left, BoundExpression right, GType resultType) 
-    : base(left, right, resultType) { }
-
-    public override SyntaxKind OperatorKind => SyntaxKind.PipeToken;
 }

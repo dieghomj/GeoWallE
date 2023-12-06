@@ -6,7 +6,7 @@ public class GreaterExpression : BinaryExpression
 
     public override SyntaxKind OperatorKind => SyntaxKind.GreaterToken;
 
-    public override SyntaxKind Kind => throw new NotImplementedException();
+    public override ExpressionKind Kind => throw new NotImplementedException();
 
     public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {
@@ -15,12 +15,4 @@ public class GreaterExpression : BinaryExpression
         var right = Right.GetBoundExpression(visibleVariables);
         return new BoundGreaterExpression(left, right, resultType);
     }
-}
-
-public class BoundGreaterExpression : BoundBinaryExpression
-{
-    public BoundGreaterExpression(BoundExpression left, BoundExpression right, GType resultType) 
-        : base(left, right, resultType) { }
-
-    public override SyntaxKind OperatorKind => SyntaxKind.GreaterToken;
 }

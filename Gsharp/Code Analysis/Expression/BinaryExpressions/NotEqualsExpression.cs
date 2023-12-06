@@ -2,7 +2,7 @@ public class NotEqualsExpression : BinaryExpression
 {
     public NotEqualsExpression(Expression left, Expression right)
         : base(left, right) { }
-    public override SyntaxKind Kind => SyntaxKind.NotEqualExpression;
+    public override ExpressionKind Kind => ExpressionKind.NotEqualExpression;
 
     public override SyntaxKind OperatorKind => SyntaxKind.BangEqualToken;
 
@@ -14,12 +14,4 @@ public class NotEqualsExpression : BinaryExpression
         return new BoundNotEqualExpression(left, right, resultType);
         
     }
-}
-
-public class BoundNotEqualExpression : BoundBinaryExpression
-{
-    public BoundNotEqualExpression(BoundExpression left, BoundExpression right, GType resultType) 
-    : base(left, right, resultType) { }
-
-    public override SyntaxKind OperatorKind => SyntaxKind.BangEqualToken;
 }

@@ -4,7 +4,9 @@ public class NegationExpression : UnaryExpression
     {
     }
 
-    public override SyntaxKind Kind => SyntaxKind.NegationExpression;
+    public override ExpressionKind Kind => ExpressionKind.NegationExpression;
+
+    public override SyntaxKind OperatorKind => SyntaxKind.MinusToken;
 
     public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {

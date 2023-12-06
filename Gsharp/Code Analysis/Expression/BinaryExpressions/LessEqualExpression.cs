@@ -3,10 +3,9 @@ public class LessEqualExpression : BinaryExpression
     public LessEqualExpression(Expression left, Expression right)
         : base(left, right) { }
 
-    public override SyntaxKind Kind => SyntaxKind.LessEqualExpression;
+    public override ExpressionKind Kind => ExpressionKind.LessEqualExpression;
 
     public override SyntaxKind OperatorKind => SyntaxKind.LessEqualToken;
-
     public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {
         var resultType = Bind(visibleVariables);

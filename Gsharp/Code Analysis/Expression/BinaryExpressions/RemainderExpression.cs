@@ -2,7 +2,7 @@ public class RemainderExpression : BinaryExpression
 {
     public RemainderExpression(Expression left, Expression right)
         : base(left, right) { }
-    public override SyntaxKind Kind => SyntaxKind.RemainderExpression;
+    public override ExpressionKind Kind => ExpressionKind.RemainderExpression;
 
     public override SyntaxKind OperatorKind => SyntaxKind.PercentToken;
 
@@ -14,12 +14,4 @@ public class RemainderExpression : BinaryExpression
         return new BoundRemainderExpression(left, right, resultType);
         
     }
-}
-
-public class BoundRemainderExpression : BoundBinaryExpression
-{
-    public BoundRemainderExpression(BoundExpression left, BoundExpression right, GType resultType) 
-    : base(left, right, resultType) { }
-
-    public override SyntaxKind OperatorKind => SyntaxKind.PercentToken;
 }

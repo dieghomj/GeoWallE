@@ -2,7 +2,7 @@ public class MultiplicationExpression : BinaryExpression
 {
     public MultiplicationExpression(Expression left, Expression right)
         : base(left, right) { }
-    public override SyntaxKind Kind => SyntaxKind.MultiplicationExpression;
+    public override ExpressionKind Kind => ExpressionKind.MultiplicationExpression;
 
     public override SyntaxKind OperatorKind => SyntaxKind.StarToken;
 

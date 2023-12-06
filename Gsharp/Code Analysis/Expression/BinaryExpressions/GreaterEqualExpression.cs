@@ -3,7 +3,7 @@ public class GreaterEqualExpression : BinaryExpression
     public GreaterEqualExpression(Expression left, Expression right)
         : base(left, right) { }
 
-    public override SyntaxKind Kind => SyntaxKind.GreaterEqualExpression;
+    public override ExpressionKind Kind => ExpressionKind.GreaterEqualExpression;
 
     public override SyntaxKind OperatorKind => SyntaxKind.GreaterEqualToken;
 

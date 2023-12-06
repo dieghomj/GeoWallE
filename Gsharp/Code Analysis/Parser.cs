@@ -94,8 +94,8 @@ public class Parser
     {
         NextToken();
 
-        if (SyntaxFacts.ColorList.Contains(Current.Kind))
-            return new ColorStatement(NextToken().Kind);
+        if (SyntaxFacts.ColorList.ContainsKey(Current.Kind))
+            return new ColorStatement(SyntaxFacts.ColorList[NextToken().Kind]);
 
         System.Console.WriteLine("!SYNTAX ERROR: Expected color");
         NextToken();

@@ -3,7 +3,7 @@ public class ExponentiationExpression : BinaryExpression
 {
     public ExponentiationExpression(Expression left, Expression right)
         : base(left, right) { }
-    public override SyntaxKind Kind => SyntaxKind.ExponentiationExpression;
+    public override ExpressionKind Kind => ExpressionKind.ExponentiationExpression;
     public override SyntaxKind OperatorKind => SyntaxKind.CircumflexToken;
     public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {

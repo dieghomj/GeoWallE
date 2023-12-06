@@ -4,7 +4,7 @@ public class AdditionExpression : BinaryExpression
     public AdditionExpression(Expression left, Expression right)
         : base(left, right) { }
 
-    public override SyntaxKind Kind => SyntaxKind.AdditionExpression;
+    public override ExpressionKind Kind => ExpressionKind.AdditionExpression;
 
     public override SyntaxKind OperatorKind => SyntaxKind.PlusToken;
 
