@@ -1,17 +1,15 @@
 public static class UnaryOperator
 {
-    public static Dictionary<SyntaxKind, Func<object, object>> OperatorFunc = new Dictionary<
-        SyntaxKind,
-        Func<object, object>
-    >
+    private static Dictionary<UnaryOperatorKind, Func<object, object>> OperatorFunc =
+        new Dictionary<UnaryOperatorKind, Func<object, object>>
     {
-        { SyntaxKind.PlusToken, Identity },
-        { SyntaxKind.MinusToken, Negation },
-        { SyntaxKind.BangToken, LogicalNegation },
+        { UnaryOperatorKind.Identity, Identity },
+        { UnaryOperatorKind.Negation, Negation },
+        { UnaryOperatorKind.LogicalNegation, LogicalNegation },
     };
 
     private static Dictionary<SyntaxKind, Func<Expression, Expression>> InstantiateFunc =
-        new()
+        new Dictionary<SyntaxKind, Func<Expression, Expression>>
         {
             { SyntaxKind.PlusToken, (Expression operand) => new IdentityExpression(operand) },
             { SyntaxKind.MinusToken, (Expression operand) => new NegationExpression(operand) },
@@ -21,7 +19,7 @@ public static class UnaryOperator
             },
         };
 
-    internal static Func<object, object> GetOperatorFunc(SyntaxKind operatorKind) =>
+    internal static Func<object, object> GetOperatorFunc(UnaryOperatorKind operatorKind) =>
         OperatorFunc[operatorKind];
 
     /// <summary>

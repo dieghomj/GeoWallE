@@ -5,7 +5,7 @@ public abstract class UnaryExpression : Expression
         Operand = operand;
     }
 
-    public SyntaxKind OperatorKind { get; }
+    public abstract SyntaxKind OperatorKind { get; }
     public Expression Operand { get; }
     public override GType Bind(Dictionary<string, GType> visibleVariables)
     {

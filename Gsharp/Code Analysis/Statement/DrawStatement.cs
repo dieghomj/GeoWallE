@@ -11,4 +11,9 @@ public class DrawStatement : Statement
     {
         throw new NotImplementedException();
     }
+
+    public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)
+    {
+        throw new NotImplementedException();
+    }
 }

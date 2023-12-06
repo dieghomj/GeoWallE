@@ -5,7 +5,7 @@ public class NameExpression : Expression
         IdentifierToken = identifierToken;
     }
 
-    public override SyntaxKind Kind => SyntaxKind.NameExpression;
+    public override ExpressionKind Kind => ExpressionKind.NameExpression;
 
     public SyntaxToken IdentifierToken { get; }
 

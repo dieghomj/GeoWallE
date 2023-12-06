@@ -8,30 +8,25 @@ public class LetInExpression : Expression
 
     public IEnumerable<Statement> Instructions { get; }
     public Expression InExpression { get; }
-    public override SyntaxKind Kind => SyntaxKind.LetInExpression;
+    public override ExpressionKind Kind => ExpressionKind.LetInExpression;
 
     public override GType Bind(Dictionary<string, GType> visibleVariables)
     {
-        // List<GType> instructionsType = new List<GType>();
         foreach (var instruction in Instructions)
             instruction.BindStatement(visibleVariables);
-        // instructionsType.Add(instruction.Bind(visibleVariables));
         var expressionType = InExpression.Bind(visibleVariables);
         return expressionType;
     }
 
     public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        throw new NotImplementedException();
-        // Modificar para Statement
+        List<BoundStatement> boundInstructions = new List<BoundStatement>();
+        Bind(new Dictionary<string, GType>(visibleVariables));
 
-        // List<BoundExpression> boundInstructions = new List<BoundExpression>();
-        // Bind(new Dictionary<string, GType>(visibleVariables));
+        foreach (var instruction in Instructions)
+            boundInstructions.Add(instruction.GetBoundStatement(visibleVariables));
 
-        // foreach (var instruction in Instructions)
-        //     boundInstructions.Add(instruction.GetBoundExpression(visibleVariables));
-
-        // var boundExpression = Expression.GetBoundExpression(visibleVariables);
-        // return new BoundLetInExpression(boundInstructions, boundExpression);
+        var boundExpression = InExpression.GetBoundExpression(visibleVariables);
+        return new BoundLetInExpression(boundInstructions, boundExpression);
     }
 }

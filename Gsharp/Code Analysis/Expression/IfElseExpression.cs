@@ -17,7 +17,7 @@ public class IfElseExpression : Expression
     public Expression TrueExpression { get; }
     public Expression FalseExpression { get; }
 
-    public override SyntaxKind Kind => SyntaxKind.IfElseExpression;
+    public override ExpressionKind Kind => ExpressionKind.IfElseExpression;
 
     public override GType Bind(Dictionary<string, GType> visibleVariables)
     {

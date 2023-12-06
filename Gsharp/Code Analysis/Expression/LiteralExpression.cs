@@ -6,7 +6,7 @@ public class LiteralExpression : Expression
         Value = value;
     }
 
-    public override SyntaxKind Kind => SyntaxKind.LiteralExpression;
+    public override ExpressionKind Kind => ExpressionKind.LiteralExpression;
     public SyntaxToken LiteralToken { get; }
     public object Value { get; }
 
