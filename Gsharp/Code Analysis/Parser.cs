@@ -65,7 +65,8 @@ public class Parser
 
     private Statement ParseImportStatement()
     {
-        NextToken();
+        Match(SyntaxKind.ImportKeyword);
+
         return new ImportStatement(ParseExpression());
     }
 
@@ -76,23 +77,102 @@ public class Parser
             case SyntaxKind.ColorKeyword:
                 return ParseColorStatement();
             case SyntaxKind.RestoreKeyword:
-                NextToken();
-                return new RestoreStatement();
+                return ParseRestoreStatement();
             case SyntaxKind.DrawKeyword:
                 return ParseDrawStatement();
+            case SyntaxKind.IdentifierToken:
+                switch (LookAhead.Kind)
+                {
+                    case SyntaxKind.OpenParenthesisToken:
+                        return ParseFunctionDeclarationStatement();
+                    case SyntaxKind.EqualsToken:
+                        return ParseAssignmentStatement();
+                    case SyntaxKind.CommaToken:
+                        return ParseMatchStatement();
+                    default:
+                        return ParseExpression();
+                }
+            case SyntaxKind.UnderscoreToken:
+                return ParseMatchStatement();
             default:
                 return ParseExpression();
         }
     }
 
+    private Statement ParseMatchStatement()
+    {
+        List<SyntaxToken> nameTokens = new();
+        while (Current.Kind != SyntaxKind.EqualsToken)
+        {
+            if (Current.Kind == SyntaxKind.UnderscoreToken)
+                nameTokens.Add(Match(SyntaxKind.UnderscoreToken));
+            else
+                nameTokens.Add(Match(SyntaxKind.IdentifierToken));
+
+            if (Current.Kind != SyntaxKind.EqualsToken)
+                nameTokens.Add(Match(SyntaxKind.CommaToken));
+        }
+
+        Match(SyntaxKind.EqualsToken);
+
+        Expression rightExpression = ParseExpression();
+
+        return new MatchStatement(nameTokens, rightExpression);
+    }
+
+    private Statement ParseAssignmentStatement()
+    {
+        SyntaxToken nameToken = Match(SyntaxKind.IdentifierToken);
+
+        Match(SyntaxKind.EqualsToken);
+
+        Expression rightExpression = ParseExpression();
+
+        return new AssignmentStatement(nameToken, rightExpression);
+    }
+
+    private Statement ParseFunctionDeclarationStatement()
+    {
+        SyntaxToken functionToken = Match(SyntaxKind.IdentifierToken);
+
+        Match(SyntaxKind.OpenParenthesisToken);
+
+        List<SyntaxToken> parameters = new();
+
+        while (Current.Kind != SyntaxKind.CloseParenthesisToken)
+        {
+            SyntaxToken parameter = Match(SyntaxKind.IdentifierToken);
+            parameters.Add(parameter);
+
+            if (Current.Kind != SyntaxKind.CloseParenthesisToken)
+                Match(SyntaxKind.CommaToken);
+        }
+
+        Match(SyntaxKind.CloseParenthesisToken);
+
+        Match(SyntaxKind.EqualsToken);
+
+        Expression functionExpression = ParseExpression();
+
+        return new FunctionDeclarationStatement(functionToken, parameters, functionExpression);
+    }
+
+    private Statement ParseRestoreStatement()
+    {
+        Match(SyntaxKind.RestoreKeyword);
+        return new RestoreStatement();
+    }
+
     private Statement ParseDrawStatement()
     {
+        Match(SyntaxKind.DrawKeyword);
+
         return new DrawStatement(ParseExpression());
     }
 
     private Statement ParseColorStatement()
     {
-        NextToken();
+        Match(SyntaxKind.ColorKeyword);
 
         if (SyntaxFacts.ColorList.ContainsKey(Current.Kind))
             return new ColorStatement(SyntaxFacts.ColorList[NextToken().Kind]);
@@ -161,7 +241,7 @@ public class Parser
                 if (LookAhead.Kind == SyntaxKind.OpenParenthesisToken)
                     return ParseFunctionCallExpression();
                 else
-                    return new NameExpression(NextToken());
+                    return ParseNameExpression();
             }
 
             case SyntaxKind.StringToken:
@@ -241,6 +321,11 @@ public class Parser
     {
         SyntaxToken literalToken = NextToken();
         return new LiteralExpression(literalToken, literalToken.Value);
+    }
+
+    private Expression ParseNameExpression()
+    {
+        return new NameExpression(Match(SyntaxKind.IdentifierToken));
     }
 
     private Expression ParseFunctionCallExpression()
