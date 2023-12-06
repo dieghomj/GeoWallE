@@ -6,7 +6,7 @@ public abstract class BinaryExpression : Expression
         Right = right;
     }
 
-    public abstract SyntaxKind OperatorKind {get; }
+    public abstract SyntaxKind OperatorKind { get; }
     public Expression Left { get; }
     public Expression Right { get; }
 
@@ -15,12 +15,13 @@ public abstract class BinaryExpression : Expression
         var leftType = Left.Bind(visibleVariables);
         var rightType = Right.Bind(visibleVariables);
         //  op => Operator
-        var op = BoundBinaryOperator.Bind(OperatorKind,  leftType, rightType);
-        if( op == null)
+        var op = BoundBinaryOperator.Bind(OperatorKind, leftType, rightType);
+        if (op == null)
         {
             System.Console.WriteLine("! SEMANTIC ERROR: Binary operator not defined");
             return GType.Undefined;
         }
-        else return op.ResultType;
+        else
+            return op.ResultType;
     }
 }

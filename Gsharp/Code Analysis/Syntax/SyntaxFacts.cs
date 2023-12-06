@@ -1,8 +1,5 @@
-using System.ComponentModel;
-
 public static class SyntaxFacts
 {
-    /// TODO: faltan : () ;
     public static Dictionary<string, SyntaxKind> Keywords = new Dictionary<string, SyntaxKind>
     {
         { "if", SyntaxKind.IfKeyword },

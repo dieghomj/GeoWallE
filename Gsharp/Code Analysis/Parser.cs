@@ -57,6 +57,8 @@ public class Parser
         return statementsList;
     }
 
+    #region ParseStatements
+
     private Statement ParseImportStatement()
     {
         NextToken();
@@ -93,8 +95,12 @@ public class Parser
 
         System.Console.WriteLine("!SYNTAX ERROR: Expected color");
         NextToken();
-        return null;
+        return null!;
     }
+
+    #endregion
+
+    #region ParseExpressions
 
     private Expression ParseExpression()
     {
@@ -107,8 +113,8 @@ public class Parser
         var unaryPrecedence = UnaryOperator.GetPrecedence(Current.Kind);
         if (unaryPrecedence != 0 && unaryPrecedence > parentPrecedence)
         {
-            var operand = ParseBinaryExpression(unaryPrecedence);
             var op = NextToken();
+            var operand = ParseBinaryExpression(unaryPrecedence);
             left = ParseUnaryOperator(op, operand);
         }
         else
@@ -120,41 +126,51 @@ public class Parser
             if (binaryPrecedence != 0 || binaryPrecedence > parentPrecedence)
                 break;
 
-            var right = ParseBinaryExpression(binaryPrecedence);
             var op = NextToken();
+            var right = ParseBinaryExpression(binaryPrecedence);
             left = ParseBinaryOperator(left, op, right);
         }
 
         return left;
     }
 
+    private Expression ParseBinaryOperator(Expression left, SyntaxToken op, Expression right)
+    {
+        return BinaryOperator.GetInstantiate(left, op, right);
+    }
+
+    private Expression ParseUnaryOperator(SyntaxToken op, Expression operand)
+    {
+        throw new NotImplementedException();
+    }
+
     private Expression ParserPrimaryExpression()
     {
-        switch (Current.Kind)
+        return ParseExpressionFunctions[Current.Kind]();
+    }
+
+    #region ParseExpressionFunctions
+    private static Dictionary<SyntaxKind, Func<Expression>> ParseExpressionFunctions =
+        new Dictionary<SyntaxKind, Func<Expression>>()
         {
-            case SyntaxKind.OpenParenthesisToken:
-                return ParseParenthesizedExpression();
+            { SyntaxKind.OpenParenthesisToken, ParseParenthesizedExpression },
+            { SyntaxKind.StringToken, ParseStringLiteral },
+            { SyntaxKind.IdentifierToken, ParseIdentifier },
+            { SyntaxKind.LetKeyword, ParseLetInExpression },
+            { SyntaxKind.IfKeyword, ParseIfElseExpression },
+        };
 
-            case SyntaxKind.StringToken:
-                return ParseStringLiteral();
-
-            case SyntaxKind.IdentifierToken:
-            {
-                if (Peek(1).Kind == SyntaxKind.OpenParenthesisToken)
-                    return ParseFunctionExpression();
-                else
-                    return ParseNameExpression();
-            }
-            case SyntaxKind.LetKeyword:
-                return ParseLetInExpression();
-            case SyntaxKind.IfKeyword:
-                return ParseIfElseExpression();
-            default:
-                return ParseNumberLiteral();
-        }
+    private static Expression ParseIdentifier()
+    {
+        throw new NotImplementedException();
     }
 
     private Expression ParseNameExpression()
+    {
+        throw new NotImplementedException();
+    }
+
+    private static Expression ParseParenthesizedExpression()
     {
         throw new NotImplementedException();
     }
@@ -164,12 +180,7 @@ public class Parser
         throw new NotImplementedException();
     }
 
-    private Expression ParseStringLiteral()
-    {
-        throw new NotImplementedException();
-    }
-
-    private Expression ParseParenthesizedExpression()
+    private static Expression ParseStringLiteral()
     {
         throw new NotImplementedException();
     }
@@ -179,22 +190,12 @@ public class Parser
         throw new NotImplementedException();
     }
 
-    private Expression ParseUnaryOperator(SyntaxToken op, Expression operand)
+    private static Expression ParseIfElseExpression()
     {
         throw new NotImplementedException();
     }
 
-    private Expression ParseBinaryOperator(Expression left, SyntaxToken op, Expression right)
-    {
-        throw new NotImplementedException();
-    }
-
-    private Expression ParseIfElseExpression()
-    {
-        throw new NotImplementedException();
-    }
-
-    private Expression ParseLetInExpression()
+    private static Expression ParseLetInExpression()
     {
         throw new NotImplementedException();
     }
@@ -213,4 +214,8 @@ public class Parser
     {
         throw new NotImplementedException();
     }
+
+    #endregion
+
+    #endregion
 }

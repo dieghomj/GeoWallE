@@ -17,9 +17,78 @@ public static class BinaryOperator
             { SyntaxKind.LessEqualToken, LessEqual },
             { SyntaxKind.GreaterToken, Greater },
             { SyntaxKind.LessToken, Less },
-    };
+        };
 
-    public static Func<object,object,object> GetOperatorFunc(SyntaxKind operatorKind) => OperatorFunc[operatorKind];
+    private static Dictionary<
+        SyntaxKind,
+        Func<Expression, Expression, Expression>
+    > InstantiateFunc =
+        new()
+        {
+            {
+                SyntaxKind.PlusToken,
+                (Expression left, Expression right) => new AdditionExpression(left, right)
+            },
+            {
+                SyntaxKind.MinusToken,
+                (Expression left, Expression right) => new SubtractionExpression(left, right)
+            },
+            {
+                SyntaxKind.StarToken,
+                (Expression left, Expression right) => new MultiplicationExpression(left, right)
+            },
+            {
+                SyntaxKind.DivToken,
+                (Expression left, Expression right) => new DivisionExpression(left, right)
+            },
+            {
+                SyntaxKind.PercentToken,
+                (Expression left, Expression right) => new RemainderExpression(left, right)
+            },
+            {
+                SyntaxKind.CircumflexToken,
+                (Expression left, Expression right) => new ExponentiationExpression(left, right)
+            },
+            {
+                SyntaxKind.AmpersandToken,
+                (Expression left, Expression right) => new LogicalAndExpression(left, right)
+            },
+            {
+                SyntaxKind.PipeToken,
+                (Expression left, Expression right) => new LogicalOrExpression(left, right)
+            },
+            {
+                SyntaxKind.EqualEqualToken,
+                (Expression left, Expression right) => new EqualsExpression(left, right)
+            },
+            {
+                SyntaxKind.BangEqualToken,
+                (Expression left, Expression right) => new NotEqualsExpression(left, right)
+            },
+            {
+                SyntaxKind.GreaterEqualToken,
+                (Expression left, Expression right) => new GreaterEqualExpression(left, right)
+            },
+            {
+                SyntaxKind.LessEqualToken,
+                (Expression left, Expression right) => new LessEqualExpression(left, right)
+            },
+            {
+                SyntaxKind.GreaterToken,
+                (Expression left, Expression right) => new GreaterExpression(left, right)
+            },
+            {
+                SyntaxKind.LessToken,
+                (Expression left, Expression right) => new LessExpression(left, right)
+            },
+        };
+
+    public static Func<object, object, object> GetOperatorFunc(SyntaxKind operatorKind) =>
+        OperatorFunc[operatorKind];
+
+    public static Expression GetInstantiate(Expression left, SyntaxToken op, Expression right) =>
+        InstantiateFunc[op.Kind](left, right);
+
     public static int GetPrecedence(SyntaxKind kind)
     {
         switch (kind)
@@ -119,5 +188,4 @@ public static class BinaryOperator
         throw new NotImplementedException();
     }
     #endregion
-
 }
