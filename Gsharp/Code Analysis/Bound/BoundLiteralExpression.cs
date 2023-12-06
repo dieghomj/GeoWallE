@@ -13,6 +13,14 @@ public class BoundLiteralExpression : BoundExpression
 
     public override GObject Evaluate()
     {
-        throw new NotImplementedException();
+        switch (GType)
+        {
+            case GType.String:
+                return new String((string)Value);  
+            case GType.Number:
+                return new Number((double)Value);
+            default:
+                return new Number(0);       
+        }
     }
 }

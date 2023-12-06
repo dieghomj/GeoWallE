@@ -263,12 +263,12 @@ public class Parser
                 return ParseLetInExpression();
 
             case SyntaxKind.IdentifierToken:
-            {
-                if (LookAhead.Kind == SyntaxKind.OpenParenthesisToken)
-                    return ParseFunctionCallExpression();
-                else
-                    return ParseNameExpression();
-            }
+                {
+                    if (LookAhead.Kind == SyntaxKind.OpenParenthesisToken)
+                        return ParseFunctionCallExpression();
+                    else
+                        return ParseNameExpression();
+                }
 
             case SyntaxKind.StringToken:
                 return ParseStringLiteral();

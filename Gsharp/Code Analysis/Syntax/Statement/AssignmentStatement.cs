@@ -11,11 +11,22 @@ public class AssignmentStatement : Statement
 
     public override void BindStatement(Dictionary<string, GType> visibleVariables)
     {
-        throw new NotImplementedException();
+        var variableName = NameToken.Text;
+        var rightType = RightExpression.Bind(visibleVariables);
+
+        if (visibleVariables.Keys.FirstOrDefault(k => k == variableName) != null)
+        {
+            System.Console.WriteLine($"Constant {variableName} is already defined");
+            return;
+        }
+        visibleVariables[variableName] = rightType;
     }
 
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)
     {
-        throw new NotImplementedException();
+        BindStatement(visibleVariables);
+        var boundRightExpression = RightExpression.GetBoundExpression(visibleVariables);
+        var variableSymbol = new VariableSymbol(NameToken.Text, boundRightExpression.Type);
+        return new BoundAssignmentStatement(variableSymbol, boundRightExpression);
     }
 }

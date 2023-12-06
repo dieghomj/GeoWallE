@@ -11,9 +11,9 @@ public class FunctionDeclarationStatement : Statement
         FunctionExpression = functionExpression;
     }
 
-    private SyntaxToken FunctionToken;
-    private List<SyntaxToken> Parameters;
-    private Expression FunctionExpression;
+    private SyntaxToken FunctionToken { get; }
+    private List<SyntaxToken> Parameters { get; }
+    private Expression FunctionExpression { get; }
 
     public override void BindStatement(Dictionary<string, GType> visibleVariables)
     {
