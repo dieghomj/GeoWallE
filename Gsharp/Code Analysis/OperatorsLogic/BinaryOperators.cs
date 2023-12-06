@@ -86,6 +86,13 @@ public static class BinaryOperator
     public static Func<object, object, object> GetOperatorFunc(SyntaxKind operatorKind) =>
         OperatorFunc[operatorKind];
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="left"></param>
+    /// <param name="op"></param>
+    /// <param name="right"></param>
+    /// <returns>Una nueva instancia de BinaryExpression</returns>
     public static Expression GetInstantiate(Expression left, SyntaxToken op, Expression right) =>
         InstantiateFunc[op.Kind](left, right);
 

@@ -1,5 +1,7 @@
 using System.Reflection.Emit;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 public class Parser
 {
@@ -36,6 +38,8 @@ public class Parser
     {
         if (Current.Kind == kind)
             return NextToken();
+
+        NextToken();
 
         Console.WriteLine($"Error: Unexpected token <{Current.Text}");
         return new SyntaxToken(kind, Current.Position, Current.Text, null);
@@ -115,7 +119,7 @@ public class Parser
         {
             var op = NextToken();
             var operand = ParseBinaryExpression(unaryPrecedence);
-            left = ParseUnaryOperator(op, operand);
+            left = UnaryOperator.GetInstantiate(op, operand);
         }
         else
             left = ParserPrimaryExpression();
@@ -128,81 +132,102 @@ public class Parser
 
             var op = NextToken();
             var right = ParseBinaryExpression(binaryPrecedence);
-            left = ParseBinaryOperator(left, op, right);
+            left = BinaryOperator.GetInstantiate(left, op, right);
         }
 
         return left;
     }
 
-    private Expression ParseBinaryOperator(Expression left, SyntaxToken op, Expression right)
-    {
-        return BinaryOperator.GetInstantiate(left, op, right);
-    }
-
-    private Expression ParseUnaryOperator(SyntaxToken op, Expression operand)
-    {
-        throw new NotImplementedException();
-    }
-
     private Expression ParserPrimaryExpression()
     {
-        return ParseExpressionFunctions[Current.Kind]();
+        if (SyntaxFacts.PredefinedFunctionKeywords.Contains(Current.Kind))
+            return ParsePredefinedFunction();
+
+        switch (Current.Kind)
+        {
+            case SyntaxKind.OpenParenthesisToken:
+                return ParseParenthesizedExpression();
+
+            case SyntaxKind.IfKeyword:
+                return ParseIfElseExpression();
+
+            case SyntaxKind.LetKeyword:
+                return ParseLetInExpression();
+
+            case SyntaxKind.IdentifierToken:
+            {
+                if (LookAhead.Kind == SyntaxKind.OpenParenthesisToken)
+                    return ParseFunctionExpression();
+                else
+                    return new NameExpression(NextToken());
+            }
+
+            case SyntaxKind.StringToken:
+                return ParseLiteral();
+
+            case SyntaxKind.NumberToken:
+                return ParseLiteral();
+
+            case SyntaxKind.OpenBracketToken:
+                return ParseSequenceLiteral();
+
+            default:
+                System.Console.WriteLine("SINTAX ERROR!: ");
+                return ParseLiteral();
+        }
     }
 
     #region ParseExpressionFunctions
-    private static Dictionary<SyntaxKind, Func<Expression>> ParseExpressionFunctions =
-        new Dictionary<SyntaxKind, Func<Expression>>()
+
+    private Expression ParseParenthesizedExpression()
+    {
+        Match(SyntaxKind.OpenParenthesisToken);
+
+        Expression parenthesizedExpression = ParseExpression();
+
+        Match(SyntaxKind.CloseParenthesisToken);
+
+        return parenthesizedExpression;
+    }
+
+    private Expression ParseIfElseExpression()
+    {
+        Expression condition,
+            trueExpression,
+            falseExpression;
+
+        Match(SyntaxKind.IfKeyword);
+
+        condition = ParseExpression();
+
+        Match(SyntaxKind.ThenKeyword);
+
+        trueExpression = ParseExpression();
+
+        Match(SyntaxKind.ElseKeyword);
+
+        falseExpression = ParseExpression();
+
+        return new IfElseExpression(condition, trueExpression, falseExpression);
+    }
+
+    private Expression ParseLetInExpression()
+    {
+        List<Statement> instructions = new List<Statement>();
+        Expression inExpression;
+
+        Match(SyntaxKind.LetKeyword);
+
+        while (Current.Kind != SyntaxKind.InKeyword)
         {
-            { SyntaxKind.OpenParenthesisToken, ParseParenthesizedExpression },
-            { SyntaxKind.StringToken, ParseStringLiteral },
-            { SyntaxKind.IdentifierToken, ParseIdentifier },
-            { SyntaxKind.LetKeyword, ParseLetInExpression },
-            { SyntaxKind.IfKeyword, ParseIfElseExpression },
-        };
+            instructions.Add(ParseStatement());
+        }
 
-    private static Expression ParseIdentifier()
-    {
-        throw new NotImplementedException();
-    }
+        Match(SyntaxKind.InKeyword);
 
-    private Expression ParseNameExpression()
-    {
-        throw new NotImplementedException();
-    }
+        inExpression = ParseExpression();
 
-    private static Expression ParseParenthesizedExpression()
-    {
-        throw new NotImplementedException();
-    }
-
-    private Expression ParseNumberLiteral()
-    {
-        throw new NotImplementedException();
-    }
-
-    private static Expression ParseStringLiteral()
-    {
-        throw new NotImplementedException();
-    }
-
-    private Expression ParseAssignmentExpression()
-    {
-        throw new NotImplementedException();
-    }
-
-    private static Expression ParseIfElseExpression()
-    {
-        throw new NotImplementedException();
-    }
-
-    private static Expression ParseLetInExpression()
-    {
-        throw new NotImplementedException();
-    }
-
-    private Expression ParsePredefinedFunction()
-    {
-        throw new NotImplementedException();
+        return new LetInExpression(instructions, inExpression);
     }
 
     private Expression ParseFunctionExpression()
@@ -211,6 +236,22 @@ public class Parser
     }
 
     private Expression ParseFunctionCallExpression()
+    {
+        throw new NotImplementedException();
+    }
+
+    private Expression ParseSequenceLiteral()
+    {
+        throw new NotImplementedException();
+    }
+
+    private Expression ParseLiteral()
+    {
+        SyntaxToken literalToken = NextToken();
+        return new LiteralExpression(literalToken, literalToken.Value);
+    }
+
+    private Expression ParsePredefinedFunction()
     {
         throw new NotImplementedException();
     }

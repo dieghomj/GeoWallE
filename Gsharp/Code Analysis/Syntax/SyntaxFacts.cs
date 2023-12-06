@@ -35,20 +35,20 @@ public static class SyntaxFacts
         { "black", SyntaxKind.BlackKeyword },
     };
 
-    public static Dictionary<string, SyntaxKind> PredefinedFunctionKeywords =
+    public static List<SyntaxKind> PredefinedFunctionKeywords =
         new()
         {
-            { "line", SyntaxKind.PredefinedFunctionKeyword },
-            { "segment", SyntaxKind.PredefinedFunctionKeyword },
-            { "ray", SyntaxKind.PredefinedFunctionKeyword },
-            { "arc", SyntaxKind.PredefinedFunctionKeyword },
-            { "circle", SyntaxKind.PredefinedFunctionKeyword },
-            { "measure", SyntaxKind.PredefinedFunctionKeyword },
-            { "intersect", SyntaxKind.PredefinedFunctionKeyword },
-            { "count", SyntaxKind.PredefinedFunctionKeyword },
-            { "randoms", SyntaxKind.PredefinedFunctionKeyword },
-            { "points", SyntaxKind.PredefinedFunctionKeyword },
-            { "samples", SyntaxKind.PredefinedFunctionKeyword }
+            SyntaxKind.LineKeyword,
+            SyntaxKind.SegmentKeyword,
+            SyntaxKind.RayKeyword,
+            SyntaxKind.ArcKeyword,
+            SyntaxKind.CircleKeyword,
+            SyntaxKind.MeasureKeyword,
+            SyntaxKind.IntersectKeyword,
+            SyntaxKind.CountKeyword,
+            SyntaxKind.RandomsKeyword,
+            SyntaxKind.PointsKeyword,
+            SyntaxKind.SamplesKeyword,
         };
 
     public static List<SyntaxKind> ColorList = new List<SyntaxKind>
