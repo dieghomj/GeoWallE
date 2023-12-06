@@ -4,5 +4,5 @@ internal class BoundLogicalNegationExpression : BoundUnaryExpression
     {
     }
 
-    public override SyntaxKind OperatorKind => SyntaxKind.BangToken;
+    public override UnaryOperatorKind OperatorKind => UnaryOperatorKind.LogicalNegation;
 }

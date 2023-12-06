@@ -4,5 +4,5 @@ internal class BoundNegationExpression : BoundUnaryExpression
     {
     }
 
-    public override SyntaxKind OperatorKind => SyntaxKind.MinusToken;
+    public override UnaryOperatorKind OperatorKind => UnaryOperatorKind.Negation;
 }

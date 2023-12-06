@@ -5,5 +5,5 @@ public class BoundIdentityExpression : BoundUnaryExpression
     {
     }
 
-    public override SyntaxKind OperatorKind => SyntaxKind.PlusToken;
+    public override UnaryOperatorKind OperatorKind => UnaryOperatorKind.Identity;
 }

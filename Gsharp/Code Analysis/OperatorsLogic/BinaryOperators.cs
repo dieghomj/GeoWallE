@@ -19,11 +19,8 @@ public static class BinaryOperator
             { SyntaxKind.LessToken, Less },
         };
 
-    private static Dictionary<
-        SyntaxKind,
-        Func<Expression, Expression, Expression>
-    > InstantiateFunc =
-        new()
+    private static Dictionary<SyntaxKind,Func<Expression, Expression, Expression> > InstantiateFunc =
+        new Dictionary<SyntaxKind, Func<Expression, Expression, Expression>>()
         {
             {
                 SyntaxKind.PlusToken,
@@ -134,7 +131,7 @@ public static class BinaryOperator
         }
     }
 
-    #region COChinas de pepe
+    #region Binary Evaluations
     private static object Addition(object left, object right)
     {
         throw new NotImplementedException();

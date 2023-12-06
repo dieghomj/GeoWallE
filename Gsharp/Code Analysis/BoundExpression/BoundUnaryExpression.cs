@@ -6,7 +6,7 @@ public abstract class BoundUnaryExpression : BoundExpression
     }
 
     //Aqui creo que OperatorKind se deberia cambiar por OperatorToken o cambiar SyntaxKind por algun otro enum algo que describa mejor a OperatorKind
-    public abstract SyntaxKind OperatorKind { get; }
+    public abstract UnaryOperatorKind OperatorKind { get; }
     public override GType Type => throw new NotImplementedException();
     protected Func<object,object> Calculate => UnaryOperator.GetOperatorFunc(OperatorKind);
     public BoundExpression Operand { get; }
