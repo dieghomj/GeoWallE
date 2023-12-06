@@ -1,6 +1,5 @@
 public static class SyntaxFacts
 {
-    /// TODO: faltan : () ;
     public static Dictionary<string, SyntaxKind> Keywords = new Dictionary<string, SyntaxKind>
     {
         { "if", SyntaxKind.IfKeyword },
@@ -24,24 +23,46 @@ public static class SyntaxFacts
         { "points", SyntaxKind.PointsKeyword },
         { "samples", SyntaxKind.SamplesKeyword },
         { "point", SyntaxKind.PointKeyword },
-        { "sequence", SyntaxKind.SequenceKeyword }
+        { "sequence", SyntaxKind.SequenceKeyword },
+        { "blue", SyntaxKind.BlueKeyword },
+        { "red", SyntaxKind.RedKeyword },
+        { "yellow", SyntaxKind.YellowKeyword },
+        { "green", SyntaxKind.GreenKeyword },
+        { "cyan", SyntaxKind.CyanKeyword },
+        { "magenta", SyntaxKind.MagentaKeyword },
+        { "white", SyntaxKind.WhiteKeyword },
+        { "gray", SyntaxKind.GrayKeyword },
+        { "black", SyntaxKind.BlackKeyword },
     };
 
-    public static Dictionary<string, SyntaxKind> PredefinedFunctionKeywords =
+    public static List<SyntaxKind> PredefinedFunctionKeywords =
         new()
         {
-            { "line", SyntaxKind.PredefinedFunctionKeyword },
-            { "segment", SyntaxKind.PredefinedFunctionKeyword },
-            { "ray", SyntaxKind.PredefinedFunctionKeyword },
-            { "arc", SyntaxKind.PredefinedFunctionKeyword },
-            { "circle", SyntaxKind.PredefinedFunctionKeyword },
-            { "measure", SyntaxKind.PredefinedFunctionKeyword },
-            { "intersect", SyntaxKind.PredefinedFunctionKeyword },
-            { "count", SyntaxKind.PredefinedFunctionKeyword },
-            { "randoms", SyntaxKind.PredefinedFunctionKeyword },
-            { "points", SyntaxKind.PredefinedFunctionKeyword },
-            { "samples", SyntaxKind.PredefinedFunctionKeyword }
+            SyntaxKind.LineKeyword,
+            SyntaxKind.SegmentKeyword,
+            SyntaxKind.RayKeyword,
+            SyntaxKind.ArcKeyword,
+            SyntaxKind.CircleKeyword,
+            SyntaxKind.MeasureKeyword,
+            SyntaxKind.IntersectKeyword,
+            SyntaxKind.CountKeyword,
+            SyntaxKind.RandomsKeyword,
+            SyntaxKind.PointsKeyword,
+            SyntaxKind.SamplesKeyword,
         };
+
+    public static List<SyntaxKind> ColorList = new List<SyntaxKind>
+    {
+        SyntaxKind.BlueKeyword,
+        SyntaxKind.RedKeyword,
+        SyntaxKind.YellowKeyword,
+        SyntaxKind.GreenKeyword,
+        SyntaxKind.CyanKeyword,
+        SyntaxKind.MagentaKeyword,
+        SyntaxKind.WhiteKeyword,
+        SyntaxKind.GrayKeyword,
+        SyntaxKind.BlackKeyword
+    };
 
     public static SyntaxKind GetKeyWordKind(string text)
     {

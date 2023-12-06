@@ -170,7 +170,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
     private void ReadOperator()
     {
         string operatorText = Current.ToString();
-        while ((operatorText+LookAhead).IsOperatorPrefix())
+        while ((operatorText + LookAhead).IsOperatorPrefix())
         {
             operatorText += LookAhead;
             Next();

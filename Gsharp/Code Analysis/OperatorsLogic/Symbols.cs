@@ -9,7 +9,7 @@ public class Symbols
         { ";", SyntaxKind.SemicolonToken },
         { ",", SyntaxKind.CommaToken },
         { "...", SyntaxKind.EllipsisToken },
-        { "_", SyntaxKind.UnderscoreToken }, 
+        { "_", SyntaxKind.UnderscoreToken },
     };
 
     public static string? GetText(SyntaxKind kind)
