@@ -1,9 +1,3 @@
-using System.Linq.Expressions;
-using System.Reflection.Emit;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
-
 public class Parser
 {
     private readonly SyntaxToken[] _tokens;
@@ -46,12 +40,21 @@ public class Parser
         return new SyntaxToken(kind, Current.Position, Current.Text, null);
     }
 
+    private List<Statement> GetImportStatements()
+    {
+        List<Statement> importStatements = new();
+        while (Current.Kind == SyntaxKind.ImportKeyword)
+        {
+            Match(SyntaxKind.ImportKeyword);
+            importStatements.Add(new ImportStatement(ParseStringLiteral()));
+        }
+
+        return importStatements;
+    }
+
     public List<Statement> Parse()
     {
         List<Statement> statementsList = new List<Statement>();
-
-        while (Current.Kind == SyntaxKind.ImportKeyword)
-            statementsList.Add(ParseImportStatement());
 
         while (Current.Kind != SyntaxKind.EndOfFileToken)
         {
@@ -63,13 +66,6 @@ public class Parser
     }
 
     #region ParseStatements
-
-    private Statement ParseImportStatement()
-    {
-        Match(SyntaxKind.ImportKeyword);
-
-        return new ImportStatement(ParseStringLiteral());
-    }
 
     private Statement ParseStatement()
     {
@@ -215,8 +211,6 @@ public class Parser
     }
 
     #endregion
-
-    /// Falta parsear las secuencias
 
     #region ParseExpressions
 
