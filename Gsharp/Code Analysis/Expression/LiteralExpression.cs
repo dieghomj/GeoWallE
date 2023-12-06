@@ -1,6 +1,6 @@
 public class LiteralExpression : Expression
 {
-    public LiteralExpression(SyntaxToken literalToken, object value)
+    public LiteralExpression(SyntaxToken literalToken, object? value)
     {
         LiteralToken = literalToken;
         Value = value;
@@ -8,7 +8,7 @@ public class LiteralExpression : Expression
 
     public override SyntaxKind Kind => SyntaxKind.LiteralExpression;
     public SyntaxToken LiteralToken { get; }
-    public object Value { get; }
+    public object? Value { get; }
 
     public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {
@@ -19,7 +19,7 @@ public class LiteralExpression : Expression
 
     public override GType Bind(Dictionary<string, GType> visibleVariables)
     {
-        switch(Value)
+        switch (Value)
         {
             case int:
             case double:

@@ -253,7 +253,23 @@ public class Parser
 
     private Expression ParsePredefinedFunction()
     {
-        throw new NotImplementedException();
+        SyntaxToken functionToken = NextToken();
+        List<Expression> arguments = new();
+
+        Match(SyntaxKind.OpenParenthesisToken);
+
+        while (Current.Kind != SyntaxKind.CloseParenthesisToken)
+        {
+            Expression argument = ParseExpression();
+            arguments.Add(argument);
+
+            if (Current.Kind != SyntaxKind.CloseParenthesisToken)
+                Match(SyntaxKind.CommaToken);
+        }
+
+        Match(SyntaxKind.CloseParenthesisToken);
+
+        return new PredefinedFunctionExpression(functionToken, arguments);
     }
 
     #endregion
