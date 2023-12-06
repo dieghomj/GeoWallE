@@ -1,8 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\GInterfaces\GInterfaces.csproj" />
-    <ProjectReference Include="..\GeoWallE\GeoWallE.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

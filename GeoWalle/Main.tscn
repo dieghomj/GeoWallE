@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://biatmdd116wge"]
+[gd_scene load_steps=3 format=3 uid="uid://biatmdd116wge"]
 
-[ext_resource type="Script" path="res://Draw.cs" id="1_j32vw"]
+[ext_resource type="Script" path="res://PanelDraw.cs" id="1_60vda"]
+[ext_resource type="Script" path="res://Controller.cs" id="1_q7a7x"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -9,27 +10,46 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_q7a7x")
 
 [node name="DrawZone" type="Panel" parent="."]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
+anchor_left = 0.427083
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
+grow_horizontal = 0
 grow_vertical = 2
-script = ExtResource("1_j32vw")
-
-[node name="CompileButton" type="Button" parent="."]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+script = ExtResource("1_60vda")
+metadata/_edit_use_anchors_ = true
 
 [node name="RunButton" type="Button" parent="."]
 layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+anchor_left = 0.303819
+anchor_top = 0.00462963
+anchor_right = 0.416667
+anchor_bottom = 0.0740741
+text = "RUN"
+metadata/_edit_use_anchors_ = true
+
+[node name="ComileButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.185764
+anchor_top = 0.00462963
+anchor_right = 0.298611
+anchor_bottom = 0.0740741
+text = "Compile
+"
+metadata/_edit_use_anchors_ = true
 
 [node name="CodeEdit" type="CodeEdit" parent="."]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.0771605
+anchor_right = 0.417535
+anchor_bottom = 1.0
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[connection signal="button_down" from="RunButton" to="." method="_OnRunButtonButtonDown"]
