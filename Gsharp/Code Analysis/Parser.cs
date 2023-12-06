@@ -104,6 +104,8 @@ public class Parser
 
     #endregion
 
+    /// Falta parsear las secuencias
+
     #region ParseExpressions
 
     private Expression ParseExpression()
@@ -157,7 +159,7 @@ public class Parser
             case SyntaxKind.IdentifierToken:
             {
                 if (LookAhead.Kind == SyntaxKind.OpenParenthesisToken)
-                    return ParseFunctionExpression();
+                    return ParseFunctionCallExpression();
                 else
                     return new NameExpression(NextToken());
             }
@@ -230,16 +232,6 @@ public class Parser
         return new LetInExpression(instructions, inExpression);
     }
 
-    private Expression ParseFunctionExpression()
-    {
-        throw new NotImplementedException();
-    }
-
-    private Expression ParseFunctionCallExpression()
-    {
-        throw new NotImplementedException();
-    }
-
     private Expression ParseSequenceLiteral()
     {
         throw new NotImplementedException();
@@ -249,6 +241,27 @@ public class Parser
     {
         SyntaxToken literalToken = NextToken();
         return new LiteralExpression(literalToken, literalToken.Value);
+    }
+
+    private Expression ParseFunctionCallExpression()
+    {
+        SyntaxToken functionToken = NextToken();
+        List<Expression> arguments = new();
+
+        Match(SyntaxKind.OpenParenthesisToken);
+
+        while (Current.Kind != SyntaxKind.CloseParenthesisToken)
+        {
+            Expression argument = ParseExpression();
+            arguments.Add(argument);
+
+            if (Current.Kind != SyntaxKind.CloseParenthesisToken)
+                Match(SyntaxKind.CommaToken);
+        }
+
+        Match(SyntaxKind.CloseParenthesisToken);
+
+        return new FunctionCallExpression(functionToken, arguments);
     }
 
     private Expression ParsePredefinedFunction()
