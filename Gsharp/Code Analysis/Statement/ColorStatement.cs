@@ -6,4 +6,9 @@ public class ColorStatement : Statement
     {
         Color = color;
     }
+
+    public override void Bind()
+    {
+        throw new NotImplementedException();
+    }
 }

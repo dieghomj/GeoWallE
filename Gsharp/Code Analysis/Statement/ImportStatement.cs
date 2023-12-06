@@ -6,4 +6,9 @@ public class ImportStatement : Statement
     {
         Path = path;
     }
+
+    public override void Bind()
+    {
+        throw new NotImplementedException();
+    }
 }

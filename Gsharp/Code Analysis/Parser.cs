@@ -149,10 +149,6 @@ public class Parser
                 return ParseLetInExpression();
             case SyntaxKind.IfKeyword:
                 return ParseIfElseExpression();
-
-            case SyntaxKind.PredefinedFunctionKeyword:
-                return ParsePredefinedFunction();
-
             default:
                 return ParseNumberLiteral();
         }

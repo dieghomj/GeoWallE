@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 public static class SyntaxFacts
 {
     /// TODO: faltan : () ;

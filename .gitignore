@@ -255,3 +255,4 @@ Gsharp/bin/Debug/net7.0/GeoWallE.pdb
 Gsharp/bin/Debug/net7.0/GInterfaces.dll
 Gsharp/bin/Debug/net7.0/GInterfaces.pdb
 GInterfaces/IDrawable.cs
+GInterfaces/obj/Debug/net7.0/GInterfaces.csproj.AssemblyReference.cache

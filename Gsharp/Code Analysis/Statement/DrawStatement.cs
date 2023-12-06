@@ -6,4 +6,9 @@ public class DrawStatement : Statement
     {
         Figure = figure;
     }
+
+    public override void Bind()
+    {
+        throw new NotImplementedException();
+    }
 }
