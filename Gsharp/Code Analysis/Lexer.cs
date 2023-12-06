@@ -113,7 +113,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
             Next();
 
         var length = _position - _start;
-        var text = _text.Substring(_start, length);
+        var text = _text.Substring(_start, length).Replace('.', ',');
 
         //Si no se puede parsear como un numero explota.
         if (!double.TryParse(text, out var value))
