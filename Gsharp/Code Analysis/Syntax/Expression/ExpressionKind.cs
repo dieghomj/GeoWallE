@@ -32,4 +32,5 @@ public enum ExpressionKind
     IdentityExpression,
     LogicalNegationExpression,
     NegationExpression,
+    SequenceLiteralExpression,
 }

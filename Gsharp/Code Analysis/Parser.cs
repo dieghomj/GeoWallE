@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using System.Reflection.Emit;
 using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
@@ -245,17 +246,17 @@ public class Parser
             }
 
             case SyntaxKind.StringToken:
-                return ParseLiteral();
+                return ParseStringLiteral();
 
             case SyntaxKind.NumberToken:
-                return ParseLiteral();
+                return ParseNumberLiteral();
 
             case SyntaxKind.OpenBracketToken:
                 return ParseSequenceLiteral();
 
             default:
                 System.Console.WriteLine("SINTAX ERROR!: ");
-                return ParseLiteral();
+                return ParseNumberLiteral();
         }
     }
 
@@ -314,12 +315,54 @@ public class Parser
 
     private Expression ParseSequenceLiteral()
     {
-        throw new NotImplementedException();
+        Match(SyntaxKind.OpenBracketToken);
+
+        if (LookAhead.Kind == SyntaxKind.EllipsisToken)
+        {
+            Expression start = ParseNumberLiteral();
+
+            Match(SyntaxKind.EllipsisToken);
+
+            if (Current.Kind == SyntaxKind.CloseBracketToken)
+            {
+                Match(SyntaxKind.CloseBracketToken);
+                return new SequenceLiteralExpression(start);
+            }
+            else
+            {
+                Expression end = ParseNumberLiteral();
+                Match(SyntaxKind.CloseBracketToken);
+                return new SequenceLiteralExpression(start, end);
+            }
+        }
+        else
+        {
+            List<Expression> elements = new List<Expression>();
+            while (Current.Kind != SyntaxKind.CloseBracketToken)
+            {
+                Expression element = ParseExpression();
+
+                elements.Add(element);
+
+                if (Current.Kind != SyntaxKind.CloseBracketToken)
+                    Match(SyntaxKind.CommaToken);
+            }
+
+            Match(SyntaxKind.CloseBracketToken);
+
+            return new SequenceLiteralExpression(elements);
+        }
     }
 
-    private Expression ParseLiteral()
+    private Expression ParseNumberLiteral()
     {
-        SyntaxToken literalToken = NextToken();
+        SyntaxToken literalToken = Match(SyntaxKind.NumberToken);
+        return new LiteralExpression(literalToken, literalToken.Value);
+    }
+
+    private Expression ParseStringLiteral()
+    {
+        SyntaxToken literalToken = Match(SyntaxKind.StringToken);
         return new LiteralExpression(literalToken, literalToken.Value);
     }
 
