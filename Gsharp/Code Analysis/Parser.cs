@@ -68,11 +68,22 @@ public class Parser
     {
         Match(SyntaxKind.ImportKeyword);
 
-        return new ImportStatement(ParseExpression());
+        return new ImportStatement(ParseStringLiteral());
     }
 
     private Statement ParseStatement()
     {
+        if (
+            SyntaxFacts.DeclarationKeywords.Contains(Current.Kind)
+            && LookAhead.Kind != SyntaxKind.OpenParenthesisToken
+        )
+        {
+            if (LookAhead.Kind == SyntaxKind.SequenceKeyword)
+                return ParseDeclarationSequenceStatement();
+            else
+                return ParseDeclarationStatement();
+        }
+
         switch (Current.Kind)
         {
             case SyntaxKind.ColorKeyword:
@@ -98,6 +109,26 @@ public class Parser
             default:
                 return ParseExpression();
         }
+    }
+
+    private Statement ParseDeclarationStatement()
+    {
+        SyntaxToken keywordToken = NextToken();
+
+        SyntaxToken nameToken = Match(SyntaxKind.IdentifierToken);
+
+        return new DeclarationStatement(keywordToken, nameToken);
+    }
+
+    private Statement ParseDeclarationSequenceStatement()
+    {
+        SyntaxToken keywordToken = NextToken();
+
+        Match(SyntaxKind.SequenceKeyword);
+
+        SyntaxToken nameToken = Match(SyntaxKind.IdentifierToken);
+
+        return new DeclarationSequenceStatement(keywordToken, nameToken);
     }
 
     private Statement ParseMatchStatement()
