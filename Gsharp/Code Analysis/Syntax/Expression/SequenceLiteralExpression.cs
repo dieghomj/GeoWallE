@@ -1,9 +1,5 @@
 public class SequenceLiteralExpression : Expression
 {
-    private List<Expression> Elements;
-    private Expression? Start = null;
-    private Expression? End = null;
-
     public SequenceLiteralExpression(List<Expression> elements)
     {
         Elements = elements;
@@ -11,14 +7,17 @@ public class SequenceLiteralExpression : Expression
 
     public SequenceLiteralExpression(Expression start, Expression? end = null)
     {
-        Elements = new List<Expression>();
         Start = start;
         End = end;
     }
 
     public override ExpressionKind Kind => ExpressionKind.SequenceLiteralExpression;
 
-    public override GType Bind(Dictionary<string, GType> visibleVariables)
+    public List<Expression> Elements { get; }
+    public Expression Start { get; }
+    public Expression? End { get; }
+
+    protected override GType BindExpression(Dictionary<string, GType> visibleVariables)
     {
         throw new NotImplementedException();
     }

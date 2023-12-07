@@ -10,7 +10,7 @@ public class FunctionCallExpression : Expression
     public SyntaxToken FunctionToken { get; }
     public List<Expression> Arguments { get; }
 
-    public override GType Bind(Dictionary<string, GType> visibleVariables)
+    protected override GType BindExpression(Dictionary<string, GType> visibleVariables)
     {
         throw new NotImplementedException();
     }

@@ -1,0 +1,66 @@
+[gd_scene load_steps=4 format=3 uid="uid://beofgl8fguqee"]
+
+[ext_resource type="Script" path="res://TabController.cs" id="1_8g4oj"]
+[ext_resource type="Script" path="res://CodeController.cs" id="3_kb5i5"]
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_4pw3l"]
+number_color = Color(0.709804, 0.807843, 0.658824, 1)
+symbol_color = Color(1, 1, 1, 1)
+function_color = Color(0.862745, 0.862745, 0.666667, 1)
+member_variable_color = Color(0.337255, 0.611765, 0.839216, 1)
+color_regions = {
+"\" \"": Color(0.807843, 0.568627, 0.470588, 1),
+"' '": Color(0.807843, 0.568627, 0.470588, 1)
+}
+
+[node name="Editor" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+metadata/_edit_group_ = true
+
+[node name="EditorsTabs" type="TabContainer" parent="."]
+layout_mode = 2
+drag_to_rearrange_enabled = true
+script = ExtResource("1_8g4oj")
+
+[node name="CodeEdit" type="CodeEdit" parent="EditorsTabs"]
+layout_mode = 2
+theme_override_colors/current_line_color = Color(1, 1, 1, 0.0862745)
+theme_override_colors/brace_mismatch_color = Color(0.988235, 0.254902, 0.219608, 1)
+theme_override_colors/line_number_color = Color(1, 1, 1, 0.360784)
+theme_override_colors/word_highlighted_color = Color(1, 1, 1, 0.266667)
+theme_override_font_sizes/font_size = 15
+text = "point p1;
+Draw p1 \"Hello World!\";
+num = 1;
+function();
+object.this;
+"
+scroll_smooth = true
+caret_blink = true
+syntax_highlighter = SubResource("CodeHighlighter_4pw3l")
+highlight_all_occurrences = true
+highlight_current_line = true
+draw_tabs = true
+draw_spaces = true
+symbol_lookup_on_click = true
+line_folding = true
+gutters_draw_line_numbers = true
+gutters_draw_fold_gutter = true
+code_completion_enabled = true
+auto_brace_completion_enabled = true
+auto_brace_completion_highlight_matching = true
+script = ExtResource("3_kb5i5")
+metadata/_edit_use_anchors_ = true
+
+[node name="+" type="Label" parent="EditorsTabs"]
+visible = false
+layout_mode = 2
+
+[connection signal="tab_clicked" from="EditorsTabs" to="EditorsTabs" method="OnTabClicked"]
+[connection signal="tab_hovered" from="EditorsTabs" to="EditorsTabs" method="_OnTabHovered"]
+[connection signal="code_completion_requested" from="EditorsTabs/CodeEdit" to="EditorsTabs/CodeEdit" method="_on_code_completion_requested"]

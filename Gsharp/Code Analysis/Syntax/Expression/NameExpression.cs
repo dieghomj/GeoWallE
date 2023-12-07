@@ -1,5 +1,6 @@
 public class NameExpression : Expression
 {
+    private GType Type;
     public NameExpression(SyntaxToken identifierToken)
     {
         IdentifierToken = identifierToken;
@@ -9,21 +10,24 @@ public class NameExpression : Expression
 
     public SyntaxToken IdentifierToken { get; }
 
-    public override GType Bind(Dictionary<string, GType> visibleVariables)
+    protected override GType BindExpression(Dictionary<string, GType> visibleVariables)
     {
         var variable = visibleVariables.Keys.FirstOrDefault(k => k == IdentifierToken.Text);
         if(variable == null)
         {
-            System.Console.WriteLine($"!SEMANTIC ERROR: Variable {variable} doesn't exist");
+            System.Console.WriteLine($"!SEMANTIC ERROR: Constant {variable} doesn't exist");
             return GType.Undefined;
-        }
-        else return visibleVariables[variable];
+        }   
+        else
+        {
+            Type = visibleVariables[variable];
+            return Type;
+        } 
     }
     protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        var type = Bind(visibleVariables);
-        if(type == GType.Undefined)
+        if(Type == GType.Undefined)
             throw new Exception($"Variable {IdentifierToken.Text} doesn't exist");
-        else return new BoundVariableExpression(new VariableSymbol(IdentifierToken.Text,type));
+        else return new BoundVariableExpression(new VariableSymbol(IdentifierToken.Text,Type));
     }
 }

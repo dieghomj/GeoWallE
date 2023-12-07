@@ -31,7 +31,6 @@ public class MatchStatement : Statement
 
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)
     {
-        BindStatement(visibleVariables);
         var boundSequence = SequenceExpression.GetBoundExpression(visibleVariables);
 
         List<VariableSymbol> boundVariables = new List<VariableSymbol>();
