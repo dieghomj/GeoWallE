@@ -1,8 +1,8 @@
-public class Circle : Figure
+public class Ray : Figure
 {
-    public Circle() { }
+    public Ray() { }
 
-    public override GFigureKind Kind => GFigureKind.Circle;
+    public override GFigureKind Kind => throw new NotImplementedException();
 
     public override GType GetGType()
     {

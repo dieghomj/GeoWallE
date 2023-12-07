@@ -11,5 +11,4 @@ public class Point : Figure
     {
         throw new NotImplementedException();
     }
-
 }

@@ -1,8 +1,8 @@
-public class Circle : Figure
+public class Segment : Figure
 {
-    public Circle() { }
+    public Segment() { }
 
-    public override GFigureKind Kind => GFigureKind.Circle;
+    public override GFigureKind Kind => throw new NotImplementedException();
 
     public override GType GetGType()
     {
