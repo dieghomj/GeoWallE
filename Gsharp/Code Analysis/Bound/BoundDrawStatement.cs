@@ -1,21 +1,22 @@
+using Gsharp;
+
 public class BoundDrawStatement : BoundStatement
 {
-    public BoundDrawStatement(BoundExpression boundFigure)
+    public BoundDrawStatement(BoundExpression boundFigure, BoundExpression? boundMessage = null)
     {
         BoundFigure = boundFigure;
-    }
-
-    public BoundDrawStatement(BoundExpression boundFigure, BoundExpression boundMessage)
-        : this(boundFigure)
-    {
         BoundMessage = boundMessage;
     }
 
     public BoundExpression BoundFigure { get; }
-    public BoundExpression BoundMessage { get; }
+    public BoundExpression? BoundMessage { get; }
 
     public override void EvaluateStatement(Dictionary<string, GObject> visibleVariables)
     {
-        throw new NotImplementedException();
+        string message = "";
+        if (BoundMessage is not null)
+            message = (string)BoundMessage.Evaluate(visibleVariables).GetValue();
+
+        Compiler.AddFigure((Figure)BoundFigure.Evaluate(visibleVariables), message);
     }
 }

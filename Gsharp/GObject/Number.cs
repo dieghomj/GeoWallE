@@ -12,6 +12,13 @@ public class Number : GObject
 
     public override object GetValue() => Value;
 
+    public override bool IsTrue()
+    {
+        if (this.Value == 0)
+            return false;
+        return true;
+    }
+
     #region Binary Operators
 
     public static Number operator +(Number a, Number b) => new Number(a.Value + b.Value);

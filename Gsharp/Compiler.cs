@@ -5,19 +5,22 @@ namespace Gsharp;
 
 public class Compiler
 {
-    private static readonly List<Figure> figures = new List<Figure>();
+    private static readonly List<(Figure figure, Color color, string message)> figures = new List<(Figure, Color, string)>();
+    private static Color currentColor = Color.Black;
     private static bool isModified = false;
     private static readonly System.Timers.Timer timer = new System.Timers.Timer();
 
-    public Compiler() { }
+    public Compiler(string code) { 
 
-    public void Evaluate() { }
+    }
 
-    public static void AddFigure(Figure figure)
+    public static void Evaluate() { }
+
+    public static void AddFigure(Figure figure, string message)
     {
         timer.Start();
         isModified = true;
-        figures.Add(figure);
+        figures.Add((figure, CurrentColor, message));
     }
 
     public static void Update()
@@ -30,5 +33,7 @@ public class Compiler
 
     public static bool IsModified => isModified;
 
-    public static List<Figure> Figures => figures;
+    public static List<(Figure, Color, string)> Figures => figures;
+
+    public static Color CurrentColor { get => currentColor; set => currentColor = value; }
 }

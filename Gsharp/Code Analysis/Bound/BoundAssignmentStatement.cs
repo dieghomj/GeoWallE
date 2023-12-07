@@ -11,6 +11,6 @@ class BoundAssignmentStatement : BoundStatement
 
     public override void EvaluateStatement(Dictionary<string, GObject> visibleVariables)
     {
-        throw new NotImplementedException();
+        visibleVariables[VariableSymbol.Name] = RightExpression.Evaluate(visibleVariables);
     }
 }

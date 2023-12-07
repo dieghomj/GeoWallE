@@ -19,6 +19,9 @@ internal class BoundIfElseExpression : BoundExpression
 
     public override GObject Evaluate(Dictionary<string, GObject> visibleVariables)
     {
-        throw new NotImplementedException();
+        if (Condition.Evaluate(visibleVariables).IsTrue())
+            return TrueExpression.Evaluate(visibleVariables);
+        else
+            return FalseExpression.Evaluate(visibleVariables);
     }
 }

@@ -1,3 +1,5 @@
+using Gsharp;
+
 public class BoundColorStatement : BoundStatement
 {
     public BoundColorStatement(Color color)
@@ -9,6 +11,6 @@ public class BoundColorStatement : BoundStatement
 
     public override void EvaluateStatement(Dictionary<string, GObject> visibleVariables)
     {
-        throw new NotImplementedException();
+        Compiler.CurrentColor = Color;
     }
 }
