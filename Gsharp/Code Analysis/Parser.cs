@@ -195,7 +195,12 @@ public class Parser
     {
         Match(SyntaxKind.DrawKeyword);
 
-        return new DrawStatement(ParseExpression());
+        Expression figure = ParseExpression();
+
+        if (Current.Kind == SyntaxKind.StringToken)
+            return new DrawStatement(figure, ParseExpression());
+        else
+            return new DrawStatement(figure);
     }
 
     private Statement ParseColorStatement()
@@ -263,12 +268,12 @@ public class Parser
                 return ParseLetInExpression();
 
             case SyntaxKind.IdentifierToken:
-                {
-                    if (LookAhead.Kind == SyntaxKind.OpenParenthesisToken)
-                        return ParseFunctionCallExpression();
-                    else
-                        return ParseNameExpression();
-                }
+            {
+                if (LookAhead.Kind == SyntaxKind.OpenParenthesisToken)
+                    return ParseFunctionCallExpression();
+                else
+                    return ParseNameExpression();
+            }
 
             case SyntaxKind.StringToken:
                 return ParseStringLiteral();
