@@ -5,9 +5,9 @@ public class BoundEqualsExpression : BoundBinaryExpression
 
     public override BinaryOperatorKind OperatorKind => BinaryOperatorKind.Equals;
 
-    public override GObject Evaluate()
+    public override GObject Evaluate(Dictionary<string, GObject> visibleVariables)
     {
-        if (Left.Evaluate().Equals(Right.Evaluate()))
+        if (Left.Evaluate(visibleVariables).Equals(Right.Evaluate(visibleVariables)))
             return new Number(1);
         return new Number(0);
     }

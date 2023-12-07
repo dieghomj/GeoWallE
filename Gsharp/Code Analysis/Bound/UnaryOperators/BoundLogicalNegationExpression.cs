@@ -5,9 +5,9 @@ internal class BoundLogicalNegationExpression : BoundUnaryExpression
 
     public override UnaryOperatorKind OperatorKind => UnaryOperatorKind.LogicalNegation;
 
-    public override GObject Evaluate()
+    public override GObject Evaluate(Dictionary<string, GObject> visibleVariables)
     {
-        dynamic operand = Operand.Evaluate();
+        dynamic operand = Operand.Evaluate(visibleVariables);
         return !operand;
     }
 }

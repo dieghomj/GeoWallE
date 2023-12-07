@@ -5,10 +5,10 @@ public class BoundAdditionExpression : BoundBinaryExpression
 
     public override BinaryOperatorKind OperatorKind => BinaryOperatorKind.Addition;
 
-    public override GObject Evaluate()
+    public override GObject Evaluate(Dictionary<string, GObject> visibleVariables)
     {
-        dynamic left = Left.Evaluate();
-        dynamic right = Right.Evaluate();
+        dynamic left = Left.Evaluate(visibleVariables);
+        dynamic right = Right.Evaluate(visibleVariables);
         return left + right;
     }
 }

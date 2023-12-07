@@ -9,7 +9,7 @@ public class BoundMatchStatement : BoundStatement
     public List<VariableSymbol> BoundVariables { get; }
     public BoundExpression BoundSequence { get; }
 
-    public override void EvaluateStatement()
+    public override void EvaluateStatement(Dictionary<string, GObject> visibleVariables)
     {
         throw new NotImplementedException();
     }

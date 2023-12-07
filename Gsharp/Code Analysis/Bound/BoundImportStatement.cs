@@ -7,7 +7,7 @@ public class BoundImportStatement : BoundStatement
 
     public BoundExpression Path { get; }
 
-    public override void EvaluateStatement()
+    public override void EvaluateStatement(Dictionary<string, GObject> visibleVariables)
     {
         throw new NotImplementedException();
     }

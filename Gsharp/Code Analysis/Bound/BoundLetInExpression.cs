@@ -8,16 +8,18 @@ public class BoundLetInExpression : BoundExpression
 
     public override GType Type => Expression.Type;
 
-    public List<BoundStatement> Instructions { get; }
-    public BoundExpression Expression { get; }
+    protected List<BoundStatement> Instructions { get; }
+    protected BoundExpression Expression { get; }
 
-    public override GObject Evaluate()
+    public override GObject Evaluate(Dictionary<string, GObject> visibleVariables)
     {
-        throw new NotImplementedException();
-    }
+        Dictionary<string, GObject> localVariables = new();
+        foreach (string key in visibleVariables.Keys)
+            localVariables[key] = visibleVariables[key];
 
-    public override void EvaluateStatement()
-    {
-        throw new NotImplementedException();
+        foreach (var instruction in Instructions)
+            instruction.EvaluateStatement(localVariables);
+
+        return Expression.Evaluate(localVariables);
     }
 }

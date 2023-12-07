@@ -5,13 +5,12 @@ public class BoundVariableExpression : BoundExpression
         Variable = variable;
     }
 
-
     public override GType Type => Variable.Type;
 
     public VariableSymbol Variable { get; }
 
-    public override GObject Evaluate()
+    public override GObject Evaluate(Dictionary<string, GObject> visibleVariables)
     {
-        throw new NotImplementedException();
+        return visibleVariables[Variable.Name];
     }
 }
