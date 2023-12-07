@@ -18,7 +18,7 @@ public class ImportStatement : Statement
 
         if (boundPath.Type == GType.String)
             return new BoundImportStatement(boundPath);
-        
+
         Console.WriteLine("SEMANTIC ERROR!: Expected string literal in import statement");
         return null!;
     }

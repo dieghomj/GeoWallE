@@ -5,14 +5,16 @@ namespace Gsharp;
 
 public static class Compiler
 {
+    private static List<Statement> syntaxStatements = new List<Statement>();
+    private static List<BoundStatement> boundStatements = new List<BoundStatement>();
+
     private static readonly List<(Figure figure, Color color, string message)> figures =
         new List<(Figure, Color, string)>();
     private static Color currentColor = Color.Black;
     private static bool isModified = false;
     private static readonly System.Timers.Timer timer = new System.Timers.Timer();
 
-    private static List<Statement> syntaxStatements = new List<Statement>();
-    private static List<BoundStatement> boundStatements = new List<BoundStatement>();
+    private static Dictionary<string, NodeState> GraphState = new Dictionary<string, NodeState>();
 
     public static void Compile(string code)
     {
@@ -32,9 +34,10 @@ public static class Compiler
     {
         syntaxStatements = new List<Statement>();
         boundStatements = new List<BoundStatement>();
+        GraphState = new Dictionary<string, NodeState>();
     }
 
-    private static void GetSyntaxStatements(string code)
+    public static void GetSyntaxStatements(string code)
     {
         Parser parser = new Parser(code);
 
@@ -73,6 +76,18 @@ public static class Compiler
         if (time >= 3000)
             isModified = false;
     }
+
+    public static NodeState GetState(string directory)
+    {
+        if (GraphState.ContainsKey(directory))
+        {
+            return GraphState[directory];
+        }
+        else
+            return NodeState.UnProcessed;
+    }
+
+    public static void AddState(string directory, NodeState state) => GraphState[directory] = state;
 
     public static bool IsModified => isModified;
 
