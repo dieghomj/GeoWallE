@@ -31,12 +31,12 @@ public class LetInExpression : Expression
 
     public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        var copyDictionary = new Dictionary<string, GType>(visibleVariables);
+        var copyVariables = new Dictionary<string, GType>(visibleVariables);
         if(!IsBinded)
         {
-            BindExpression(copyDictionary);
+            BindExpression(copyVariables);
             IsBinded = true;
         }
-        return InstantiateBoundExpression(copyDictionary);
+        return InstantiateBoundExpression(copyVariables);
     }
 }
