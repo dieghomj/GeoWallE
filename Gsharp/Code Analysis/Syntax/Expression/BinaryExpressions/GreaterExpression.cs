@@ -8,9 +8,9 @@ public class GreaterExpression : BinaryExpression
 
     public override ExpressionKind Kind => throw new NotImplementedException();
 
-    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
+    protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        var resultType = Bind(visibleVariables);
+        var resultType = ResultType;
         var left = Left.GetBoundExpression(visibleVariables);
         var right = Right.GetBoundExpression(visibleVariables);
         return new BoundGreaterExpression(left, right, resultType);

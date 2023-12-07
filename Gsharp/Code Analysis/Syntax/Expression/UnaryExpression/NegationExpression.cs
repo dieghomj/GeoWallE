@@ -8,10 +8,10 @@ public class NegationExpression : UnaryExpression
 
     public override SyntaxKind OperatorKind => SyntaxKind.MinusToken;
 
-    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
+    protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        var operatorType = Bind(visibleVariables);
+        var operatorType = ResultType;
         var operand = Operand.GetBoundExpression(visibleVariables);
-        return new BoundNegationExpression(operand);
+        return new BoundNegationExpression(operand, operatorType);
     }
 }

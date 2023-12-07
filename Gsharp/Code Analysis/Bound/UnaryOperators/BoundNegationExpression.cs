@@ -1,6 +1,6 @@
 internal class BoundNegationExpression : BoundUnaryExpression
 {
-    public BoundNegationExpression(BoundExpression operand) : base(operand)
+    public BoundNegationExpression(BoundExpression operand, GType operatorType) : base(operand,operatorType)
     {
     }
 

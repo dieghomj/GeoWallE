@@ -34,14 +34,8 @@ public class IfElseExpression : Expression
         return trueExpressionType;
     }
 
-    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
-    {
-        
-        if( Bind(visibleVariables) == GType.Undefined)
-        {
-            throw new Exception();
-        }
-        
+    protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)
+    {   
         var boundCondition = Condition.GetBoundExpression(visibleVariables);
         var boundTrueExpression = TrueExpression.GetBoundExpression(visibleVariables);
         var boundFalseExpression = FalseExpression.GetBoundExpression(visibleVariables);

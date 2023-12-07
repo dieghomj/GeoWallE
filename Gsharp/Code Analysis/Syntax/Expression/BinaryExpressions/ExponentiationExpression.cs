@@ -5,9 +5,9 @@ public class ExponentiationExpression : BinaryExpression
         : base(left, right) { }
     public override ExpressionKind Kind => ExpressionKind.ExponentiationExpression;
     public override SyntaxKind OperatorKind => SyntaxKind.CircumflexToken;
-    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
+    protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        var resultType = Bind(visibleVariables);
+        var resultType = ResultType;
         var left = Left.GetBoundExpression(visibleVariables);
         var right = Right.GetBoundExpression(visibleVariables);
         return new BoundExponentiationExpression(left,right,resultType);

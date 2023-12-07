@@ -18,15 +18,25 @@ public class LetInExpression : Expression
         return expressionType;
     }
 
-    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
+    protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)
     {
         List<BoundStatement> boundInstructions = new List<BoundStatement>();
-        Bind(new Dictionary<string, GType>(visibleVariables));
 
         foreach (var instruction in Instructions)
             boundInstructions.Add(instruction.GetBoundStatement(visibleVariables));
 
         var boundExpression = InExpression.GetBoundExpression(visibleVariables);
         return new BoundLetInExpression(boundInstructions, boundExpression);
+    }
+
+    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
+    {
+        var copyDictionary = new Dictionary<string, GType>(visibleVariables);
+        if(!IsBinded)
+        {
+            Bind(copyDictionary);
+            IsBinded = true;
+        }
+        return InstantiateBoundExpression(copyDictionary);
     }
 }
