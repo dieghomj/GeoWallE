@@ -10,7 +10,7 @@ public class LetInExpression : Expression
     public Expression InExpression { get; }
     public override ExpressionKind Kind => ExpressionKind.LetInExpression;
 
-    public override GType Bind(Dictionary<string, GType> visibleVariables)
+    protected override GType BindExpression(Dictionary<string, GType> visibleVariables)
     {
         foreach (var instruction in Instructions)
             instruction.BindStatement(visibleVariables);
@@ -34,7 +34,7 @@ public class LetInExpression : Expression
         var copyDictionary = new Dictionary<string, GType>(visibleVariables);
         if(!IsBinded)
         {
-            Bind(copyDictionary);
+            BindExpression(copyDictionary);
             IsBinded = true;
         }
         return InstantiateBoundExpression(copyDictionary);

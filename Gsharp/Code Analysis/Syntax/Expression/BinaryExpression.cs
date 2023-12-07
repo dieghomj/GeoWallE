@@ -13,10 +13,8 @@ public abstract class BinaryExpression : Expression
     public Expression Left { get; }
     public Expression Right { get; }
 
-    public override GType Bind(Dictionary<string, GType> visibleVariables)
+    protected override GType BindExpression(Dictionary<string, GType> visibleVariables)
     {
-        IsBinded = true;
-        
         var leftType = Left.Bind(visibleVariables);
         var rightType = Right.Bind(visibleVariables);
         //  op => Operator

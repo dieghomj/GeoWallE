@@ -18,7 +18,7 @@ public class LiteralExpression : Expression
         return new BoundLiteralExpression(value, type);
     }
 
-    public override GType Bind(Dictionary<string, GType> visibleVariables)
+    protected override GType BindExpression(Dictionary<string, GType> visibleVariables)
     {
         switch (Value)
         {

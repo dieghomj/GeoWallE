@@ -9,7 +9,7 @@ public abstract class UnaryExpression : Expression
 
     public abstract SyntaxKind OperatorKind { get; }
     public Expression Operand { get; }
-    public override GType Bind(Dictionary<string, GType> visibleVariables)
+    protected override GType BindExpression(Dictionary<string, GType> visibleVariables)
     {
         var operandType = Operand.Bind(visibleVariables);
         var op = BoundUnaryOperator.Bind(OperatorKind,operandType);

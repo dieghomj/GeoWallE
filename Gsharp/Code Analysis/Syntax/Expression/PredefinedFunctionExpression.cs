@@ -10,7 +10,7 @@ public class PredefinedFunctionExpression : Expression
     private List<Expression> Arguments { get; }
     public override ExpressionKind Kind => ExpressionKind.PredefinedFunctionExpression;
 
-    public override GType Bind(Dictionary<string, GType> visibleVariables)
+    protected override GType BindExpression(Dictionary<string, GType> visibleVariables)
     {
         throw new NotImplementedException();
     }

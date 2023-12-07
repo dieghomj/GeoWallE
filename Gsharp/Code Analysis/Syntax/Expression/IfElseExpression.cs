@@ -19,7 +19,7 @@ public class IfElseExpression : Expression
 
     public override ExpressionKind Kind => ExpressionKind.IfElseExpression;
 
-    public override GType Bind(Dictionary<string, GType> visibleVariables)
+    protected override GType BindExpression(Dictionary<string, GType> visibleVariables)
     {
         Condition.Bind(visibleVariables);
         var trueExpressionType = TrueExpression.Bind(visibleVariables);
