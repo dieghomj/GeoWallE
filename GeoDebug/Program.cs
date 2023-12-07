@@ -1,11 +1,21 @@
-﻿while (true)
+﻿System.Console.WriteLine("Entry code: (and end it with exit keyword in a new line) \n");
+
+string code = "";
+
+while (true)
 {
-    Console.Write("> ");
-    var line = Console.ReadLine();
+    string line = Console.ReadLine()!;
 
-    if (string.IsNullOrWhiteSpace(line))
-        return;
+    if (line == "exit")
+        break;
 
-    foreach (var t in new Lexer(line))
-        System.Console.WriteLine(t);
+    code += line;
 }
+
+foreach(var token in new Lexer(code))
+    System.Console.WriteLine(token.Kind);
+
+Parser parser = new Parser(code);
+
+// foreach (var statement in parser.Parse())
+//     System.Console.WriteLine(statement.GetType());
