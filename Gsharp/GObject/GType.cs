@@ -5,5 +5,11 @@ public enum GType
     Measure,
     String,
     Sequence,
-    Figure
+    Point,
+    Line,
+    Circle,
+    Arc,
+    Ray,
+    Segment,
+    
 }
