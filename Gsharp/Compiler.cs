@@ -8,7 +8,7 @@ public static class Compiler
     private static List<Statement> syntaxStatements = new List<Statement>();
     private static List<BoundStatement> boundStatements = new List<BoundStatement>();
 
-    private static readonly List<(Figure figure, Color color, string message)> figures =
+    private static List<(Figure figure, Color color, string message)> figures =
         new List<(Figure, Color, string)>();
     private static Color currentColor = Color.Black;
     private static bool isModified = false;
@@ -28,13 +28,20 @@ public static class Compiler
             AddBoundStatement(statement.GetBoundStatement(visibleVariables));
     }
 
-    public static void Evaluate() { }
+    public static void Evaluate()
+    {
+        Dictionary<string, GObject> visibleVariables = new();
+
+        foreach (BoundStatement boundStatement in boundStatements)
+            boundStatement.EvaluateStatement(visibleVariables);
+    }
 
     public static void Reset()
     {
         syntaxStatements = new List<Statement>();
         boundStatements = new List<BoundStatement>();
         GraphState = new Dictionary<string, NodeState>();
+        figures = new List<(Figure, Color, string)>();
     }
 
     public static void GetSyntaxStatements(string code)
