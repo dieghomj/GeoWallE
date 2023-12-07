@@ -1,5 +1,6 @@
 public class LiteralExpression : Expression
 {
+    private GType Type;
     public LiteralExpression(SyntaxToken literalToken, object? value)
     {
         LiteralToken = literalToken;
@@ -10,9 +11,9 @@ public class LiteralExpression : Expression
     public SyntaxToken LiteralToken { get; }
     public object? Value { get; }
 
-    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
+    protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        var type = Bind(visibleVariables);
+        var type = Type;
         var value = Value ?? 0.0;
         return new BoundLiteralExpression(value, type);
     }
@@ -23,10 +24,13 @@ public class LiteralExpression : Expression
         {
             case int:
             case double:
+                Type = GType.Number;
                 return GType.Number;
             case string:
+                Type = GType.String;
                 return GType.String;
             default:
+                Type = GType.Undefined;
                 return GType.Undefined;
         }
     }

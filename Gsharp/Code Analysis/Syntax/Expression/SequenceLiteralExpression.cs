@@ -23,7 +23,7 @@ public class SequenceLiteralExpression : Expression
         throw new NotImplementedException();
     }
 
-    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
+    protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)
     {
         throw new NotImplementedException();
     }

@@ -8,9 +8,9 @@ public class AdditionExpression : BinaryExpression
 
     public override SyntaxKind OperatorKind => SyntaxKind.PlusToken;
 
-    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
+    protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        var resultType = Bind(visibleVariables);
+        var resultType = ResultType;
         var leftExpression = Left.GetBoundExpression(visibleVariables);
         var rightExpression = Right.GetBoundExpression(visibleVariables);
         return new BoundAdditionExpression(leftExpression,rightExpression,resultType);

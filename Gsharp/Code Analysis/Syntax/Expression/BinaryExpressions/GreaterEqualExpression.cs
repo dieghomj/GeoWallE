@@ -7,9 +7,9 @@ public class GreaterEqualExpression : BinaryExpression
 
     public override SyntaxKind OperatorKind => SyntaxKind.GreaterEqualToken;
 
-    public override BoundExpression GetBoundExpression(Dictionary<string, GType> visibleVariables)
+    protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        var resultType = Bind(visibleVariables);
+        var resultType = ResultType;
         var left = Left.GetBoundExpression(visibleVariables);
         var right = Right.GetBoundExpression(visibleVariables);
         return new BoundGreaterEqualExpression(left, right, resultType);

@@ -1,5 +1,7 @@
 public abstract class UnaryExpression : Expression
 {
+    protected GType ResultType;
+
     protected UnaryExpression(Expression operand)
     {
         Operand = operand;
