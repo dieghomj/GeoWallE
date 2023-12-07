@@ -11,7 +11,7 @@ public class BoundLetInExpression : BoundExpression
     public List<BoundStatement> Instructions { get; }
     public BoundExpression Expression { get; }
 
-    public override object Evaluate()
+    public override GObject Evaluate()
     {
         throw new NotImplementedException();
     }

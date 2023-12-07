@@ -12,14 +12,7 @@ public abstract class BoundUnaryExpression : BoundExpression
     }
 
     public abstract UnaryOperatorKind OperatorKind { get; }
-    public override GType Type => OperatorType ;
-    protected Func<object,object> Calculate => UnaryOperator.GetOperatorFunc(OperatorKind);
-    public BoundExpression Operand { get; }
+    protected BoundExpression Operand { get; }
     protected GType OperatorType { get; }
-
-    public override object Evaluate()
-    {
-        var operand = Operand.Evaluate();
-        return Calculate(operand);
-    }
+    public override GType Type => OperatorType;
 }

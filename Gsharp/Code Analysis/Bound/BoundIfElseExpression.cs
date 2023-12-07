@@ -13,7 +13,7 @@ internal class BoundIfElseExpression : BoundExpression
     public BoundExpression TrueExpression { get; }
     public BoundExpression FalseExpression { get; }
 
-    public override object Evaluate()
+    public override GObject Evaluate()
     {
         throw new NotImplementedException();
     }

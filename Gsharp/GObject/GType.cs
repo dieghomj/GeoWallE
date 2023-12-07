@@ -7,9 +7,8 @@ public enum GType
     Sequence,
     Point,
     Line,
-    Circle,
-    Arc,
-    Ray,
     Segment,
-    
+    Ray,
+    Arc,
+    Circle
 }
