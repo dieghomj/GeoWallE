@@ -1,6 +1,6 @@
 public abstract class Expression : Statement
 {
-    private bool IsBinded = false;
+    protected bool IsBinded = false;
     public abstract ExpressionKind Kind { get; }
     protected abstract GType BindExpression(Dictionary<string,GType> visibleVariables);
     public virtual GType Bind(Dictionary<string, GType> visibleVariables)
