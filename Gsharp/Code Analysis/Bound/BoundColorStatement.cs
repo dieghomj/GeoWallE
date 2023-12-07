@@ -1,6 +1,5 @@
 public class BoundColorStatement : BoundStatement
 {
-
     public BoundColorStatement(Color color)
     {
         Color = color;
@@ -8,7 +7,7 @@ public class BoundColorStatement : BoundStatement
 
     public Color Color { get; }
 
-    public override void EvaluateStatement()
+    public override void EvaluateStatement(Dictionary<string, GObject> visibleVariables)
     {
         throw new NotImplementedException();
     }

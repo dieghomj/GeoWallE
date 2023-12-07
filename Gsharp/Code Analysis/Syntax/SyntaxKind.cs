@@ -14,7 +14,6 @@ public enum SyntaxKind
     CloseBracketToken,
     OpenParenthesisToken,
     CloseParenthesisToken,
-    SemicolonToken,
     CommaToken,
     EllipsisToken,
     UnderscoreToken,

@@ -5,7 +5,8 @@ public class BoundDrawStatement : BoundStatement
         BoundFigure = boundFigure;
     }
 
-    public BoundDrawStatement(BoundExpression boundFigure, BoundExpression boundMessage) : this(boundFigure)
+    public BoundDrawStatement(BoundExpression boundFigure, BoundExpression boundMessage)
+        : this(boundFigure)
     {
         BoundMessage = boundMessage;
     }
@@ -13,7 +14,7 @@ public class BoundDrawStatement : BoundStatement
     public BoundExpression BoundFigure { get; }
     public BoundExpression BoundMessage { get; }
 
-    public override void EvaluateStatement()
+    public override void EvaluateStatement(Dictionary<string, GObject> visibleVariables)
     {
         throw new NotImplementedException();
     }

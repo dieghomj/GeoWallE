@@ -13,7 +13,6 @@ public class BoundUnaryOperator
     private static BoundUnaryOperator[] _operators = 
     {
         new BoundUnaryOperator(SyntaxKind.BangToken, UnaryOperatorKind.LogicalNegation, GType.Number),
-
         new BoundUnaryOperator(SyntaxKind.PlusToken, UnaryOperatorKind.Identity, GType.Number),
         new BoundUnaryOperator(SyntaxKind.MinusToken, UnaryOperatorKind.Negation, GType.Number),
     };

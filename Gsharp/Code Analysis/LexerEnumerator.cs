@@ -18,6 +18,10 @@ public class LexerEnumerator : IEnumerator<SyntaxToken>
         {
             if (isAtEnd || isNotMoved)
                 throw new Exception("is not possible to get the current enumerator");
+
+            if (_current.Kind == SyntaxKind.EndOfFileToken)
+                isAtEnd = true;
+
             return _current;
         }
     }
@@ -28,17 +32,14 @@ public class LexerEnumerator : IEnumerator<SyntaxToken>
 
     public bool MoveNext()
     {
+        if (isAtEnd)
+            return false;
+
         isNotMoved = false;
         _current = _lex.Lex();
 
         if (_current.Kind == SyntaxKind.WhiteSpaceToken)
             return MoveNext();
-
-        if (_current.Kind == SyntaxKind.EndOfFileToken)
-        {
-            isAtEnd = true;
-            return false;
-        }
 
         return true;
     }

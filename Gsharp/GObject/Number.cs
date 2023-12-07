@@ -11,4 +11,84 @@ public class Number : GObject
     public override GType GetGType() => Type;
 
     public override object GetValue() => Value;
+
+    #region Binary Operators
+
+    public static Number operator +(Number a, Number b) => new Number(a.Value + b.Value);
+
+    public static Number operator -(Number a, Number b) => new Number(a.Value - b.Value);
+
+    public static Number operator /(Number a, Number b) => new Number(a.Value / b.Value);
+
+    public static Number operator *(Number a, Number b) => new Number(a.Value * b.Value);
+
+    public static Number operator %(Number a, Number b) => new Number(a.Value % b.Value);
+
+    public static Number operator ^(Number a, Number b) => new Number(double.Pow(a.Value, b.Value));
+
+    public static Number operator &(Number a, Number b)
+    {
+        if (a.Value != 0 && b.Value != 0)
+            return new Number(1);
+        else
+            return new Number(0);
+    }
+
+    public static Number operator |(Number a, Number b)
+    {
+        if (a.Value != 0 || b.Value != 0)
+            return new Number(1);
+        else
+            return new Number(0);
+    }
+
+    public static Number operator <(Number a, Number b)
+    {
+        if (a.Value < b.Value)
+            return new Number(1);
+        else
+            return new Number(0);
+    }
+
+    public static Number operator >(Number a, Number b)
+    {
+        if (a.Value > b.Value)
+            return new Number(1);
+        else
+            return new Number(0);
+    }
+
+    public static Number operator <=(Number a, Number b)
+    {
+        if (a.Value <= b.Value)
+            return new Number(1);
+        else
+            return new Number(0);
+    }
+
+    public static Number operator >=(Number a, Number b)
+    {
+        if (a.Value >= b.Value)
+            return new Number(1);
+        else
+            return new Number(0);
+    }
+
+    #endregion
+
+    #region Unary Operators
+
+    public static Number operator +(Number a) => new Number(a.Value);
+
+    public static Number operator -(Number a) => new Number(-a.Value);
+
+    public static Number operator !(Number a)
+    {
+        if (a.Value == 0)
+            return new Number(1);
+        else
+            return new Number(0);
+    }
+
+    #endregion
 }

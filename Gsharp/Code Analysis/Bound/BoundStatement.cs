@@ -1,4 +1,4 @@
 public abstract class BoundStatement
 {
-    public abstract void EvaluateStatement();
+    public abstract void EvaluateStatement(Dictionary<string, GObject> visibleVariables);
 }

@@ -6,21 +6,21 @@ public class BoundLiteralExpression : BoundExpression
         GType = type;
     }
 
-    public object Value { get; }
     private GType GType { get; }
+    public object Value { get; }
 
     public override GType Type => GType;
 
-    public override GObject Evaluate()
+    public override GObject Evaluate(Dictionary<string, GObject> visibleVariables)
     {
         switch (GType)
         {
             case GType.String:
-                return new String((string)Value);  
+                return new String((string)Value);
             case GType.Number:
                 return new Number((double)Value);
             default:
-                return new Number(0);       
+                return new Number(0);
         }
     }
 }

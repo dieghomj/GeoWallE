@@ -9,7 +9,7 @@ class BoundAssignmentStatement : BoundStatement
     public VariableSymbol VariableSymbol { get; }
     public BoundExpression RightExpression { get; }
 
-    public override void EvaluateStatement()
+    public override void EvaluateStatement(Dictionary<string, GObject> visibleVariables)
     {
         throw new NotImplementedException();
     }

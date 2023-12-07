@@ -59,6 +59,7 @@ public class Parser
         while (Current.Kind != SyntaxKind.EndOfFileToken)
         {
             statementsList.Add(ParseStatement());
+
             Match(SyntaxKind.EndOfStatementToken);
         }
 
@@ -195,7 +196,12 @@ public class Parser
     {
         Match(SyntaxKind.DrawKeyword);
 
-        return new DrawStatement(ParseExpression());
+        Expression figure = ParseExpression();
+
+        if (Current.Kind == SyntaxKind.StringToken)
+            return new DrawStatement(figure, ParseExpression());
+        else
+            return new DrawStatement(figure);
     }
 
     private Statement ParseColorStatement()
@@ -223,7 +229,7 @@ public class Parser
     {
         Expression left;
         var unaryPrecedence = UnaryOperator.GetPrecedence(Current.Kind);
-        if (unaryPrecedence != 0 && unaryPrecedence > parentPrecedence)
+        if (unaryPrecedence != 0 && unaryPrecedence >= parentPrecedence)
         {
             var op = NextToken();
             var operand = ParseBinaryExpression(unaryPrecedence);
@@ -235,7 +241,7 @@ public class Parser
         while (true)
         {
             var binaryPrecedence = BinaryOperator.GetPrecedence(Current.Kind);
-            if (binaryPrecedence != 0 || binaryPrecedence > parentPrecedence)
+            if (binaryPrecedence == 0 || binaryPrecedence <= parentPrecedence)
                 break;
 
             var op = NextToken();
@@ -263,12 +269,12 @@ public class Parser
                 return ParseLetInExpression();
 
             case SyntaxKind.IdentifierToken:
-                {
-                    if (LookAhead.Kind == SyntaxKind.OpenParenthesisToken)
-                        return ParseFunctionCallExpression();
-                    else
-                        return ParseNameExpression();
-                }
+            {
+                if (LookAhead.Kind == SyntaxKind.OpenParenthesisToken)
+                    return ParseFunctionCallExpression();
+                else
+                    return ParseNameExpression();
+            }
 
             case SyntaxKind.StringToken:
                 return ParseStringLiteral();
@@ -329,6 +335,8 @@ public class Parser
         while (Current.Kind != SyntaxKind.InKeyword)
         {
             instructions.Add(ParseStatement());
+
+            Match(SyntaxKind.EndOfStatementToken);
         }
 
         Match(SyntaxKind.InKeyword);

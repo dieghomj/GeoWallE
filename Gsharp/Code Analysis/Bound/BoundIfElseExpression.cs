@@ -1,6 +1,10 @@
 internal class BoundIfElseExpression : BoundExpression
 {
-    public BoundIfElseExpression(BoundExpression condition, BoundExpression trueExpression, BoundExpression falseExpression)
+    public BoundIfElseExpression(
+        BoundExpression condition,
+        BoundExpression trueExpression,
+        BoundExpression falseExpression
+    )
     {
         Condition = condition;
         TrueExpression = trueExpression;
@@ -13,7 +17,7 @@ internal class BoundIfElseExpression : BoundExpression
     public BoundExpression TrueExpression { get; }
     public BoundExpression FalseExpression { get; }
 
-    public override object Evaluate()
+    public override GObject Evaluate(Dictionary<string, GObject> visibleVariables)
     {
         throw new NotImplementedException();
     }
