@@ -1,6 +1,6 @@
 public class SequenceLiteralExpression : Expression
 {
-    public SequenceLiteralExpression(List<Expression> elements)
+    public SequenceLiteralExpression(List<Expression> elements) : this(elements.FirstOrDefault(), elements.LastOrDefault())
     {
         Elements = elements;
     }
@@ -19,11 +19,44 @@ public class SequenceLiteralExpression : Expression
 
     protected override GType BindExpression(Dictionary<string, GType> visibleVariables)
     {
-        throw new NotImplementedException();
+        var startType = Start.Bind(visibleVariables);
+        if (Elements is null)
+        {
+            if (End is null)
+                return startType;
+
+            var endType = End.Bind(visibleVariables);
+            if (endType != startType)
+            {
+                System.Console.WriteLine($"! SEMANTIC ERROR: Element of type {endType} in sequence of type {startType}");
+                return GType.Undefined;
+            }
+        }
+        else
+        {
+            foreach (var element in Elements)
+            {
+                var elementType = element.Bind(visibleVariables);
+                if (elementType == startType)
+                    continue;
+                System.Console.WriteLine($"! SEMANTIC ERROR: Element of type {elementType} in sequence of type {startType}");
+                return GType.Undefined;
+            }
+        }
+        return startType;
     }
 
     protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        throw new NotImplementedException();
+        List<BoundExpression> boundElements = new List<BoundExpression>();
+        var boundStart = Start.GetBoundExpression(visibleVariables);
+        if(Elements is null)
+        {
+            if(End is null)
+                return new BoundSequenceLiteralExpression(boundStart);
+            var boundEnd = End.GetBoundExpression(visibleVariables);
+                return new BoundSequenceLiteralExpression(boundStart, boundEnd);
+        }
+        return new BoundSequenceLiteralExpression(boundElements);
     }
 }

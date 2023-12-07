@@ -16,13 +16,20 @@ public class DrawStatement : Statement
 
     public override void BindStatement(Dictionary<string, GType> visibleVariables)
     {
-        Figure.Bind(visibleVariables);
+        if(Figure.Bind(visibleVariables) != GType.Figure)
+        {
+            System.Console.WriteLine("! SEMMANTIC ERROR : Expected figure is not of type <figure>");
+            return;
+        }
+
+        { var a = 1;}
+
         if (Message is not null)
         {
             var messageType = Message.Bind(visibleVariables);
             if (messageType != GType.String)
             {
-                System.Console.WriteLine("! SEMANTIC ERROR: Expected message of type string");
+                System.Console.WriteLine("! SEMANTIC ERROR: Expected message of type <string>");
                 return;
             }
         }
