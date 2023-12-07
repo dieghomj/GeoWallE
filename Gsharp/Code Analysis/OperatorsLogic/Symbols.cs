@@ -6,7 +6,7 @@ public class Symbols
         { ")", SyntaxKind.CloseParenthesisToken },
         { "{", SyntaxKind.OpenBracketToken },
         { "}", SyntaxKind.CloseBracketToken },
-        { ";", SyntaxKind.SemicolonToken },
+        { ";", SyntaxKind.EndOfStatementToken },
         { ",", SyntaxKind.CommaToken },
         { "...", SyntaxKind.EllipsisToken },
         { "_", SyntaxKind.UnderscoreToken },

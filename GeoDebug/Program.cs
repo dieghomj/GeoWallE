@@ -12,10 +12,10 @@ while (true)
     code += line;
 }
 
-foreach(var token in new Lexer(code))
-    System.Console.WriteLine(token.Kind);
+// foreach(var token in new Lexer(code))
+//     System.Console.WriteLine(token.Kind);
 
 Parser parser = new Parser(code);
 
-// foreach (var statement in parser.Parse())
-//     System.Console.WriteLine(statement.GetType());
+foreach (var statement in parser.Parse())
+    System.Console.WriteLine(statement.GetType());

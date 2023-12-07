@@ -59,6 +59,7 @@ public class Parser
         while (Current.Kind != SyntaxKind.EndOfFileToken)
         {
             statementsList.Add(ParseStatement());
+
             Match(SyntaxKind.EndOfStatementToken);
         }
 
@@ -228,7 +229,7 @@ public class Parser
     {
         Expression left;
         var unaryPrecedence = UnaryOperator.GetPrecedence(Current.Kind);
-        if (unaryPrecedence != 0 && unaryPrecedence > parentPrecedence)
+        if (unaryPrecedence != 0 && unaryPrecedence >= parentPrecedence)
         {
             var op = NextToken();
             var operand = ParseBinaryExpression(unaryPrecedence);
@@ -240,7 +241,7 @@ public class Parser
         while (true)
         {
             var binaryPrecedence = BinaryOperator.GetPrecedence(Current.Kind);
-            if (binaryPrecedence != 0 || binaryPrecedence > parentPrecedence)
+            if (binaryPrecedence == 0 || binaryPrecedence <= parentPrecedence)
                 break;
 
             var op = NextToken();
@@ -334,6 +335,8 @@ public class Parser
         while (Current.Kind != SyntaxKind.InKeyword)
         {
             instructions.Add(ParseStatement());
+
+            Match(SyntaxKind.EndOfStatementToken);
         }
 
         Match(SyntaxKind.InKeyword);
