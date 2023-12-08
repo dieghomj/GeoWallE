@@ -25,8 +25,4 @@ public partial class CodeController : CodeEdit
 	{
 	}
 
-	public void OnCodeCompletionRequested()
-	{
-
-	}
 }

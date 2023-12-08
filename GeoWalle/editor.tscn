@@ -63,4 +63,3 @@ layout_mode = 2
 
 [connection signal="tab_clicked" from="EditorsTabs" to="EditorsTabs" method="OnTabClicked"]
 [connection signal="tab_hovered" from="EditorsTabs" to="EditorsTabs" method="_OnTabHovered"]
-[connection signal="code_completion_requested" from="EditorsTabs/CodeEdit" to="EditorsTabs/CodeEdit" method="_on_code_completion_requested"]
