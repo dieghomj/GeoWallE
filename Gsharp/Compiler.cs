@@ -9,13 +9,12 @@ public static class Compiler
     private static List<Statement> syntaxStatements = new List<Statement>();
     private static List<BoundStatement> boundStatements = new List<BoundStatement>();
 
-    private static List<(Figure figure, Color color, string message)> figures =
-        new List<(Figure, Color, string)>();
+    private static List<(Figure figure, Color color, string message)> figures = new List<(Figure, Color, string)>();
     private static Color currentColor = Color.Black;
     private static bool isModified = false;
     private static readonly System.Timers.Timer timer = new System.Timers.Timer();
-
     private static Dictionary<string, NodeState> GraphState = new Dictionary<string, NodeState>();
+    private static Dictionary<FunctionSymbol, Expression> syntaxFunctionDefinitions = new Dictionary<FunctionSymbol, Expression>();
 
     public static void Compile(string code)
     {
@@ -94,6 +93,22 @@ public static class Compiler
         else
             return NodeState.UnProcessed;
     }
+
+    public static FunctionSymbol GetFunctionSymbol(Func<FunctionSymbol, bool> predicate)
+    {
+        return syntaxFunctionDefinitions.Keys.FirstOrDefault(predicate)!;
+    }
+
+    public static Expression GetFunctionDefinition(FunctionSymbol symbol)
+    {
+        if (!syntaxFunctionDefinitions.ContainsKey(symbol))
+            return null;
+        return syntaxFunctionDefinitions[symbol];
+    }
+
+
+
+    public static void AddFunctionDefinition(FunctionSymbol symbol, Expression expression) => syntaxFunctionDefinitions[symbol] = expression;
 
     public static void AddState(string directory, NodeState state) => GraphState[directory] = state;
 

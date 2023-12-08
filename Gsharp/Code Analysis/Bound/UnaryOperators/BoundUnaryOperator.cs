@@ -21,7 +21,7 @@ public class BoundUnaryOperator
     {
         foreach(var op in _operators)
         {
-            if(op.SyntaxKind == syntaxKind && op.OperandType == operandType)
+            if((op.SyntaxKind == syntaxKind && op.OperandType == operandType) || operandType == GType.Undefined)
                 return op;
         }
 

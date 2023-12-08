@@ -35,7 +35,7 @@ class BoundBinaryOperator
     {
         foreach (var op in _operators)
         {
-            if (op.SyntaxKind == syntaxKind && op.LeftType == leftType && op.RightType == rightType)
+            if ((op.SyntaxKind == syntaxKind && op.LeftType == leftType && op.RightType == rightType) || leftType == GType.Undefined || rightType == GType.Undefined)
                 return op;
         }
         return null!;

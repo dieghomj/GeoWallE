@@ -1,3 +1,5 @@
+using Gsharp;
+
 public class FunctionDeclarationStatement : Statement
 {
     public FunctionDeclarationStatement(
@@ -17,11 +19,37 @@ public class FunctionDeclarationStatement : Statement
 
     public override void BindStatement(Dictionary<string, GType> visibleVariables)
     {
-        throw new NotImplementedException();
-    }
+        var functionName = FunctionToken.Text;
+        if(Compiler.GetFunctionSymbol(k => k.FunctionName == functionName) != null)
+        {
+            throw new Exception($"! SEMANTIC ERROR : Function {functionName} is already defined");
+        }
 
+        foreach (var parameter in Parameters)
+        {
+            var variableName = parameter.Text;
+            if(visibleVariables.Keys.FirstOrDefault(k => k == variableName) != null)
+            {
+                throw new Exception("! SEMANTIC ERROR : Cant use a constant already defined as a parameter");
+            }
+            var symbol = new VariableSymbol(variableName,GType.Undefined);
+            visibleVariables.Add(variableName,symbol.Type);
+        }
+        FunctionExpression.Bind(visibleVariables);
+    }
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)
     {
-        throw new NotImplementedException();
+        List<string> parameters = new List<string>();
+        var boundExpression = FunctionExpression.GetBoundExpression(visibleVariables);
+        var functionName = FunctionToken.Text;
+        foreach (var parameter in Parameters)
+        {
+            parameters.Add(parameter.Text);
+        }
+        var functionSymbol = new FunctionSymbol(functionName, parameters);
+        Compiler.AddFunctionDefinition(functionSymbol,FunctionExpression);
+        return new BoundFunctionDeclarationStatement(functionSymbol,boundExpression);
     }
+
+
 }
