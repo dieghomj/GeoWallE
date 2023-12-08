@@ -9,7 +9,7 @@ while (true)
     if (line == "exit")
         break;
 
-    code += line;
+    code += line + " ";
 }
 
 // foreach(var token in new Lexer(code))

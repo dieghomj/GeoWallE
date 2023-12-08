@@ -14,7 +14,7 @@ public class String : GObject
 
     public override bool IsTrue()
     {
-        if(this.Value == "")
+        if (Value == "")
             return false;
         return true;
     }
