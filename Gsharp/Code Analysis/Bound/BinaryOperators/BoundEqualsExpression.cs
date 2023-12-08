@@ -7,8 +7,8 @@ public class BoundEqualsExpression : BoundBinaryExpression
 
     public override GObject Evaluate(Dictionary<string, GObject> visibleVariables)
     {
-        if (Left.Evaluate(visibleVariables).Equals(Right.Evaluate(visibleVariables)))
-            return new Number(1);
-        return new Number(0);
+        dynamic left = Left.Evaluate(visibleVariables);
+        dynamic right = Right.Evaluate(visibleVariables);
+        return left == right;
     }
 }

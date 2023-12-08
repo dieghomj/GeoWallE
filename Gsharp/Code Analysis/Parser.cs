@@ -40,9 +40,9 @@ public class Parser
         return new SyntaxToken(kind, Current.Position, Current.Text, null);
     }
 
-    private List<Statement> GetImportStatements()
+    public List<ImportStatement> GetImportStatements()
     {
-        List<Statement> importStatements = new();
+        List<ImportStatement> importStatements = new();
         while (Current.Kind == SyntaxKind.ImportKeyword)
         {
             Match(SyntaxKind.ImportKeyword);

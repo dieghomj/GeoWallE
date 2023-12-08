@@ -12,6 +12,13 @@ public class Number : GObject
 
     public override object GetValue() => Value;
 
+    public override bool IsTrue()
+    {
+        if (this.Value == 0)
+            return false;
+        return true;
+    }
+
     #region Binary Operators
 
     public static Number operator +(Number a, Number b) => new Number(a.Value + b.Value);
@@ -74,6 +81,22 @@ public class Number : GObject
             return new Number(0);
     }
 
+    public static Number operator ==(Number a, Number b)
+    {
+        if (a.Value == b.Value)
+            return new Number(1);
+        else
+            return new Number(0);
+    }
+
+    public static Number operator !=(Number a, Number b)
+    {
+        if (a.Value != b.Value)
+            return new Number(1);
+        else
+            return new Number(0);
+    }
+
     #endregion
 
     #region Unary Operators
@@ -91,4 +114,24 @@ public class Number : GObject
     }
 
     #endregion
+
+    public override bool Equals(object? obj)
+    {
+        if (ReferenceEquals(this, obj))
+        {
+            return true;
+        }
+
+        if (ReferenceEquals(obj, null))
+        {
+            return false;
+        }
+
+        throw new NotImplementedException();
+    }
+
+    public override int GetHashCode()
+    {
+        throw new NotImplementedException();
+    }
 }
