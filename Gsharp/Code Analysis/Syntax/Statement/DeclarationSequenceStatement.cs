@@ -11,11 +11,19 @@ public class DeclarationSequenceStatement : Statement
 
     public override void BindStatement(Dictionary<string, GType> visibleVariables)
     {
-        throw new NotImplementedException();
+        var name = NameToken.Text;
+        var kind = KeywordToken.Kind;
+        if(visibleVariables.Keys.FirstOrDefault(k => k == name) != null)
+        {
+            System.Console.WriteLine($"! SEMANTIC ERROR : Constant {name} is already defined");
+            return;
+        }
+        visibleVariables[name] = SyntaxFacts.DeclarationKeywordsTypes[kind];
     }
 
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)
     {
-        throw new NotImplementedException();
+        var type = SyntaxFacts.DeclarationKeywordsTypes[KeywordToken.Kind];
+        return new BoundDeclarationStatement(new VariableSymbol(NameToken.Text,type));
     }
 }

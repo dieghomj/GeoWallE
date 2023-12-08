@@ -42,7 +42,16 @@ public static class SyntaxFacts
             SyntaxKind.LineKeyword,
             SyntaxKind.SegmentKeyword,
             SyntaxKind.RayKeyword,
-            SyntaxKind.CircleKeyword
+            SyntaxKind.CircleKeyword,
+        };
+    public static Dictionary<SyntaxKind,GType> DeclarationKeywordsTypes =
+        new()
+        {
+            {SyntaxKind.PointKeyword,GType.Point},
+            {SyntaxKind.LineKeyword,GType.Line},
+            {SyntaxKind.SegmentKeyword,GType.Segment},
+            {SyntaxKind.RayKeyword,GType.Ray},
+            {SyntaxKind.CircleKeyword,GType.Circle}
         };
 
     public static List<SyntaxKind> PredefinedFunctionKeywords =

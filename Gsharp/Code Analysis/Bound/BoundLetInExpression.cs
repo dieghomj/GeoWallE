@@ -13,9 +13,7 @@ public class BoundLetInExpression : BoundExpression
 
     public override GObject Evaluate(Dictionary<string, GObject> visibleVariables)
     {
-        Dictionary<string, GObject> localVariables = new();
-        foreach (string key in visibleVariables.Keys)
-            localVariables[key] = visibleVariables[key];
+        Dictionary<string, GObject> localVariables = new Dictionary<string, GObject>(visibleVariables);
 
         foreach (var instruction in Instructions)
             instruction.EvaluateStatement(localVariables);

@@ -16,9 +16,9 @@ public class DrawStatement : Statement
 
     public override void BindStatement(Dictionary<string, GType> visibleVariables)
     {
-        if(Figure.Bind(visibleVariables) != GType.Figure)
+        if(Figure.Bind(visibleVariables).IsFigure())
         {
-            System.Console.WriteLine("! SEMMANTIC ERROR : Expected figure is not of type <figure>");
+            System.Console.WriteLine("! SEMMANTIC ERROR : Expected figure is not a figure");
             return;
         }
 

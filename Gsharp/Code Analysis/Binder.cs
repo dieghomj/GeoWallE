@@ -1,12 +1,15 @@
 public class Binder
 {
-    private Dictionary<string, GType> visibleVariables = new Dictionary<string, GType>();
-    public Binder(Expression root)
+    public Binder(List<Statement> roots)
     {
-        Root = root;
+        Roots = roots;
     }
 
-    public Expression Root { get; }
+    public List<Statement> Roots { get; }
 
-    public BoundExpression Bind() => Root.GetBoundExpression(visibleVariables);
+    public IEnumerable<BoundStatement> Bind(Dictionary<string,GType> visibleVariables) 
+    {
+        foreach (var statement in Roots)
+            yield return statement.GetBoundStatement(visibleVariables);
+    }
 }
