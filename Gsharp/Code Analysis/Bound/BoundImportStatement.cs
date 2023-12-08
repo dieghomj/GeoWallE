@@ -34,7 +34,7 @@ public class BoundImportStatement : BoundStatement
 
             while (line != null)
             {
-                code += line;
+                code += line + " ";
                 line = file.ReadLine();
             }
 
