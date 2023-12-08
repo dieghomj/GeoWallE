@@ -15,4 +15,9 @@ public class Sequence<T> : GObject
     {
         throw new NotImplementedException();
     }
+
+    public override bool IsTrue()
+    {
+        throw new NotImplementedException();
+    }
 }

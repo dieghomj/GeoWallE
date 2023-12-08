@@ -99,7 +99,7 @@ public static class Compiler
 
     public static bool IsModified => isModified;
 
-    public static List<(Figure, Color, string)> Figures => figures;
+    public static List<(Figure figure, Color color, string message)> Figures => figures;
 
     public static Color CurrentColor
     {

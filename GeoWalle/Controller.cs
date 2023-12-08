@@ -4,7 +4,6 @@ using System;
 
 public partial class Controller : Control
 {
-    private Compiler Compiler;
     private TabContainer TabContainer;
     private Button RunButton;
     private PanelContainer Editor;
@@ -30,7 +29,7 @@ public partial class Controller : Control
         var codeText = codeEdit.Text;
         try
         {
-            Compiler = new Compiler(codeText);
+            Compiler.Compile(codeText);
         }
         catch (Exception e)
         {
@@ -50,8 +49,6 @@ public partial class Controller : Control
             GD.PrintErr(e.Message, e.InnerException, e.StackTrace, e.Source);
             return;
         }
-        var debug = Compiler.ConsoleDebug;
-        GD.Print(debug);
     }
 
     public void OnCodeEditCodeCompletionRequested()
