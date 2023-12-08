@@ -36,7 +36,7 @@ public class Parser
 
         NextToken();
 
-        Console.WriteLine($"Error: Unexpected token <{Current.Text}");
+        Console.WriteLine($"Error: Unexpected token <{Current.Text}>");
         return new SyntaxToken(kind, Current.Position, Current.Text, null);
     }
 
@@ -286,7 +286,7 @@ public class Parser
                 return ParseSequenceLiteral();
 
             default:
-                System.Console.WriteLine("SINTAX ERROR!: ");
+                System.Console.WriteLine("! SYNTAX ERROR : ");
                 return ParseNumberLiteral();
         }
     }

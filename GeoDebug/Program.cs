@@ -1,4 +1,4 @@
-﻿System.Console.WriteLine("Entry code: (and end it with exit keyword in a new line) \n");
+﻿System.Console.WriteLine("Entry code: (and end it with \"exit\" keyword in a new line) \n");
 
 string code = "";
 
