@@ -1,7 +1,9 @@
-public class Sequence<T> : GObject
+using System.Collections;
+
+public class Sequence<T> : GObject, IEnumerable<T>
     where T : GObject
 {
-    private SequenceEnumerable<T> elements;
+    private List<T> elements;
     private bool isInfinite;
 
     public Sequence() { }
@@ -17,6 +19,16 @@ public class Sequence<T> : GObject
     }
 
     public override bool IsTrue()
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerator<T> GetEnumerator()
+    {
+        throw new NotImplementedException();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
     {
         throw new NotImplementedException();
     }
