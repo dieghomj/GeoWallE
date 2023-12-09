@@ -3,33 +3,55 @@ using System.Collections;
 public class Sequence<T> : GObject, IEnumerable<T>
     where T : GObject
 {
-    private List<T> elements;
-    private bool isInfinite;
-
-    public Sequence() { }
-
-    public override GType GetGType()
+    public Sequence(List<T> elements)
     {
-        throw new NotImplementedException();
+        Elements = elements;
+        Length = elements.Count;
     }
 
-    public override object GetValue()
+    public Sequence(int start, int? end = null)
     {
-        throw new NotImplementedException();
+        Start = start;
+        End = end;
+
+        if (End is not null)
+        {
+            Length = (int)End - Start + 1;
+            isRange = true;
+        }
+        else
+            isInfinite = true;
+
+        Elements = new List<T>();
     }
+
+    private readonly GType Type = GType.Sequence;
+    private readonly bool isInfinite = false;
+    private readonly bool isRange = false;
+
+    private List<T> Elements { get; }
+    private int Length { get; }
+
+    private int Start { get; }
+    private int? End { get; }
+
+    public override GType GetGType() => Type;
+
+    public override object GetValue() => this;
 
     public override bool IsTrue()
     {
-        throw new NotImplementedException();
+        if(Length == 0)
+            return false;
+        return true;
     }
 
     public IEnumerator<T> GetEnumerator()
     {
-        throw new NotImplementedException();
+        if (!isInfinite && !isRange)
+            return Elements.GetEnumerator();
+        return new SequenceEnumerator<T>(Start, End);
     }
 
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        throw new NotImplementedException();
-    }
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
