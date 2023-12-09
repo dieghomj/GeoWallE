@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://biatmdd116wge"]
+[gd_scene load_steps=7 format=3 uid="uid://biatmdd116wge"]
 
 [ext_resource type="Script" path="res://Controller.cs" id="1_q7a7x"]
 [ext_resource type="PackedScene" uid="uid://cfyss5chxpq18" path="res://draw_zone.tscn" id="3_2rmp0"]
@@ -15,7 +15,10 @@ color_regions = {
 "' '": Color(0.807843, 0.568627, 0.470588, 1)
 }
 
+[sub_resource type="SystemFont" id="SystemFont_34prw"]
+
 [node name="Control" type="Control"]
+texture_filter = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -123,6 +126,7 @@ vertical = true
 
 [node name="DrawZone" parent="Workspace/Draw and Debug" instance=ExtResource("3_2rmp0")]
 layout_mode = 2
+Font = SubResource("SystemFont_34prw")
 
 [node name="DebugConsole" parent="Workspace/Draw and Debug" instance=ExtResource("4_c4put")]
 layout_mode = 2

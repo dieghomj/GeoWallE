@@ -8,14 +8,15 @@ using System.Drawing;
 public partial class PanelDraw : Panel
 {
     [Export]
-    public static Font Font;
+    public Font Font;
+    private static Font font;
     private static PanelDraw panelDraw;
     private Dictionary<GFigureKind, Action<Figure, Color, string>> FigureDrawings = new Dictionary<GFigureKind, Action<Figure, Color, string>>
     {
         {GFigureKind.Point, GDrawPoint},
         {GFigureKind.Line, GDrawLine},
-        {GFigureKind.Ray, GDrawRay},
-        {GFigureKind.Segment, GDrawSegment},
+        {GFigureKind.Ray, GDrawLine},
+        {GFigureKind.Segment, GDrawLine},
         {GFigureKind.Arc, GDrawArc},
         {GFigureKind.Circle, GDrawCircle},
 
@@ -23,10 +24,17 @@ public partial class PanelDraw : Panel
 
     public override void _Ready()
     {
+        font = Font;
         panelDraw = this;
     }
     public override void _Process(double delta)
     {
+
+        if(Input.IsMouseButtonPressed(MouseButton.WheelDown))
+            Scale*=2;
+        if(Input.IsMouseButtonPressed(MouseButton.WheelUp))
+            Scale/=2;
+
         if (Compiler.IsModified)
         {
             QueueRedraw();
@@ -48,12 +56,10 @@ public partial class PanelDraw : Panel
     public static void GDrawCircle(Figure figure, Color color, string message)
     {
         var circle = (Circle)figure;
-        var x = circle.Position.x;
-        var y = circle.Position.y;
 
         var radius = circle.Radius;
-        var position = new Vector2(x, y);
-        panelDraw.DrawArc(position, radius, 0, 360, 50, GetColor(color));
+        var position = GetViewportPosition(circle.Position);
+        panelDraw.DrawArc(position, radius, 0, 360, 50, GetColor(color),-1,true);
         DrawMessage(message, position);
 
     }
@@ -61,51 +67,32 @@ public partial class PanelDraw : Panel
     {
         var arc = (Arc)figure;
         var radius = arc.Radius;
-        var center = new Vector2(arc.Position.x, arc.Position.y);
+        var center = GetViewportPosition(arc.Position);
         var startAngle = arc.StartAngle;
         var endAngle = arc.EndAngle;
 
-        panelDraw.DrawArc(center, radius, startAngle, endAngle, 50, GetColor(color));
+        panelDraw.DrawArc(center, radius, startAngle, endAngle, 50, GetColor(color),-1,true);
         DrawMessage(message, center);
 
-    }
-
-    private static void GDrawSegment(Figure figure, Color color, string message)
-    {
-        var segment = (Segment)figure;
-        var start = segment.StartPoint;
-        var end = segment.EndPoint;
-
-        panelDraw.DrawLine(new Vector2(start.x, start.y), new Vector2(end.x, end.y), GetColor(color));
-        DrawMessage(message, new Vector2(start.x, start.y));
-    }
-
-    private static void GDrawRay(Figure figure, Color color, string message)
-    {
-        var ray = (Ray)figure;
-        var start = ray.StartPoint;
-        var end = ray.EndPoint;
-        panelDraw.DrawLine(new Vector2(start.x,start.y), new Vector2(end.x,end.y),GetColor(color));
-        DrawMessage(message, new Vector2(start.x, start.y));
     }
 
     private static void GDrawLine(Figure figure, Color color, string message)
     {
         var line = (Line)figure;
-        var start = line.StartPoint;
-        var end = line.EndPoint;
-        panelDraw.DrawLine(new Vector2(start.x,start.y), new Vector2(end.x,end.y),GetColor(color));
-        DrawMessage(message, new Vector2(start.x, start.y));
+        var start = GetViewportPosition(line.StartPoint);
+        var end = GetViewportPosition(line.EndPoint);
+        panelDraw.DrawLine(start, end,GetColor(color),-1,true);
+        DrawMessage(message, start);
 
     }
 
     private static void GDrawPoint(Figure figure, Color color, string message)
     {
-        var position = figure.Position;
+        var position = GetViewportPosition(figure.Position);
+        
+        panelDraw.DrawCircle(position,3,GetColor(color));
 
-        panelDraw.DrawCircle(new Vector2(position.x,position.y),5,GetColor(color));
-
-        DrawMessage(message,new Vector2(position.x,position.y));
+        DrawMessage(message,position);
     }
     private static Godot.Color GetColor(Color color)
     {
@@ -134,10 +121,16 @@ public partial class PanelDraw : Panel
         }
     }
 
+    private static Vector2 GetViewportPosition((float x, float y) position)
+    {
+        var size = panelDraw.Size;
+        return new Vector2(position.x*size.X/100, position.y * size.Y/100);
+    }
+
     private static void DrawMessage(string message, Vector2 position)
     {
         if (!string.IsNullOrEmpty(message))
-            panelDraw.DrawString(Font, position, message);
+            panelDraw.DrawString(font, position + 10 * Vector2.Right, message,HorizontalAlignment.Left,-1,16,GetColor(Color.Black));
     }
 }
 

@@ -1,11 +1,15 @@
 public class Ray : Line
 {
-    public Ray() { }
+    public Ray() 
+    { 
+        StartPoint = (Random.Shared.Next(0,100),Random.Shared.Next(0,100));
+        EndPoint = (Random.Shared.Next(100,200),Random.Shared.Next(100,200));
+    }
 
-    public override GFigureKind Kind => throw new NotImplementedException();
+    public override GFigureKind Kind => GFigureKind.Ray;
 
-    public (float x, float y) StartPoint { get; set; }
-    public (float x, float y) EndPoint { get; set; }
+    public override (float x, float y) StartPoint { get; }
+    public override (float x, float y) EndPoint { get; }
     public override (float x, float y) Position { get => throw new NotImplementedException(); }
 
     public override GType GetGType()
