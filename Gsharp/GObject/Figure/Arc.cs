@@ -4,6 +4,11 @@ public class Arc : Figure
 
     public override GFigureKind Kind => throw new NotImplementedException();
 
+    public float Radius { get; set; }
+    public float StartAngle { get; set; }
+    public float EndAngle { get; set; }
+    public override (float x, float y) Position { get => throw new NotImplementedException();}
+
     public override GType GetGType()
     {
         throw new NotImplementedException();

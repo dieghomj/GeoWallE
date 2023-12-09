@@ -72,10 +72,4 @@ public partial class Controller : Control
     {
         RunButton.Disabled = true;
     }
-
-    public void _OnWorkspaceDragged(int offset)
-    {
-    }
-
-
 }
