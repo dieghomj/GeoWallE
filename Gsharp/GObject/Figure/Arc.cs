@@ -7,7 +7,7 @@ public class Arc : Figure
     public float Radius { get; set; }
     public float StartAngle { get; set; }
     public float EndAngle { get; set; }
-    public override (float x, float y) Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public override (float x, float y) Position { get => throw new NotImplementedException();}
 
     public override GType GetGType()
     {

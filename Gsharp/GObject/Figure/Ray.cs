@@ -1,4 +1,4 @@
-public class Ray : Figure
+public class Ray : Line
 {
     public Ray() { }
 
@@ -6,7 +6,7 @@ public class Ray : Figure
 
     public (float x, float y) StartPoint { get; set; }
     public (float x, float y) EndPoint { get; set; }
-    public override (float x, float y) Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public override (float x, float y) Position { get => throw new NotImplementedException(); }
 
     public override GType GetGType()
     {
