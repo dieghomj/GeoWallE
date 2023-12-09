@@ -26,8 +26,6 @@ public class NameExpression : Expression
     }
     protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)
     {
-        if(Type == GType.Undefined)
-            throw new Exception($"Variable {IdentifierToken.Text} doesn't exist");
-        else return new BoundVariableExpression(new VariableSymbol(IdentifierToken.Text,Type));
+        return new BoundVariableExpression(new VariableSymbol(IdentifierToken.Text,Type));
     }
 }

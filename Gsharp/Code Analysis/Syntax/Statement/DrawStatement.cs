@@ -21,9 +21,6 @@ public class DrawStatement : Statement
             System.Console.WriteLine("! SEMMANTIC ERROR : Expected figure is not a figure");
             return;
         }
-
-        { var a = 1;}
-
         if (Message is not null)
         {
             var messageType = Message.Bind(visibleVariables);
@@ -37,7 +34,6 @@ public class DrawStatement : Statement
 
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)
     {
-        BindStatement(visibleVariables);
         var boundFigure = Figure.GetBoundExpression(visibleVariables);
 
         if (Message is not null)
