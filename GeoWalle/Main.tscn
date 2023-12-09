@@ -92,11 +92,8 @@ theme_override_colors/line_number_color = Color(1, 1, 1, 0.360784)
 theme_override_colors/word_highlighted_color = Color(1, 1, 1, 0.266667)
 theme_override_font_sizes/font_size = 15
 text = "point p1;
-Draw p1 \"Hello World!\";
-num = 1;
-function();
-object.this;
-"
+draw p1 \"Hello World!\";
+num = 1;"
 scroll_smooth = true
 caret_blink = true
 syntax_highlighter = SubResource("CodeHighlighter_bhwpd")
@@ -107,7 +104,6 @@ draw_spaces = true
 symbol_lookup_on_click = true
 line_folding = true
 gutters_draw_line_numbers = true
-gutters_draw_fold_gutter = true
 code_completion_enabled = true
 auto_brace_completion_enabled = true
 auto_brace_completion_highlight_matching = true
@@ -137,3 +133,5 @@ layout_mode = 2
 [connection signal="tab_hovered" from="Workspace/Editor/EditorsTabs" to="Workspace/Editor/EditorsTabs" method="_OnTabHovered"]
 [connection signal="code_completion_requested" from="Workspace/Editor/EditorsTabs/CodeEdit" to="." method="OnCodeEditCodeCompletionRequested"]
 [connection signal="text_changed" from="Workspace/Editor/EditorsTabs/CodeEdit" to="." method="_OnCodeEditTextChanged"]
+
+[editable path="Workspace/Draw and Debug/DebugConsole"]
