@@ -48,7 +48,6 @@ public class FunctionCallExpression : Expression
         foreach (var argument in Arguments)
             boundArguments.Add(argument.GetBoundExpression(visibleVariables));
 
-        
-        return new BoundFunctionCallExpression(boundArguments,boundFunctionExpression);
+        return new BoundFunctionCallExpression(functionSymbol.Parameters,boundArguments,boundFunctionExpression);
     }
 }

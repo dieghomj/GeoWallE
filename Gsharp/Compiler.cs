@@ -6,6 +6,7 @@ namespace Gsharp;
 
 public static class Compiler
 {
+    public static string debugLog;
     private static List<Statement> syntaxStatements = new List<Statement>();
     private static List<BoundStatement> boundStatements = new List<BoundStatement>();
 
@@ -105,8 +106,6 @@ public static class Compiler
             return null;
         return syntaxFunctionDefinitions[symbol];
     }
-
-
 
     public static void AddFunctionDefinition(FunctionSymbol symbol, Expression expression) => syntaxFunctionDefinitions[symbol] = expression;
 
