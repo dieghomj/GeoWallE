@@ -32,7 +32,7 @@ public static class Compiler
     public static void Evaluate()
     {
         figures.Clear();
-        Dictionary<string, GObject> visibleVariables = new();
+        Dictionary<string, GObject> visibleVariables = new Dictionary<string, GObject>();
 
         foreach (BoundStatement boundStatement in boundStatements)
             boundStatement.EvaluateStatement(visibleVariables);
