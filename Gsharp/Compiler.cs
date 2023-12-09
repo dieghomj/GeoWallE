@@ -31,6 +31,7 @@ public static class Compiler
 
     public static void Evaluate()
     {
+        figures.Clear();
         Dictionary<string, GObject> visibleVariables = new();
 
         foreach (BoundStatement boundStatement in boundStatements)
