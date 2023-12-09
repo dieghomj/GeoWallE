@@ -3,7 +3,9 @@ using System.Collections;
 internal class SequenceEnumerator<T> : IEnumerator<T>
     where T : GObject
 {
-    public SequenceEnumerator() { }
+    public SequenceEnumerator(int start, int? end) { 
+        
+    }
 
     public T Current => throw new NotImplementedException();
 

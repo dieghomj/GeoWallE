@@ -23,9 +23,9 @@ public static class Compiler
         GetSyntaxStatements(code);
 
         Dictionary<string, GType> visibleVariables = new Dictionary<string, GType>();
-
-        foreach (Statement statement in syntaxStatements)
-            AddBoundStatement(statement.GetBoundStatement(visibleVariables));
+        
+        Binder binder = new Binder(syntaxStatements);
+        boundStatements = binder.Bind(visibleVariables).ToList<BoundStatement>();
     }
 
     public static void Evaluate()
@@ -65,9 +65,6 @@ public static class Compiler
     }
 
     public static void AddSyntaxStatement(Statement statement) => syntaxStatements.Add(statement);
-
-    private static void AddBoundStatement(BoundStatement boundStatement) =>
-        boundStatements.Add(boundStatement);
 
     public static void AddFigure(Figure figure, string message)
     {
