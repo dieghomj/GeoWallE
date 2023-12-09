@@ -1,13 +1,18 @@
 [gd_scene format=3 uid="uid://tj1v0qdgvdb1"]
 
 [node name="DebugConsole" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 3
-metadata/_edit_use_anchors_ = true
 metadata/_edit_group_ = true
 
 [node name="TextEdit" type="TextEdit" parent="."]
 layout_mode = 2
-size_flags_vertical = 8
+theme_override_font_sizes/font_size = 12
+placeholder_text = "Console"
 editable = false
 context_menu_enabled = false
 shortcut_keys_enabled = false

@@ -9,10 +9,11 @@ public partial class Controller : Control
     private PanelContainer Editor;
     private SplitContainer DrawAndDebug;
     private SplitContainer Workspace;
-
+    private TextEdit DebugConsole;
 
     public override void _Ready()
     {
+        DebugConsole = (TextEdit)GetNode("Workspace/Draw and Debug/DebugConsole/TextEdit");
         Workspace = (SplitContainer)GetNode("Workspace");
         TabContainer = (TabContainer)GetNode("Workspace/Editor/EditorsTabs");
         RunButton = (Button)GetNode("Buttons/ButtonContainer/RunButton");
@@ -33,7 +34,7 @@ public partial class Controller : Control
         }
         catch (Exception e)
         {
-            GD.PrintErr(e.Message, e.Message, e.InnerException, e.StackTrace, e.Source);
+            DebugConsole.Text = e.Message+ "\n" + e.Message+ "\n" + e.InnerException+ "\n" + e.StackTrace+ "\n" + e.Source ;
             return;
         }
         RunButton.Disabled = false;
@@ -46,7 +47,7 @@ public partial class Controller : Control
         }
         catch (Exception e)
         {
-            GD.PrintErr(e.Message, e.InnerException, e.StackTrace, e.Source);
+            DebugConsole.Text = e.Message+ "\n" + e.Message+ "\n" + e.InnerException+ "\n" + e.StackTrace+ "\n" + e.Source ;;
             return;
         }
     }
