@@ -1,60 +1,48 @@
-public enum UnaryOperatorKind
+public static class UnaryOperator
 {
-    LogicalNegation,
-    Identity,
-    Negation
-}
-public class UnaryOperator
-{
-    public static Dictionary<SyntaxKind,Func<object,object,object>> OperatorFunc = new Dictionary<SyntaxKind, Func<object, object, object>>
+    private static Dictionary<UnaryOperatorKind, Func<object, object>> OperatorFunc =
+        new Dictionary<UnaryOperatorKind, Func<object, object>>
     {
-        {SyntaxKind.PlusToken, Identity},
-        {SyntaxKind.MinusToken, Negation},
-        {SyntaxKind.BangToken, LogicalNegation},
-    
+        { UnaryOperatorKind.Identity, Identity },
+        { UnaryOperatorKind.Negation, Negation },
+        { UnaryOperatorKind.LogicalNegation, LogicalNegation },
     };
 
-    public UnaryOperator(SyntaxKind kind, UnaryOperatorKind operatorKind, Type operandType)
-    {
-        SyntaxKind = kind;
-        OperatorKind = operatorKind;
-        OperandType = operandType;
-    }
-    public SyntaxKind SyntaxKind { get; }
-    public UnaryOperatorKind OperatorKind { get; }
-    public Type OperandType { get; }
-
-    private static UnaryOperator[] _operators = 
-    {
-        new UnaryOperator(SyntaxKind.BangToken, UnaryOperatorKind.LogicalNegation, typeof(bool)),
-
-        new UnaryOperator(SyntaxKind.PlusToken, UnaryOperatorKind.Identity, typeof(double)),
-        new UnaryOperator(SyntaxKind.MinusToken, UnaryOperatorKind.Negation, typeof(double)),
-    };
-
-    public static UnaryOperator Bind(SyntaxKind syntaxKind, Type operandType)
-    {
-        foreach(var op in _operators)
+    private static Dictionary<SyntaxKind, Func<Expression, Expression>> InstantiateFunc =
+        new Dictionary<SyntaxKind, Func<Expression, Expression>>
         {
-            if(op.SyntaxKind == syntaxKind && op.OperandType == operandType)
-                return op;
-        }
+            { SyntaxKind.PlusToken, (Expression operand) => new IdentityExpression(operand) },
+            { SyntaxKind.MinusToken, (Expression operand) => new NegationExpression(operand) },
+            {
+                SyntaxKind.BangToken,
+                (Expression operand) => new LogicalNegationExpression(operand)
+            },
+        };
 
-        return null;
-    }
+    internal static Func<object, object> GetOperatorFunc(UnaryOperatorKind operatorKind) =>
+        OperatorFunc[operatorKind];
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="op"></param>
+    /// <param name="operand"></param>
+    /// <returns> Una nueva instancia de UnaryExpression </returns>
+    public static Expression GetInstantiate(SyntaxToken op, Expression operand) =>
+        InstantiateFunc[op.Kind](operand);
 
     #region casi cochina
-    private static object Identity(object arg1, object arg2)
+    private static object Identity(object operand)
     {
         throw new NotImplementedException();
     }
 
-    private static object Negation(object arg1, object arg2)
+    private static object Negation(object operand)
     {
         throw new NotImplementedException();
     }
 
-    private static object LogicalNegation(object arg1, object arg2)
+    private static object LogicalNegation(object operand)
     {
         throw new NotImplementedException();
     }

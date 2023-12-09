@@ -1,5 +1,6 @@
 public enum SyntaxKind
 {
+    // Tokens
     EndOfFileToken,
     EndOfStatementToken,
     BadToken,
@@ -7,10 +8,17 @@ public enum SyntaxKind
     NumberToken,
     StringToken,
     IdentifierToken,
+
+    // Symbol Tokens
+    OpenBracketToken,
+    CloseBracketToken,
     OpenParenthesisToken,
     CloseParenthesisToken,
+    CommaToken,
+    EllipsisToken,
+    UnderscoreToken,
 
-    //Operators
+    // Operator Tokens
     PlusToken,
     MinusToken,
     StarToken,
@@ -29,29 +37,42 @@ public enum SyntaxKind
     EqualsToken,
     BangToken,
 
-    //Keywords
+    // Keywords
     LetKeyword,
     InKeyword,
     IfKeyword,
     ThenKeyword,
     ElseKeyword,
     ConstantKeyword,
+    ColorKeyword,
+    RestoreKeyword,
+    ImportKeyword,
+    DrawKeyword,
+    LineKeyword,
+    SegmentKeyword,
+    RayKeyword,
+    ArcKeyword,
+    CircleKeyword,
+    MeasureKeyword,
+    IntersectKeyword,
+    CountKeyword,
+    RandomsKeyword,
+    PointsKeyword,
+    SamplesKeyword,
+    PointKeyword,
+    SequenceKeyword,
     PredefinedFunctionKeyword,
 
-    //Expressions
-    LiteralExpression,
-    NameExpression,
-    UnaryExpression,
-    BinaryExpression,
-    ParenthesizedExpression,
-    AssignmentExpression,
-    LetInExpression,
-    IfElseExpression,
-    FunctionCallExpression,
-    FunctionDeclarationExpression,
-    PredefinedFunctionExpression,
 
-    // Binary Expression
-    AdditionExpression,
-    SubtractionExpression
+    //Colors
+    BlueKeyword,
+    RedKeyword,
+    YellowKeyword,
+    GreenKeyword,
+    CyanKeyword,
+    MagentaKeyword,
+    WhiteKeyword,
+    GrayKeyword,
+    BlackKeyword,
+
 }
