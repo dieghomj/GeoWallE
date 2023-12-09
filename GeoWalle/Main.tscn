@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://Controller.cs" id="1_q7a7x"]
 [ext_resource type="PackedScene" uid="uid://cfyss5chxpq18" path="res://draw_zone.tscn" id="3_2rmp0"]
+[ext_resource type="SystemFont" uid="uid://nbnrlxvu5d4d" path="res://systemfont.res" id="4_0hni7"]
 [ext_resource type="PackedScene" uid="uid://tj1v0qdgvdb1" path="res://debug_console.tscn" id="4_c4put"]
 [ext_resource type="Script" path="res://TabController.cs" id="4_jod3n"]
 
@@ -14,8 +15,6 @@ color_regions = {
 "\" \"": Color(0.807843, 0.568627, 0.470588, 1),
 "' '": Color(0.807843, 0.568627, 0.470588, 1)
 }
-
-[sub_resource type="SystemFont" id="SystemFont_34prw"]
 
 [node name="Control" type="Control"]
 texture_filter = 2
@@ -126,7 +125,7 @@ vertical = true
 
 [node name="DrawZone" parent="Workspace/Draw and Debug" instance=ExtResource("3_2rmp0")]
 layout_mode = 2
-Font = SubResource("SystemFont_34prw")
+Font = ExtResource("4_0hni7")
 
 [node name="DebugConsole" parent="Workspace/Draw and Debug" instance=ExtResource("4_c4put")]
 layout_mode = 2
