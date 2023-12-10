@@ -6,7 +6,7 @@ namespace Gsharp;
 
 public static class Compiler
 {
-    public static string? debugLog;
+    private static string? debugLog = "";
     private static List<Error> errors = new List<Error>();
     private static List<Statement> syntaxStatements = new List<Statement>();
     private static List<BoundStatement> boundStatements = new List<BoundStatement>();
@@ -43,9 +43,11 @@ public static class Compiler
 
     public static void Reset()
     {
+        debugLog = "";
         errors = new List<Error>();
         syntaxStatements = new List<Statement>();
         boundStatements = new List<BoundStatement>();
+        syntaxFunctionDefinitions = new Dictionary<FunctionSymbol,Expression>();
         GraphState = new Dictionary<string, NodeState>();
         figures = new List<(Figure, Color, string)>();
     }
@@ -121,6 +123,12 @@ public static class Compiler
     public static List<Error> GetErrors() => new List<Error>(errors);
 
     public static void AddError(Error error) => errors.Add(error);
+
+    public static string Print(string print)
+    {
+        debugLog += print+"\n";
+        return debugLog;
+    }
 
     public static Color CurrentColor
     {

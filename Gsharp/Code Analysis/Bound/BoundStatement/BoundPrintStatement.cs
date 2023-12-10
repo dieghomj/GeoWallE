@@ -1,3 +1,5 @@
+using Gsharp;
+
 public class BoundPrintStatement : BoundStatement
 {
     public BoundPrintStatement(BoundExpression boundExpression)
@@ -10,6 +12,6 @@ public class BoundPrintStatement : BoundStatement
     public override void EvaluateStatement(Dictionary<string, GObject> visibleVariables)
     {
         /* Implementacion temporal */
-        System.Console.WriteLine(BoundExpression.Evaluate(visibleVariables));
+        Compiler.Print(BoundExpression.Evaluate(visibleVariables).ToString());
     }
 }

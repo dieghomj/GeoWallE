@@ -44,6 +44,7 @@ public partial class Controller : Control
         try
         {
             Compiler.Evaluate();
+            DebugConsole.Text = Compiler.Print("");
         }
         catch (Exception e)
         {
