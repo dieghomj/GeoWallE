@@ -11,6 +11,7 @@ public static class Compiler
     private static List<Statement> syntaxStatements = new List<Statement>();
     private static List<BoundStatement> boundStatements = new List<BoundStatement>();
 
+    private static Stack<Color>ColorStack = new Stack<Color>();
     private static List<(Figure figure, Color color, string message)> figures =
         new List<(Figure, Color, string)>();
     private static Color currentColor = Color.Black;
@@ -130,9 +131,11 @@ public static class Compiler
         return debugLog;
     }
 
+    internal static void ColorRestore() => ColorStack.Pop();    
+
     public static Color CurrentColor
     {
-        get => currentColor;
-        set => currentColor = value;
+        get => ColorStack.Peek();
+        set => ColorStack.Push(value);
     }
 }
