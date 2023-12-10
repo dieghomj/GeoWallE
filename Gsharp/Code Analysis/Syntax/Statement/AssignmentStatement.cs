@@ -24,7 +24,6 @@ public class AssignmentStatement : Statement
 
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)
     {
-        BindStatement(visibleVariables);
         var boundRightExpression = RightExpression.GetBoundExpression(visibleVariables);
         var variableSymbol = new VariableSymbol(NameToken.Text, boundRightExpression.Type);
         return new BoundAssignmentStatement(variableSymbol, boundRightExpression);
