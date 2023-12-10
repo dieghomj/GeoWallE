@@ -14,7 +14,7 @@ public class AssignmentStatement : Statement
         var variableName = NameToken.Text;
         var rightType = RightExpression.Bind(visibleVariables);
 
-        if (visibleVariables.Keys.FirstOrDefault(k => k == variableName) != null)
+        if (visibleVariables.ContainsKey(variableName))
         {
             System.Console.WriteLine($"Constant {variableName} is already defined");
             return;
@@ -24,7 +24,6 @@ public class AssignmentStatement : Statement
 
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)
     {
-        BindStatement(visibleVariables);
         var boundRightExpression = RightExpression.GetBoundExpression(visibleVariables);
         var variableSymbol = new VariableSymbol(NameToken.Text, boundRightExpression.Type);
         return new BoundAssignmentStatement(variableSymbol, boundRightExpression);

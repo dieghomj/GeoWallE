@@ -19,6 +19,8 @@ public class Measure : GObject
         return false;
     }
 
+    public override string ToString() => Value.ToString();
+
     #region Arithmetic Operators
 
     public static Measure operator +(Measure a, Measure b) => new Measure(a.Value + b.Value);

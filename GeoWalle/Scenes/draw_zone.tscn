@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cfyss5chxpq18"]
 
-[ext_resource type="StyleBox" uid="uid://68pdqspowm8i" path="res://drawpanel.stylebox" id="1_3bg2i"]
-[ext_resource type="Script" path="res://PanelDraw.cs" id="2_5flq1"]
+[ext_resource type="StyleBox" uid="uid://68pdqspowm8i" path="res://Styles/drawpanel.stylebox" id="1_3bg2i"]
+[ext_resource type="Script" path="res://Scripts/PanelDraw.cs" id="2_5flq1"]
 
 [node name="DrawZone" type="Panel"]
 clip_contents = true

@@ -24,6 +24,17 @@ public class Sequence<T> : GObject, IEnumerable<T>
         return true;
     }
 
+    public override string ToString()
+    {
+        if (IsInfinite())
+            return "{Infinite Sequence}";
+
+        string output = "{ ";
+        foreach (var x in Elements)
+            output += x.ToString() + ' ';
+        return output + "}";
+    }
+
     public bool IsInfinite() => Count == -1;
 
     public IEnumerator<T> GetEnumerator() => Elements.GetEnumerator();

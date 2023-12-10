@@ -1,6 +1,7 @@
 public class SequenceLiteralExpression : Expression
 {
-    public SequenceLiteralExpression(List<Expression> elements) : this(elements.FirstOrDefault(), elements.LastOrDefault())
+    public SequenceLiteralExpression(List<Expression> elements)
+        : this(elements.FirstOrDefault(), elements.LastOrDefault())
     {
         Elements = elements;
     }
@@ -28,7 +29,9 @@ public class SequenceLiteralExpression : Expression
             var endType = End.Bind(visibleVariables);
             if (endType != startType)
             {
-                System.Console.WriteLine($"! SEMANTIC ERROR: Element of type {endType} in sequence of type {startType}");
+                System.Console.WriteLine(
+                    $"! SEMANTIC ERROR: Element of type {endType} in sequence of type {startType}"
+                );
                 return GType.Undefined;
             }
         }
@@ -39,7 +42,9 @@ public class SequenceLiteralExpression : Expression
                 var elementType = element.Bind(visibleVariables);
                 if (elementType == startType)
                     continue;
-                System.Console.WriteLine($"! SEMANTIC ERROR: Element of type {elementType} in sequence of type {startType}");
+                System.Console.WriteLine(
+                    $"! SEMANTIC ERROR: Element of type {elementType} in sequence of type {startType}"
+                );
                 return GType.Undefined;
             }
         }
@@ -49,13 +54,16 @@ public class SequenceLiteralExpression : Expression
     protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)
     {
         List<BoundExpression> boundElements = new List<BoundExpression>();
+        foreach (Expression element in Elements)
+            boundElements.Add(element.GetBoundExpression(visibleVariables));
+
         var boundStart = Start.GetBoundExpression(visibleVariables);
-        if(Elements is null)
+        if (Elements is null)
         {
-            if(End is null)
+            if (End is null)
                 return new BoundSequenceLiteralExpression(boundStart);
             var boundEnd = End.GetBoundExpression(visibleVariables);
-                return new BoundSequenceLiteralExpression(boundStart, boundEnd);
+            return new BoundSequenceLiteralExpression(boundStart, boundEnd);
         }
         return new BoundSequenceLiteralExpression(boundElements);
     }
