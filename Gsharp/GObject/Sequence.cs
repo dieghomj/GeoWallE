@@ -26,10 +26,13 @@ public class Sequence<T> : GObject, IEnumerable<T>
 
     public override string ToString()
     {
-        if (Elements.ToString() is null)
-            return "{Sequence}";
-        else
-            return Elements.ToString()!;
+        if (IsInfinite())
+            return "{Infinite Sequence}";
+
+        string output = "{ ";
+        foreach (var x in Elements)
+            output += x.ToString() + ' ';
+        return output + "}";
     }
 
     public bool IsInfinite() => Count == -1;

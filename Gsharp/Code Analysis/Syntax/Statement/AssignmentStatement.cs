@@ -14,7 +14,7 @@ public class AssignmentStatement : Statement
         var variableName = NameToken.Text;
         var rightType = RightExpression.Bind(visibleVariables);
 
-        if (visibleVariables.Keys.FirstOrDefault(k => k == variableName) != null)
+        if (visibleVariables.ContainsKey(variableName))
         {
             System.Console.WriteLine($"Constant {variableName} is already defined");
             return;

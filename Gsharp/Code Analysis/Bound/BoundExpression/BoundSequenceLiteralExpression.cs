@@ -1,8 +1,12 @@
+using System.Linq.Expressions;
+
 public class BoundSequenceLiteralExpression : BoundExpression
 {
     public BoundSequenceLiteralExpression(List<BoundExpression> boundElements)
     {
         BoundElements = boundElements;
+        Start = boundElements.FirstOrDefault()!;
+        End = null;
     }
 
     public BoundSequenceLiteralExpression(BoundExpression start, BoundExpression? end = null)
