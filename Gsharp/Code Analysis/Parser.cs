@@ -37,7 +37,7 @@ public class Parser
         NextToken();
 
         Console.WriteLine($"Error: Unexpected token <{Current.Text}>");
-        return new SyntaxToken(kind, Current.Position, Current.Text, null);
+        return new SyntaxToken(kind, Current.Position, Current.Text);
     }
 
     public List<ImportStatement> GetImportStatements()
@@ -390,13 +390,20 @@ public class Parser
     private Expression ParseNumberLiteral()
     {
         SyntaxToken literalToken = Match(SyntaxKind.NumberToken);
-        return new LiteralExpression(literalToken, literalToken.Value);
+        return new LiteralExpression(literalToken, double.Parse(literalToken.Text));
     }
 
     private Expression ParseStringLiteral()
     {
         SyntaxToken literalToken = Match(SyntaxKind.StringToken);
-        return new LiteralExpression(literalToken, literalToken.Value);
+
+        string value = literalToken.Text[1..^1];
+        value = value.Replace("\\\"", "\"");
+        value = value.Replace("\\t", "\t");
+        value = value.Replace("\\n", "\n");
+        value = value.Replace("\\\\", "\\");
+
+        return new LiteralExpression(literalToken, value);
     }
 
     private Expression ParseNameExpression()

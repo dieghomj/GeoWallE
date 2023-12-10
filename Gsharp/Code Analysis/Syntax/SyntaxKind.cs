@@ -3,6 +3,8 @@ public enum SyntaxKind
     // Tokens
     EndOfFileToken,
     EndOfStatementToken,
+    EndOfLineToken,
+    CommentaryToken,
     BadToken,
     WhiteSpaceToken,
     NumberToken,
@@ -63,7 +65,6 @@ public enum SyntaxKind
     SequenceKeyword,
     PredefinedFunctionKeyword,
 
-
     //Colors
     BlueKeyword,
     RedKeyword,
@@ -74,5 +75,4 @@ public enum SyntaxKind
     WhiteKeyword,
     GrayKeyword,
     BlackKeyword,
-
 }
