@@ -33,6 +33,7 @@ public static class SyntaxFacts
         { "white", SyntaxKind.WhiteKeyword },
         { "gray", SyntaxKind.GrayKeyword },
         { "black", SyntaxKind.BlackKeyword },
+        { "print", SyntaxKind.PrintKeyword }
     };
 
     public static List<SyntaxKind> DeclarationKeywords =
@@ -44,14 +45,14 @@ public static class SyntaxFacts
             SyntaxKind.RayKeyword,
             SyntaxKind.CircleKeyword,
         };
-    public static Dictionary<SyntaxKind,GType> DeclarationKeywordsTypes =
+    public static Dictionary<SyntaxKind, GType> DeclarationKeywordsTypes =
         new()
         {
-            {SyntaxKind.PointKeyword,GType.Point},
-            {SyntaxKind.LineKeyword,GType.Line},
-            {SyntaxKind.SegmentKeyword,GType.Segment},
-            {SyntaxKind.RayKeyword,GType.Ray},
-            {SyntaxKind.CircleKeyword,GType.Circle}
+            { SyntaxKind.PointKeyword, GType.Point },
+            { SyntaxKind.LineKeyword, GType.Line },
+            { SyntaxKind.SegmentKeyword, GType.Segment },
+            { SyntaxKind.RayKeyword, GType.Ray },
+            { SyntaxKind.CircleKeyword, GType.Circle }
         };
 
     public static List<SyntaxKind> PredefinedFunctionKeywords =

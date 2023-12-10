@@ -19,6 +19,8 @@ public class Number : GObject
         return true;
     }
 
+    public override string ToString() => Value.ToString();
+
     #region Binary Operators
 
     public static Number operator +(Number a, Number b) => new Number(a.Value + b.Value);

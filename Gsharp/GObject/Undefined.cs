@@ -12,4 +12,6 @@ public class Undefined : GObject
     }
 
     public override bool IsTrue() => false;
+
+    public override string ToString() => "Undefined";
 }

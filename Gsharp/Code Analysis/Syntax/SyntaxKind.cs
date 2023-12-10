@@ -64,6 +64,7 @@ public enum SyntaxKind
     PointKeyword,
     SequenceKeyword,
     PredefinedFunctionKeyword,
+    PrintKeyword,
 
     //Colors
     BlueKeyword,

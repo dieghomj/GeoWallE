@@ -66,7 +66,7 @@ public class Parser
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns>Devuelve una lista de ImportStatement</returns>
     public List<ImportStatement> GetImportStatements()
@@ -136,9 +136,18 @@ public class Parser
                 }
             case SyntaxKind.UnderscoreToken:
                 return ParseMatchStatement();
+            case SyntaxKind.PrintKeyword:
+                return ParsePrintStatement();
             default:
                 return ParseExpression();
         }
+    }
+
+    private Statement ParsePrintStatement()
+    {
+        Match(SyntaxKind.PrintKeyword);
+
+        return new PrintStatement(ParseExpression());
     }
 
     private Statement ParseDeclarationStatement()

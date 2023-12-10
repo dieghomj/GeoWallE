@@ -20,5 +20,7 @@ public class String : GObject
         return true;
     }
 
+    public override string ToString() => Value;
+
     public static String operator +(String a, String b) => new String(string.Concat(a, b));
 }
