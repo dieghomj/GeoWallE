@@ -15,8 +15,7 @@ public class DeclarationSequenceStatement : Statement
         var kind = KeywordToken.Kind;
         if(visibleVariables.Keys.FirstOrDefault(k => k == name) != null)
         {
-            System.Console.WriteLine($"! SEMANTIC ERROR : Constant {name} is already defined");
-            return;
+            throw new Exception($"! SEMANTIC ERROR : Constant {name} is already defined");
         }
         visibleVariables[name] = SyntaxFacts.DeclarationKeywordsTypes[kind];
     }

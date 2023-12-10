@@ -18,16 +18,14 @@ public class DrawStatement : Statement
     {
         if(Figure.Bind(visibleVariables).IsFigure())
         {
-            System.Console.WriteLine("! SEMMANTIC ERROR : Expected figure is not a figure");
-            return;
+            throw new Exception("! SEMMANTIC ERROR : Expected figure is not a figure");
         }
         if (Message is not null)
         {
             var messageType = Message.Bind(visibleVariables);
             if (messageType != GType.String)
             {
-                System.Console.WriteLine("! SEMANTIC ERROR: Expected message of type <string>");
-                return;
+                throw new Exception("! SEMANTIC ERROR: Expected message of type <string>");
             }
         }
     }

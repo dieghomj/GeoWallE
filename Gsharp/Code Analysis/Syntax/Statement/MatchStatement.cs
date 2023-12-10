@@ -21,7 +21,7 @@ public class MatchStatement : Statement
 
             if (visibleVariables.Keys.FirstOrDefault(k => k == variableName) != null)
             {
-                System.Console.WriteLine($"Constant {variableName} is already defined");
+                throw new Exception($"Constant {variableName} is already defined");
                 return;
             }
 

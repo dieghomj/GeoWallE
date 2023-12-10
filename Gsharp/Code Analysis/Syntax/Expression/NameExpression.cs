@@ -15,8 +15,7 @@ public class NameExpression : Expression
         var variable = visibleVariables.Keys.FirstOrDefault(k => k == IdentifierToken.Text);
         if(variable == null)
         {
-            System.Console.WriteLine($"!SEMANTIC ERROR: Constant {variable} doesn't exist");
-            return GType.Undefined;
+            throw new Exception($"!SEMANTIC ERROR: Constant {variable} doesn't exist");
         }   
         else
         {

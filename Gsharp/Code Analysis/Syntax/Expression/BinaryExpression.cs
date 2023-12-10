@@ -22,8 +22,7 @@ public abstract class BinaryExpression : Expression
         ResultType = op.ResultType;
         if (op == null)
         {
-            System.Console.WriteLine("! SEMANTIC ERROR: Binary operator not defined");
-            return GType.Undefined;
+            throw new Exception("! SEMANTIC ERROR: Binary operator not defined");
         }
         else
             return op.ResultType;
