@@ -100,7 +100,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
             ReadSymbol();
         }
         else
-            throw new Exception($"! LEXICAL ERROR: `{Current}` is not a valid token.");
+            throw new Exception($"! LEXICAL ERROR: `{Current}` is not valid token.");
 
         int length = _position - _start;
         string text = _text.Substring(_start, length);
