@@ -3,13 +3,13 @@ using System;
 
 public partial class TabController : TabContainer
 {
-    private Node CodeEdit;
+    private CodeEdit CodeEdit;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
 	{
 		GetTabControl(0).Name = "Code";
-		CodeEdit = GetTabControl(0).Duplicate();
+		CodeEdit = (CodeEdit)GetTabControl(0).Duplicate();
 		CodeEdit.Name = "Code";
 	}
 
@@ -29,15 +29,14 @@ public partial class TabController : TabContainer
 
 	public void OnTabClicked(int tab)
 	{
-        bool isNewButton;
         if (tab == GetTabCount() - 1)
 		{
 			var newTabButton = GetTabControl(tab).Duplicate();
 			GetTabControl(tab).Free();
 
-			var newCodeEdit = CodeEdit.Duplicate();
-			AddChild(newCodeEdit);
-			newCodeEdit.Name = "Code";
+			AddChild(CodeEdit);
+			CodeEdit.Name = "Code";
+			CodeEdit = (CodeEdit)CodeEdit.Duplicate();
 			AddChild(newTabButton);
 			newTabButton.Name = "+";
 		
