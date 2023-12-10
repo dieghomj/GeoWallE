@@ -1,6 +1,6 @@
 public class PredefinedFunctionExpression : Expression
 {
-    private BoundPredefinedFunction function;
+    private BoundPredefinedFunction? function;
     public PredefinedFunctionExpression(SyntaxToken functionToken, List<Expression> arguments)
     {
         FunctionToken = functionToken;

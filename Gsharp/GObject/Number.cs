@@ -1,5 +1,9 @@
 public class Number : GObject
 {
+    public Number()
+    {
+        Value = Random.Shared.NextDouble();
+    }
     public Number(double value)
     {
         Value = value;

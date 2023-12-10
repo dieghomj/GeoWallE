@@ -16,10 +16,10 @@ public class BoundPredefinedFunctionExpression : BoundExpression
 
     public override GObject Evaluate(Dictionary<string, GObject> visibleVariables)
     {
-        List<object> arguments = new List<object>();
+        List<GObject> arguments = new List<GObject>();
         foreach (var argument in Arguments)
             arguments.Add(argument.Evaluate(visibleVariables));
 
-        return Function.Evaluate(arguments);
+        return Function.Evaluate(arguments.ToArray());
     }
 }

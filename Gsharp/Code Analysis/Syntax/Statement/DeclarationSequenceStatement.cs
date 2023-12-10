@@ -24,6 +24,6 @@ public class DeclarationSequenceStatement : Statement
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)
     {
         var type = SyntaxFacts.DeclarationKeywordsTypes[KeywordToken.Kind];
-        return new BoundDeclarationStatement(new VariableSymbol(NameToken.Text,type));
+        return new BoundSequenceDeclarationStatement(new VariableSymbol(NameToken.Text,type));
     }
 }

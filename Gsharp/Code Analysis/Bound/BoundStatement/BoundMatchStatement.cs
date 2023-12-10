@@ -16,8 +16,7 @@ public class BoundMatchStatement : BoundStatement
                 visibleVariables[variable.Name] = new Undefined();
         else
         {
-            Sequence<GObject> sequence =
-                (Sequence<GObject>)BoundSequence.Evaluate(visibleVariables);
+            Sequence<GObject> sequence =(Sequence<GObject>)BoundSequence.Evaluate(visibleVariables);
             IEnumerator<GObject> sequenceEnumerator = sequence.GetEnumerator();
 
             for (int i = 0; i < BoundVariables.Count - 1; ++i)
