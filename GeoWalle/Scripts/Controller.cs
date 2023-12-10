@@ -34,6 +34,7 @@ public partial class Controller : Control
         }
         catch (Exception e)
         {
+            DebugConsole.AddThemeColorOverride("font_readonly_color",Godot.Color.Color8(230,100,100));
             DebugConsole.Text = e.Message+ "\n" + e.Message+ "\n" + e.InnerException+ "\n" + e.StackTrace+ "\n" + e.Source ;
             return;
         }
@@ -44,10 +45,12 @@ public partial class Controller : Control
         try
         {
             Compiler.Evaluate();
+            DebugConsole.AddThemeColorOverride("font_readonly_color",Godot.Color.Color8(244,244,244));
             DebugConsole.Text = Compiler.Print("");
         }
         catch (Exception e)
         {
+            DebugConsole.AddThemeColorOverride("font_readonly_color",Godot.Color.Color8(230,100,100));
             DebugConsole.Text = e.Message+ "\n" + e.Message+ "\n" + e.InnerException+ "\n" + e.StackTrace+ "\n" + e.Source ;;
             return;
         }
@@ -61,11 +64,6 @@ public partial class Controller : Control
         {
             currentCode.AddCodeCompletionOption(CodeEdit.CodeCompletionKind.Class,keyword,keyword);
         }
-
-        // foreach (var variable in Compiler.bindVariables.Keys)
-        // {
-        //     currentCode.AddCodeCompletionOption(CodeEdit.CodeCompletionKind.Variable,variable,variable);
-        // }
 
         currentCode.UpdateCodeCompletionOptions(true);
     }

@@ -17,7 +17,8 @@ function_color = Color(0.862745, 0.862745, 0.666667, 1)
 member_variable_color = Color(0.337255, 0.611765, 0.839216, 1)
 color_regions = {
 "\" \"": Color(0.807843, 0.568627, 0.470588, 1),
-"' '": Color(0.807843, 0.568627, 0.470588, 1)
+"' '": Color(0.807843, 0.568627, 0.470588, 1),
+"\\\\ \\\\": Color(0, 0, 0, 1)
 }
 
 [node name="Control" type="Control"]
@@ -103,7 +104,7 @@ theme_override_colors/brace_mismatch_color = Color(0.988235, 0.254902, 0.219608,
 theme_override_colors/line_number_color = Color(1, 1, 1, 0.360784)
 theme_override_colors/word_highlighted_color = Color(1, 1, 1, 0.266667)
 theme_override_font_sizes/font_size = 15
-text = "point p1;
+placeholder_text = "point p1;
 draw p1 \"Hello World!\";
 num = 1;"
 scroll_smooth = true
@@ -112,10 +113,10 @@ syntax_highlighter = SubResource("CodeHighlighter_bhwpd")
 highlight_all_occurrences = true
 highlight_current_line = true
 draw_tabs = true
-draw_spaces = true
 symbol_lookup_on_click = true
 line_folding = true
 gutters_draw_line_numbers = true
+delimiter_strings = Array[String]([])
 code_completion_enabled = true
 auto_brace_completion_enabled = true
 auto_brace_completion_highlight_matching = true
