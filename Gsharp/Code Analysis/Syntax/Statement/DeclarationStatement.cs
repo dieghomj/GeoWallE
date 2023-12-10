@@ -15,13 +15,11 @@ public class DeclarationStatement : Statement
         var kind = KeywordToken.Kind;
         if(!SyntaxFacts.DeclarationKeywordsTypes.ContainsKey(kind))
         {
-            System.Console.WriteLine($"! SEMANTIC ERROR : {KeywordToken.Text} type doesn't exist");
-            return;
+            throw new Exception($"! SEMANTIC ERROR : {KeywordToken.Text} type doesn't exist");
         }
         if(visibleVariables.Keys.FirstOrDefault(k => k == name) != null)
         {
-            System.Console.WriteLine($"! SEMANTIC ERROR : Constant {name} is already defined");
-            return;
+            throw new Exception($"! SEMANTIC ERROR : Constant {name} is already defined");
         }
         visibleVariables[name] = SyntaxFacts.DeclarationKeywordsTypes[kind];
     }

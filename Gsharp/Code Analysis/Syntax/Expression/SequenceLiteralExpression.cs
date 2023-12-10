@@ -29,10 +29,9 @@ public class SequenceLiteralExpression : Expression
             var endType = End.Bind(visibleVariables);
             if (endType != startType)
             {
-                System.Console.WriteLine(
+                throw new Exception(
                     $"! SEMANTIC ERROR: Element of type {endType} in sequence of type {startType}"
                 );
-                return GType.Undefined;
             }
         }
         else
@@ -42,10 +41,9 @@ public class SequenceLiteralExpression : Expression
                 var elementType = element.Bind(visibleVariables);
                 if (elementType == startType)
                     continue;
-                System.Console.WriteLine(
+                throw new Exception(
                     $"! SEMANTIC ERROR: Element of type {elementType} in sequence of type {startType}"
                 );
-                return GType.Undefined;
             }
         }
         return startType;

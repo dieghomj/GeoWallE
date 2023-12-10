@@ -15,8 +15,8 @@ public abstract class UnaryExpression : Expression
         var op = BoundUnaryOperator.Bind(OperatorKind,operandType);
         if(op == null)
         {
-            System.Console.WriteLine($"! SEMANTIC ERROR : Unary operator {Operators.GetText(OperatorKind)} is not defined for {operandType}");
-            return GType.Undefined;
+            throw new Exception($"! SEMANTIC ERROR : Unary operator {Operators.GetText(OperatorKind)} is not defined for {operandType}");
+
         }
         else
             return op.OperandType;
