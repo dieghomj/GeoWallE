@@ -14,7 +14,6 @@ public static class Compiler
     private static Stack<Color>ColorStack = new Stack<Color>();
     private static List<(Figure figure, Color color, string message)> figures =
         new List<(Figure, Color, string)>();
-    private static Color currentColor = Color.Black;
     private static bool isModified = false;
     private static readonly System.Timers.Timer timer = new System.Timers.Timer();
     private static Dictionary<string, NodeState> GraphState = new Dictionary<string, NodeState>();
@@ -26,6 +25,8 @@ public static class Compiler
         Reset();
 
         GetSyntaxStatements(code);
+        
+        ColorStack.Push(Color.Black);
 
         Dictionary<string, GType> visibleVariables = new Dictionary<string, GType>();
 
@@ -44,6 +45,7 @@ public static class Compiler
 
     public static void Reset()
     {
+        ColorStack.Clear();
         debugLog = "";
         errors = new List<Error>();
         syntaxStatements = new List<Statement>();

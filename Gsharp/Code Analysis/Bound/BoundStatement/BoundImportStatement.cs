@@ -20,14 +20,10 @@ public class BoundImportStatement : BoundStatement
                 Compiler.AddState(directory, NodeState.Processing);
                 break;
             case NodeState.Processing:
-                System.Console.WriteLine("Compilation Error: There is a cycle in file imports");
-                return;
+                throw new Exception("Circular import detected");
             case NodeState.Processed:
                 return;
         }
-
-        try
-        {
             StreamReader file = new StreamReader(directory);
 
             string? line = file.ReadLine();
@@ -43,10 +39,6 @@ public class BoundImportStatement : BoundStatement
             Compiler.GetSyntaxStatements(code);
 
             Compiler.AddState(directory, NodeState.Processed);
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine("Exception: " + e.Message);
-        }
+  
     }
 }

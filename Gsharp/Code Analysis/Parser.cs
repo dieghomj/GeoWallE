@@ -76,8 +76,8 @@ public class Parser
         {
             Match(SyntaxKind.ImportKeyword);
             importStatements.Add(new ImportStatement(ParseStringLiteral()));
+            Match(SyntaxKind.EndOfStatementToken);
         }
-
         return importStatements;
     }
 
