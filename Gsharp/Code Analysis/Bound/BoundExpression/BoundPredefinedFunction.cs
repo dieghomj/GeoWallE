@@ -36,15 +36,13 @@ public class BoundPredefinedFunction
     public static BoundPredefinedFunction Bind(string function, int argumentsCount, GType[] argumentsType)
     {
         foreach (var predefFunction in _Functions)
-        {   
-            bool equalArguments = false;
-            
-            if(predefFunction.Function != function)
+        {
+            if (predefFunction.Function != function)
                 continue;
             if(predefFunction.ArgumentsCount != argumentsCount)
                 continue;
-            
-            equalArguments = true;
+
+            bool equalArguments = true;
             for (int i = 0; i < predefFunction.ArgumentsType.Length; i++)
             {
                 if (predefFunction.ArgumentsType[i] == argumentsType[i])
@@ -119,7 +117,7 @@ public class BoundPredefinedFunction
     }
     private static GObject Count(GObject[] args) 
     {
-        var s = (Sequence<GObject>)args[0] ;
+        dynamic s = args[0];
         return new Number(s.Count);
     }
 

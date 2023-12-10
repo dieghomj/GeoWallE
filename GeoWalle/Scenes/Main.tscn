@@ -138,6 +138,10 @@ Font = ExtResource("7_aelpk")
 [node name="DebugConsole" parent="Workspace/Draw and Debug" instance=ExtResource("4_c4put")]
 layout_mode = 2
 
+[node name="TextEdit" parent="Workspace/Draw and Debug/DebugConsole" index="0"]
+theme_override_colors/font_readonly_color = Color(0.956863, 0.956863, 0.956863, 1)
+context_menu_enabled = true
+
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
 offset_left = 18.0
