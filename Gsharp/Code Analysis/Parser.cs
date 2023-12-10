@@ -4,6 +4,10 @@ public class Parser
     private string _text;
     private int _position;
 
+    /// <summary>
+    /// Inicializa un analizador sintactico para un codigo en el lenguaje Gsharp
+    /// </summary>
+    /// <param name="text"></param>
     public Parser(string text)
     {
         _text = text;
@@ -11,6 +15,11 @@ public class Parser
         _tokens = lexer.ToArray();
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="offset"></param>
+    /// <returns>Retorna _tokens[position + offset] </returns>
     private SyntaxToken Peek(int offset)
     {
         var index = _position + offset;
@@ -19,9 +28,20 @@ public class Parser
         return _tokens[index];
     }
 
+    /// <summary>
+    /// Contiene el token actual
+    /// </summary>
     private SyntaxToken Current => Peek(0);
+
+    /// <summary>
+    /// Contiene el token siguiente
+    /// </summary>
     private SyntaxToken LookAhead => Peek(1);
 
+    /// <summary>
+    /// Mueve al siguiente token
+    /// </summary>
+    /// <returns>Devuelve el token actual antes de moverse</returns>
     private SyntaxToken NextToken()
     {
         var current = Current;
@@ -29,6 +49,11 @@ public class Parser
         return current;
     }
 
+    /// <summary>
+    /// Verifica si el token actual es del tipo kind
+    /// </summary>
+    /// <param name="kind"></param>
+    /// <returns>Devuelve el token requerido</returns>
     private SyntaxToken Match(SyntaxKind kind)
     {
         if (Current.Kind == kind)
@@ -37,12 +62,16 @@ public class Parser
         NextToken();
 
         Console.WriteLine($"Error: Unexpected token <{Current.Text}>");
-        return new SyntaxToken(kind, Current.Position, Current.Text, null);
+        return new SyntaxToken(kind, Current.Position, Current.Text);
     }
 
+    /// <summary>
+    ///
+    /// </summary>
+    /// <returns>Devuelve una lista de ImportStatement</returns>
     public List<ImportStatement> GetImportStatements()
     {
-        List<ImportStatement> importStatements = new();
+        List<ImportStatement> importStatements = new List<ImportStatement>();
         while (Current.Kind == SyntaxKind.ImportKeyword)
         {
             Match(SyntaxKind.ImportKeyword);
@@ -52,6 +81,10 @@ public class Parser
         return importStatements;
     }
 
+    /// <summary>
+    /// Analiza sintacticamente un codigo en el lenguaje Gsharp
+    /// </summary>
+    /// <returns>Una lista de Statement</returns>
     public List<Statement> Parse()
     {
         List<Statement> statementsList = new List<Statement>();
@@ -103,9 +136,18 @@ public class Parser
                 }
             case SyntaxKind.UnderscoreToken:
                 return ParseMatchStatement();
+            case SyntaxKind.PrintKeyword:
+                return ParsePrintStatement();
             default:
                 return ParseExpression();
         }
+    }
+
+    private Statement ParsePrintStatement()
+    {
+        Match(SyntaxKind.PrintKeyword);
+
+        return new PrintStatement(ParseExpression());
     }
 
     private Statement ParseDeclarationStatement()
@@ -390,13 +432,20 @@ public class Parser
     private Expression ParseNumberLiteral()
     {
         SyntaxToken literalToken = Match(SyntaxKind.NumberToken);
-        return new LiteralExpression(literalToken, literalToken.Value);
+        return new LiteralExpression(literalToken, double.Parse(literalToken.Text));
     }
 
     private Expression ParseStringLiteral()
     {
         SyntaxToken literalToken = Match(SyntaxKind.StringToken);
-        return new LiteralExpression(literalToken, literalToken.Value);
+
+        string value = literalToken.Text[1..^1];
+        value = value.Replace("\\\"", "\"");
+        value = value.Replace("\\t", "\t");
+        value = value.Replace("\\n", "\n");
+        value = value.Replace("\\\\", "\\");
+
+        return new LiteralExpression(literalToken, value);
     }
 
     private Expression ParseNameExpression()

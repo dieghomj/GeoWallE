@@ -38,7 +38,7 @@ public class LexerEnumerator : IEnumerator<SyntaxToken>
         isNotMoved = false;
         _current = _lex.Lex();
 
-        if (_current.Kind == SyntaxKind.WhiteSpaceToken)
+        if (_current.Kind is SyntaxKind.WhiteSpaceToken or SyntaxKind.EndOfLineToken)
             return MoveNext();
 
         return true;

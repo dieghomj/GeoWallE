@@ -17,5 +17,9 @@ while (true)
 
 Parser parser = new Parser(code);
 
-foreach (var statement in parser.Parse())
-    System.Console.WriteLine(statement.GetType());
+Binder binder = new Binder(parser.Parse());
+
+Dictionary<string, GObject> visibleVariables = new Dictionary<string, GObject>();
+
+foreach (var boundStatement in binder.Bind(new Dictionary<string, GType>()))
+    boundStatement.EvaluateStatement(visibleVariables);
