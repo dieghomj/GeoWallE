@@ -72,7 +72,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
             Next();
             _kind = SyntaxKind.WhiteSpaceToken;
         }
-        else if (Current == '\\' && LookAhead == '\\')
+        else if (Current == '/' && LookAhead == '/')
         {
             ReadComment();
         }
@@ -100,10 +100,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
             ReadSymbol();
         }
         else
-        {
-            System.Console.WriteLine("LEXICAL ERROR");
-            Next();
-        }
+            throw new Exception($"! LEXICAL ERROR: `{Current}` is not valid token.");
 
         int length = _position - _start;
         string text = _text.Substring(_start, length);
@@ -133,7 +130,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
         //Si no se puede parsear como un numero explota.
         if (!double.TryParse(text, out var value))
         {
-            Console.WriteLine($"! LEXICAL ERROR: `{text}` is not a NUMBER");
+            throw new Exception($"! LEXICAL ERROR: `{text}` is not a NUMBER");
         }
 
         _kind = SyntaxKind.NumberToken;
@@ -162,7 +159,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
 
         if (Current == '\0')
         {
-            System.Console.WriteLine("!LEXICAL ERROR: Expected character <\">");
+            throw new Exception("! LEXICAL ERROR: Expected character <\">");
         }
         else
         {

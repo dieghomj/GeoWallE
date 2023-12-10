@@ -21,9 +21,8 @@ public partial class Controller : Control
         DrawAndDebug = (SplitContainer)GetNode("Workspace/Draw and Debug");
     }
 
-    public override void _Process(double delta)
-    {
-    }
+    public override void _Process(double delta) { }
+
     public void OnCompileButtonButtonDown()
     {
         var codeEdit = (CodeEdit)TabContainer.GetCurrentTabControl();
@@ -35,11 +34,13 @@ public partial class Controller : Control
         catch (Exception e)
         {
             DebugConsole.AddThemeColorOverride("font_readonly_color",Godot.Color.Color8(230,100,100));
-            DebugConsole.Text = e.Message+ "\n" + e.Message+ "\n" + e.InnerException+ "\n" + e.StackTrace+ "\n" + e.Source ;
+            DebugConsole.Text =
+                e.Message + "\n" + e.InnerException + "\n" + e.StackTrace + "\n" + e.Source;
             return;
         }
         RunButton.Disabled = false;
     }
+
     public void _OnRunButtonButtonDown()
     {
         try
@@ -51,7 +52,9 @@ public partial class Controller : Control
         catch (Exception e)
         {
             DebugConsole.AddThemeColorOverride("font_readonly_color",Godot.Color.Color8(230,100,100));
-            DebugConsole.Text = e.Message+ "\n" + e.Message+ "\n" + e.InnerException+ "\n" + e.StackTrace+ "\n" + e.Source ;;
+            DebugConsole.Text =
+                e.Message + "\n" + e.InnerException + "\n" + e.StackTrace + "\n" + e.Source;
+            ;
             return;
         }
     }
@@ -62,7 +65,11 @@ public partial class Controller : Control
         GD.Print(currentCode.Name);
         foreach (var keyword in SyntaxFacts.Keywords.Keys)
         {
-            currentCode.AddCodeCompletionOption(CodeEdit.CodeCompletionKind.Class,keyword,keyword);
+            currentCode.AddCodeCompletionOption(
+                CodeEdit.CodeCompletionKind.Class,
+                keyword,
+                keyword
+            );
         }
 
         currentCode.UpdateCodeCompletionOptions(true);
