@@ -110,7 +110,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
 
     private void ReadComment()
     {
-        while (Current != '\n' || Current != '\0')
+        while (Current != '\n' && Current != '\0')
             Next();
 
         if (Current == '\n')

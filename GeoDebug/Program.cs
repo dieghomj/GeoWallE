@@ -12,14 +12,14 @@ while (true)
     code += line + " ";
 }
 
-// foreach(var token in new Lexer(code))
-//     System.Console.WriteLine(token.Kind);
+foreach(var token in new Lexer(code))
+    System.Console.WriteLine(token.Kind);
 
-Parser parser = new Parser(code);
+// Parser parser = new Parser(code);
 
-Binder binder = new Binder(parser.Parse());
+// Binder binder = new Binder(parser.Parse());
 
-Dictionary<string, GObject> visibleVariables = new Dictionary<string, GObject>();
+// Dictionary<string, GObject> visibleVariables = new Dictionary<string, GObject>();
 
-foreach (var boundStatement in binder.Bind(new Dictionary<string, GType>()))
-    boundStatement.EvaluateStatement(visibleVariables);
+// foreach (var boundStatement in binder.Bind(new Dictionary<string, GType>()))
+//     boundStatement.EvaluateStatement(visibleVariables);

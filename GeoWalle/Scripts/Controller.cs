@@ -4,24 +4,24 @@ using System;
 
 public partial class Controller : Control
 {
-    private TabContainer TabContainer;
-    private Button RunButton;
-    private PanelContainer Editor;
-    private SplitContainer DrawAndDebug;
-    private SplitContainer Workspace;
-    private TextEdit DebugConsole;
+	private TabContainer TabContainer;
+	private Button RunButton;
+	private PanelContainer Editor;
+	private SplitContainer DrawAndDebug;
+	private SplitContainer Workspace;
+	private TextEdit DebugConsole;
 
-    public override void _Ready()
-    {
-        DebugConsole = (TextEdit)GetNode("Workspace/Draw and Debug/DebugConsole/TextEdit");
-        Workspace = (SplitContainer)GetNode("Workspace");
-        TabContainer = (TabContainer)GetNode("Workspace/Editor/EditorsTabs");
-        RunButton = (Button)GetNode("Buttons/ButtonContainer/RunButton");
-        Editor = (PanelContainer)GetNode("Workspace/Editor");
-        DrawAndDebug = (SplitContainer)GetNode("Workspace/Draw and Debug");
-    }
+	public override void _Ready()
+	{
+		DebugConsole = (TextEdit)GetNode("Workspace/Draw and Debug/DebugConsole/TextEdit");
+		Workspace = (SplitContainer)GetNode("Workspace");
+		TabContainer = (TabContainer)GetNode("Workspace/Editor/EditorsTabs");
+		RunButton = (Button)GetNode("Buttons/ButtonContainer/RunButton");
+		Editor = (PanelContainer)GetNode("Workspace/Editor");
+		DrawAndDebug = (SplitContainer)GetNode("Workspace/Draw and Debug");
+	}
 
-    public override void _Process(double delta) { }
+	public override void _Process(double delta) { }
 
     public void OnCompileButtonButtonDown()
     {
@@ -72,11 +72,11 @@ public partial class Controller : Control
             );
         }
 
-        currentCode.UpdateCodeCompletionOptions(true);
-    }
+		currentCode.UpdateCodeCompletionOptions(true);
+	}
 
-    public void _OnCodeEditTextChanged()
-    {
-        RunButton.Disabled = true;
-    }
+	public void _OnCodeEditTextChanged()
+	{
+		RunButton.Disabled = true;
+	}
 }
