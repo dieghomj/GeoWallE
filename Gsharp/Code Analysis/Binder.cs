@@ -1,5 +1,9 @@
 public class Binder
 {
+    /// <summary>
+    /// Inicializa un analizador semantico para una lista de Statement
+    /// </summary>
+    /// <param name="roots"></param>
     public Binder(List<Statement> roots)
     {
         Roots = roots;
@@ -7,7 +11,12 @@ public class Binder
 
     public List<Statement> Roots { get; }
 
-    public IEnumerable<BoundStatement> Bind(Dictionary<string,GType> visibleVariables) 
+    /// <summary>
+    /// Analiza semanticamente una lista de Statement
+    /// </summary>
+    /// <param name="visibleVariables"></param>
+    /// <returns> Un IEnumerable de BoundStatement</returns>
+    public IEnumerable<BoundStatement> Bind(Dictionary<string, GType> visibleVariables)
     {
         foreach (var statement in Roots)
             yield return statement.GetBoundStatement(visibleVariables);

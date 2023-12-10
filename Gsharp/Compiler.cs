@@ -6,16 +6,19 @@ namespace Gsharp;
 
 public static class Compiler
 {
-    public static string debugLog;
+    public static string? debugLog;
+    private static List<Error> errors = new List<Error>();
     private static List<Statement> syntaxStatements = new List<Statement>();
     private static List<BoundStatement> boundStatements = new List<BoundStatement>();
 
-    private static List<(Figure figure, Color color, string message)> figures = new List<(Figure, Color, string)>();
+    private static List<(Figure figure, Color color, string message)> figures =
+        new List<(Figure, Color, string)>();
     private static Color currentColor = Color.Black;
     private static bool isModified = false;
     private static readonly System.Timers.Timer timer = new System.Timers.Timer();
     private static Dictionary<string, NodeState> GraphState = new Dictionary<string, NodeState>();
-    private static Dictionary<FunctionSymbol, Expression> syntaxFunctionDefinitions = new Dictionary<FunctionSymbol, Expression>();
+    private static Dictionary<FunctionSymbol, Expression> syntaxFunctionDefinitions =
+        new Dictionary<FunctionSymbol, Expression>();
 
     public static void Compile(string code)
     {
@@ -24,7 +27,7 @@ public static class Compiler
         GetSyntaxStatements(code);
 
         Dictionary<string, GType> visibleVariables = new Dictionary<string, GType>();
-        
+
         Binder binder = new Binder(syntaxStatements);
         boundStatements = binder.Bind(visibleVariables).ToList<BoundStatement>();
     }
@@ -40,6 +43,7 @@ public static class Compiler
 
     public static void Reset()
     {
+        errors = new List<Error>();
         syntaxStatements = new List<Statement>();
         boundStatements = new List<BoundStatement>();
         GraphState = new Dictionary<string, NodeState>();
@@ -101,17 +105,22 @@ public static class Compiler
     public static Expression GetFunctionDefinition(FunctionSymbol symbol)
     {
         if (!syntaxFunctionDefinitions.ContainsKey(symbol))
-            return null;
+            return null!;
         return syntaxFunctionDefinitions[symbol];
     }
 
-    public static void AddFunctionDefinition(FunctionSymbol symbol, Expression expression) => syntaxFunctionDefinitions[symbol] = expression;
+    public static void AddFunctionDefinition(FunctionSymbol symbol, Expression expression) =>
+        syntaxFunctionDefinitions[symbol] = expression;
 
     public static void AddState(string directory, NodeState state) => GraphState[directory] = state;
 
     public static bool IsModified => isModified;
 
     public static List<(Figure figure, Color color, string message)> Figures => figures;
+
+    public static List<Error> GetErrors() => new List<Error>(errors);
+
+    public static void AddError(Error error) => errors.Add(error);
 
     public static Color CurrentColor
     {

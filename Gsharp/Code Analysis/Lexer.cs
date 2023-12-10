@@ -1,4 +1,5 @@
 using System.Collections;
+using Gsharp;
 
 public sealed class Lexer : IEnumerable<SyntaxToken>
 {
@@ -49,7 +50,7 @@ public sealed class Lexer : IEnumerable<SyntaxToken>
     }
 
     /// <summary>
-    /// Analiza lexicamente la linea de codigo y retorna el siguiente token.
+    /// Analiza lexicamente el codigo y retorna el siguiente token.
     /// </summary>
     /// <returns></returns>
     public SyntaxToken Lex()
