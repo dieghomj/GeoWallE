@@ -1,5 +1,4 @@
 
-
 public class BoundPredefinedFunction
 {
     public delegate GObject PredefinedFunctionEvaluation (params GObject[]  args);
@@ -17,7 +16,6 @@ public class BoundPredefinedFunction
         new BoundPredefinedFunction( "randoms", 0, new GType[] {}, GType.Sequence, Randoms),
         new BoundPredefinedFunction( "samples", 0, new GType[] {}, GType.Sequence, Samples),
 
-        new BoundPredefinedFunction( "points", 1, new GType[] {GType.Figure}, GType.Sequence, Points),
         new BoundPredefinedFunction( "count", 1, new GType[] {GType.Sequence}, GType.Number, Count),
 
         new BoundPredefinedFunction( "line", 2, new GType[] {GType.Point,GType.Point}, GType.Line, CreateLine),
@@ -26,9 +24,14 @@ public class BoundPredefinedFunction
         new BoundPredefinedFunction( "circle", 2, new GType[] {GType.Point,GType.Measure}, GType.Circle, CreateCircle),
 
         //TODO: FIX THIS measure y intersect van a dar error cuando no se le pasen expresiones que sean explicitamente figuras
+        #region  TO FIX
+        new BoundPredefinedFunction( "points", 1, new GType[] {GType.Figure}, GType.Sequence, Points),
+        new BoundPredefinedFunction( "points", 1, new GType[] {GType.Point}, GType.Sequence, Points),
+        new BoundPredefinedFunction( "points", 1, new GType[] {GType.Line}, GType.Sequence, Points),
+
         new BoundPredefinedFunction( "measure", 2, new GType[] {GType.Figure,GType.Figure}, GType.Measure, CreateMeasure),
         new BoundPredefinedFunction( "intersect", 2, new GType[] {GType.Figure,GType.Figure}, GType.Sequence, Intersect),
-
+        #endregion
 
         new BoundPredefinedFunction( "arc", 4, new GType[] {GType.Point,GType.Point,GType.Point,GType.Measure}, GType.Arc, CreateArc),
     };
@@ -100,7 +103,18 @@ public class BoundPredefinedFunction
 
     private static GObject Points(GObject[] args)
     {
-        throw new NotImplementedException();
+        dynamic figure = args[0];
+        Random random = new Random();
+        List<Point> points = new List<Point>();
+        var count = random.Next(2,10);
+        if(figure.GetGType().Name == "Point")
+            count = 1;
+        for( int i = 0; i < count; i++)
+        {
+            var point = new Point(figure.GetPoint().x,figure.GetPoint().y);
+            points.Add(point);
+        }
+        return new Sequence<Point>(points,count);
     }
 
     private static GObject Samples(GObject[] args)

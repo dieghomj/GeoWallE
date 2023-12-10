@@ -19,6 +19,8 @@ public class Point : Figure
         throw new NotImplementedException();
     }
 
+    public override (float x, float y) GetPoint() => Position;
+
     public override object GetValue()
     {
         throw new NotImplementedException();

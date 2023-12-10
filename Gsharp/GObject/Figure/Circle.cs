@@ -22,6 +22,11 @@ public class Circle : Figure
         throw new NotImplementedException();
     }
 
+    public override (float x, float y) GetPoint()
+    {
+        throw new NotImplementedException();
+    }
+
     public override object GetValue()
     {
         throw new NotImplementedException();
