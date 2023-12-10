@@ -74,6 +74,11 @@ public class Parser
         List<ImportStatement> importStatements = new List<ImportStatement>();
         while (Current.Kind == SyntaxKind.ImportKeyword)
         {
+            if (Current.Kind == SyntaxKind.CommentaryToken)
+            {
+                NextToken();
+                continue;
+            }
             Match(SyntaxKind.ImportKeyword);
             importStatements.Add(new ImportStatement(ParseStringLiteral()));
             Match(SyntaxKind.EndOfStatementToken);
@@ -91,6 +96,11 @@ public class Parser
 
         while (Current.Kind != SyntaxKind.EndOfFileToken)
         {
+            if (Current.Kind == SyntaxKind.CommentaryToken)
+            {
+                NextToken();
+                continue;
+            }
             statementsList.Add(ParseStatement());
 
             Match(SyntaxKind.EndOfStatementToken);

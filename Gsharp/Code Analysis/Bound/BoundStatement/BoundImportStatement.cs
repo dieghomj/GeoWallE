@@ -24,21 +24,20 @@ public class BoundImportStatement : BoundStatement
             case NodeState.Processed:
                 return;
         }
-            StreamReader file = new StreamReader(directory);
+        StreamReader file = new StreamReader(directory);
 
-            string? line = file.ReadLine();
+        string? line = file.ReadLine();
 
-            while (line != null)
-            {
-                code += line + " ";
-                line = file.ReadLine();
-            }
+        while (line != null)
+        {
+            code += line + "\n";
+            line = file.ReadLine();
+        }
 
-            file.Close();
+        file.Close();
 
-            Compiler.GetSyntaxStatements(code);
+        Compiler.GetSyntaxStatements(code);
 
-            Compiler.AddState(directory, NodeState.Processed);
-  
+        Compiler.AddState(directory, NodeState.Processed);
     }
 }
