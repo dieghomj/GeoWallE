@@ -1,4 +1,3 @@
-
 public class BoundPredefinedFunction
 {
     public delegate GObject PredefinedFunctionEvaluation (params GObject[]  args);
