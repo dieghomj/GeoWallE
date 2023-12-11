@@ -61,8 +61,7 @@ public class Parser
 
         NextToken();
 
-        throw new Exception($"Error: Unexpected token <{Current.Text}>");
-        return new SyntaxToken(kind, Current.Position, Current.Text);
+        throw new Exception($"! Syntax Error: Unexpected token <{Current.Text}>");
     }
 
     /// <summary>
@@ -263,7 +262,7 @@ public class Parser
         if (SyntaxFacts.ColorList.ContainsKey(Current.Kind))
             return new ColorStatement(SyntaxFacts.ColorList[NextToken().Kind]);
 
-        throw new Exception("!SYNTAX ERROR: Expected color");
+        throw new Exception("! Syntax Error: Expected color");
     }
 
     #endregion
@@ -336,7 +335,7 @@ public class Parser
                 return ParseSequenceLiteral();
 
             default:
-                throw new Exception("! SYNTAX ERROR : Token not recognized ");
+                throw new Exception("! Syntax Error : Token not recognized ");
         }
     }
 

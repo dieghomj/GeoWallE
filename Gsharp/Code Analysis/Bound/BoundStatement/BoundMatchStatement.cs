@@ -33,15 +33,26 @@ public class BoundMatchStatement : BoundStatement
         if (!sequence.IsInfinite())
             count = Math.Max(0, count - BoundVariables.Count + 1);
 
-        visibleVariables[BoundVariables[BoundVariables.Count - 1].Name] = new Sequence<GObject>(
-            GetRemainderEnumerable(sequenceEnumerator),
-            count
-        );
+            visibleVariables[BoundVariables[BoundVariables.Count - 1].Name] = new Sequence<GObject>(
+                GetRemainderEnumerable(sequenceEnumerator, BoundVariables.Count - 1),
+                count
+            );
+        }
     }
 
-    private IEnumerable<GObject> GetRemainderEnumerable(IEnumerator<GObject> sequenceEnumerator)
+    private IEnumerable<GObject> GetRemainderEnumerable(IEnumerator<GObject> sequenceEnumerator,int ignore)
     {
+        sequenceEnumerator.Reset();
+
+        while (ignore > 0)
+        {
+            sequenceEnumerator.MoveNext();
+            ignore--;
+        }
+
         while (sequenceEnumerator.MoveNext())
             yield return sequenceEnumerator.Current;
+
+        sequenceEnumerator.Reset();
     }
 }
