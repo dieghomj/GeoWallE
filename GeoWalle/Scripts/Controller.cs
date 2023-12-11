@@ -4,12 +4,12 @@ using System;
 
 public partial class Controller : Control
 {
-	private TabContainer TabContainer;
-	private Button RunButton;
-	private PanelContainer Editor;
-	private SplitContainer DrawAndDebug;
-	private SplitContainer Workspace;
-	private TextEdit DebugConsole;
+    private TabContainer TabContainer;
+    private Button RunButton;
+    private PanelContainer Editor;
+    private SplitContainer DrawAndDebug;
+    private SplitContainer Workspace;
+    private TextEdit DebugConsole;
 
     public override void _Ready()
     {
@@ -19,8 +19,6 @@ public partial class Controller : Control
         RunButton = (Button)GetNode("Buttons/ButtonContainer/RunButton");
         Editor = (PanelContainer)GetNode("Workspace/Editor");
         DrawAndDebug = (SplitContainer)GetNode("Workspace/Draw and Debug");
-        CodeEdit codeEdit = (CodeEdit)TabContainer.GetTabControl(0);
-        codeEdit.DelimiterComments.Add("//");
     }
     public override void _Process(double delta) { }
 
@@ -74,11 +72,11 @@ public partial class Controller : Control
             );
         }
 
-		currentCode.UpdateCodeCompletionOptions(true);
-	}
+        currentCode.UpdateCodeCompletionOptions(true);
+    }
 
-	public void _OnCodeEditTextChanged()
-	{
-		RunButton.Disabled = true;
-	}
+    public void _OnCodeEditTextChanged()
+    {
+        RunButton.Disabled = true;
+    }
 }

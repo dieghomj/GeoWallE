@@ -22,7 +22,6 @@ public class MatchStatement : Statement
             if (visibleVariables.Keys.FirstOrDefault(k => k == variableName) != null)
             {
                 throw new Exception($"Constant {variableName} is already defined");
-                return;
             }
 
             visibleVariables[variableName] = sequenceType;

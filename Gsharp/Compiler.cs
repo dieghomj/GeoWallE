@@ -31,7 +31,7 @@ public static class Compiler
         Dictionary<string, GType> visibleVariables = new Dictionary<string, GType>();
 
         Binder binder = new Binder(syntaxStatements);
-        boundStatements = binder.Bind(visibleVariables).ToList<BoundStatement>();
+        boundStatements = binder.Bind(visibleVariables).ToList();
     }
 
     public static void Evaluate()

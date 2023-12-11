@@ -21,6 +21,10 @@ public class SequenceLiteralExpression : Expression
     protected override GType BindExpression(Dictionary<string, GType> visibleVariables)
     {
         var startType = Start.Bind(visibleVariables);
+        
+        if(Start == null && End == null)
+            return GType.Undefined;
+
         if (Elements is null)
         {
             if (End is null)

@@ -16,7 +16,7 @@ public class DrawStatement : Statement
 
     public override void BindStatement(Dictionary<string, GType> visibleVariables)
     {
-        if(Figure.Bind(visibleVariables).IsFigure())
+        if(!Figure.Bind(visibleVariables).IsFigure())
         {
             throw new Exception("! SEMMANTIC ERROR : Expected figure is not a figure");
         }
@@ -32,6 +32,7 @@ public class DrawStatement : Statement
 
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)
     {
+        
         var boundFigure = Figure.GetBoundExpression(visibleVariables);
 
         if (Message is not null)

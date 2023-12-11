@@ -18,7 +18,7 @@ member_variable_color = Color(0.337255, 0.611765, 0.839216, 1)
 color_regions = {
 "\" \"": Color(0.807843, 0.568627, 0.470588, 1),
 "' '": Color(0.807843, 0.568627, 0.470588, 1),
-"// //": Color(0.509804, 0.509804, 0.509804, 0.592157),
+"//": Color(0.505882, 0.505882, 0.505882, 0.686275),
 "\\\\ \\\\": Color(0, 0, 0, 1)
 }
 
@@ -117,7 +117,7 @@ draw_tabs = true
 symbol_lookup_on_click = true
 line_folding = true
 gutters_draw_line_numbers = true
-delimiter_strings = Array[String]([])
+delimiter_strings = Array[String](["\" \"", "' '"])
 code_completion_enabled = true
 auto_brace_completion_enabled = true
 auto_brace_completion_highlight_matching = true
