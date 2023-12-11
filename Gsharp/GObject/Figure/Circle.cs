@@ -6,18 +6,18 @@ public class Circle : Figure
         Radius = Random.Shared.Next(0, 100);
     }
 
-    public Circle(float x, float y, double radius)
+    public Circle(float x, float y, float radius)
     {
         Position = (x, y);
         Radius = radius;
     }
 
     public Circle(Point a, Measure radius)
-        : this(a.Position.x, a.Position.y, (double)radius.GetValue()) { }
+        : this(a.Position.x, a.Position.y, (float)radius.GetValue()) { }
 
     public override GFigureKind Kind => GFigureKind.Circle;
 
-    public double Radius { get; set; }
+    public float Radius { get; set; }
     public override (float x, float y) Position { get; }
 
     public override GType GetGType()

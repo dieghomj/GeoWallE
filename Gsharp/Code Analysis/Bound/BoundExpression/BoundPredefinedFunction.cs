@@ -57,7 +57,7 @@ public class BoundPredefinedFunction
             if(equalArguments)
                 return predefFunction;
         }
-        return null;
+        return null!;
     }
     public string Function { get; }
     public int ArgumentsCount { get; }
