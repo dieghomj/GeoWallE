@@ -6,11 +6,20 @@ public class Segment : Line
         EndPoint = (Random.Shared.Next(0, 100), Random.Shared.Next(0, 100));
     }
 
+    public Segment(Point a, Point b)
+    {
+        StartPoint = (a.Position.x, a.Position.y);
+        EndPoint = (b.Position.x, b.Position.y);
+    }
+
     public override GFigureKind Kind => GFigureKind.Segment;
 
     public override (float x, float y) StartPoint { get; }
     public override (float x, float y) EndPoint { get; }
-    public override (float x, float y) Position { get => throw new NotImplementedException(); }
+    public override (float x, float y) Position
+    {
+        get => throw new NotImplementedException();
+    }
 
     public override GType GetGType()
     {

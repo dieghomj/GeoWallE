@@ -5,6 +5,13 @@ public class Measure : GObject
         Value = double.Abs(value);
     }
 
+    public Measure(Point a, Point b)
+    {
+        double x = a.Position.x - b.Position.x;
+        double y = a.Position.y - b.Position.y;
+        double value = Math.Sqrt(x * x + y * y);
+    }
+
     private GType Type = GType.Measure;
     private double Value;
 

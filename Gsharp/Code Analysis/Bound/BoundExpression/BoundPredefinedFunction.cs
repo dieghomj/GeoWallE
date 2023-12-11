@@ -1,4 +1,3 @@
-
 public class BoundPredefinedFunction
 {
     public delegate GObject PredefinedFunctionEvaluation (params GObject[]  args);
@@ -54,7 +53,7 @@ public class BoundPredefinedFunction
             if(equalArguments)
                 return predefFunction;
         }
-        return null;
+        return null!;
     }
     public string Function { get; }
     public int ArgumentsCount { get; }
@@ -63,39 +62,51 @@ public class BoundPredefinedFunction
     public PredefinedFunctionEvaluation Evaluate { get; }
 
     #region Predefined Functions Evaluation
-    private static GObject CreateArc(GObject[] args)
-    {
-        throw new NotImplementedException();
-    }
-
     private static GObject Intersect(GObject[] args)
     {
         throw new NotImplementedException();
     }
-
     private static GObject CreateMeasure(GObject[] args)
     {
-        throw new NotImplementedException();
+        Point a = (Point)args[0];
+        Point b = (Point)args[1];
+        return new Measure(a, b);
+    }
+    private static GObject CreateArc(GObject[] args)
+    {
+        Point center = (Point)args[0];
+        Point p1 = (Point)args[1];
+        Point p2 = (Point)args[2];
+        Measure m = (Measure)args[3];
+        return new Arc(center, p1, p2, m);
     }
 
     private static GObject CreateCircle(GObject[] args)
     {
-        throw new NotImplementedException();
+        Point a = (Point)args[0];
+        Measure m = (Measure)args[1];
+        return new Circle(a,m);
     }
 
     private static GObject CreateRay(GObject[] args)
     {
-        throw new NotImplementedException();
+        Point a = (Point)args[0];
+        Point b = (Point)args[1];
+        return new Ray(a,b);
     }
 
     private static GObject CreateSegment(GObject[] args)
     {
-        throw new NotImplementedException();
+        Point a = (Point)args[0];
+        Point b = (Point)args[1];
+        return new Segment(a,b);
     }
 
     private static GObject CreateLine(GObject[] args)
     {
-        throw new NotImplementedException();
+        Point a = (Point)args[0];
+        Point b = (Point)args[1];
+        return new Line(a,b);
     }
 
     private static GObject Points(GObject[] args)

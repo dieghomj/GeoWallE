@@ -16,6 +16,15 @@ public class BoundFunctionCallExpression : BoundExpression
 
     public override GObject Evaluate(Dictionary<string, GObject> visibleVariables)
     {
-        throw new NotImplementedException();
+        Dictionary<string, GObject> localVariables = new Dictionary<string, GObject>();
+
+        var enumerator = Parameters.GetEnumerator();
+        foreach(BoundExpression argument in BoundArguments)
+        {
+            enumerator.MoveNext();
+            localVariables[enumerator.Current] = argument.Evaluate(visibleVariables);
+        }
+
+        return BoundFunctionExpression.Evaluate(localVariables);
     }
 }
