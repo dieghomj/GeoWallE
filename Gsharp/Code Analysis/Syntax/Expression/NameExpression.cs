@@ -9,7 +9,8 @@ public class NameExpression : Expression
     public override ExpressionKind Kind => ExpressionKind.NameExpression;
 
     public SyntaxToken IdentifierToken { get; }
-
+    public bool IsSequence() => GType.Sequence == Type;
+    public GType SequenceType => IsSequence() ? Binder.GetSequenceVariable(IdentifierToken.Text) : GType.Any;
     protected override GType BindExpression(Dictionary<string, GType> visibleVariables)
     {
         var variable = visibleVariables.Keys.FirstOrDefault(k => k == IdentifierToken.Text);
@@ -27,4 +28,5 @@ public class NameExpression : Expression
     {
         return new BoundVariableExpression(new VariableSymbol(IdentifierToken.Text,Type));
     }
+
 }

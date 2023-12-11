@@ -50,7 +50,7 @@ public class SequenceLiteralExpression : Expression
                 );
             }
         }
-        return startType;
+        return GType.Sequence;
     }
 
     protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)

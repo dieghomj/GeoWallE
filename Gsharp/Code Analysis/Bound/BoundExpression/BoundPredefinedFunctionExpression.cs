@@ -12,7 +12,7 @@ public class BoundPredefinedFunctionExpression : BoundExpression
     public string Name { get; }
     public List<BoundExpression> Arguments { get; }
     public BoundPredefinedFunction Function { get; }
-    public GType ResultType { get; }
+    public GType ResultType => Function.ResultType;
 
     public override GObject Evaluate(Dictionary<string, GObject> visibleVariables)
     {

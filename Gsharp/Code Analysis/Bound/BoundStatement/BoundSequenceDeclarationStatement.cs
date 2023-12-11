@@ -5,14 +5,19 @@ internal class BoundSequenceDeclarationStatement : BoundStatement
         VariableSymbol = variableSymbol;
     }
 
+    public BoundSequenceDeclarationStatement(VariableSymbol variableSymbol, GType sequenceType) : this(variableSymbol)
+    {
+        SequenceType = sequenceType;
+    }
+
     public VariableSymbol VariableSymbol { get; }
+    public GType SequenceType { get; }
 
     public override void EvaluateStatement(Dictionary<string, GObject> visibleVariables)
     {
         var name = VariableSymbol.Name;
-        var type = VariableSymbol.Type;  
 
-        switch ( type )
+        switch ( SequenceType )
         {
             case GType.Point:
                 

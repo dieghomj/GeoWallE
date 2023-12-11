@@ -10,10 +10,8 @@ public static class Compiler
     private static List<Error> errors = new List<Error>();
     private static List<Statement> syntaxStatements = new List<Statement>();
     private static List<BoundStatement> boundStatements = new List<BoundStatement>();
-
-    private static Stack<Color>ColorStack = new Stack<Color>();
-    private static List<(Figure figure, Color color, string message)> figures =
-        new List<(Figure, Color, string)>();
+    private readonly static Stack<Color> ColorStack = new Stack<Color>();
+    private static List<(Figure figure, Color color, string message)> figures = new List<(Figure, Color, string)>();
     private static bool isModified = false;
     private static readonly System.Timers.Timer timer = new System.Timers.Timer();
     private static Dictionary<string, NodeState> GraphState = new Dictionary<string, NodeState>();
@@ -87,9 +85,9 @@ public static class Compiler
 
     public static void Update()
     {
-        //Esto aparentemente funciona
+        //Esto aparentemente funciona o no
         var time = timer.Interval;
-        if (time >= 3000)
+        if (time >= 1500)
             isModified = false;
     }
 

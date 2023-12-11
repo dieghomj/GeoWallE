@@ -11,5 +11,6 @@ public enum GType
     Segment,
     Ray,
     Arc,
-    Circle
+    Circle,
+    Any
 }

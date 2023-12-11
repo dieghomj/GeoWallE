@@ -57,21 +57,32 @@ public partial class PanelDraw : Panel
     {
         var circle = (Circle)figure;
 
-        var radius = circle.Radius;
+        var radius = circle.Radius * GetNorm()/100;
+        GD.Print(radius);
         var position = GetViewportPosition(circle.Position);
-        panelDraw.DrawArc(position, radius, 0, 360, 50, GetColor(color),-1,true);
+        panelDraw.DrawArc(position, radius, 0, 360, 50, GetColor(color));
         DrawMessage(message, position);
 
     }
+
+    private static float GetNorm()
+    {
+        float v = panelDraw.Size.Length();
+        GD.Print(v);
+        return v;  
+    }
+
+
     private static void GDrawArc(Figure figure, Color color, string message)
     {
         var arc = (Arc)figure;
-        var radius = arc.Radius;
+        var radius = arc.Radius * GetNorm()/100;
         var center = GetViewportPosition(arc.Position);
-        var startAngle = arc.StartAngle;
-        var endAngle = arc.EndAngle;
+        var startAngle = arc.StartAngle * 180 / (float)(2 * Math.PI);
+        var endAngle = arc.EndAngle * 180 / (float)(2 * Math.PI);
+        GD.Print($"radius : {radius}, start angle : {startAngle}, endAngle : {endAngle}");
 
-        panelDraw.DrawArc(center, radius, startAngle, endAngle, 50, GetColor(color),-1,true);
+        panelDraw.DrawArc(center, radius, startAngle, endAngle, 50, GetColor(color));
         DrawMessage(message, center);
 
     }

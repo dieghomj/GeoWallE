@@ -26,7 +26,10 @@ public class MatchStatement : Statement
 
             visibleVariables[variableName] = sequenceType;
         }
-        visibleVariables[NameTokens.Last().Text] = GType.Sequence;
+        var lastVariable = NameTokens.Last().Text;
+        
+        Binder.AddSequenceVariable(lastVariable,sequenceType);
+        visibleVariables[lastVariable] = GType.Sequence;
     }
 
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)

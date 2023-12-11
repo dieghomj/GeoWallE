@@ -1,23 +1,23 @@
 public class Measure : GObject
 {
-    public Measure(double value)
+    public Measure(float value)
     {
-        Value = double.Abs(value);
+        this.value = float.Abs(value);
     }
 
     public Measure(Point a, Point b)
     {
         double x = a.Position.x - b.Position.x;
         double y = a.Position.y - b.Position.y;
-        double value = Math.Sqrt(x * x + y * y);
+        this.value = float.Abs((float)Math.Sqrt(x * x + y * y));
     }
 
     private GType Type = GType.Measure;
-    private double Value;
-
+    private float value;
+    public float Value => float.Abs(value);
     public override GType GetGType() => Type;
 
-    public override object GetValue() => Value;
+    public override object GetValue() => float.Abs(Value);
 
     public override bool IsTrue()
     {
@@ -33,12 +33,12 @@ public class Measure : GObject
     public static Measure operator +(Measure a, Measure b) => new Measure(a.Value + b.Value);
 
     public static Measure operator -(Measure a, Measure b) =>
-        new Measure(double.Abs(a.Value - b.Value));
+        new Measure(float.Abs(a.Value - b.Value));
 
     public static Measure operator *(Measure a, Number b)
     {
-        double value = (double)b.GetValue();
-        value = double.Abs(value);
+        float value = (float)b.GetValue();
+        value = float.Abs(value);
         int number = (int)value;
 
         return new Measure(a.Value * number);
@@ -46,8 +46,8 @@ public class Measure : GObject
 
     public static Measure operator *(Number b, Measure a)
     {
-        double value = (double)b.GetValue();
-        value = double.Abs(value);
+        float value = (float)b.GetValue();
+        value = float.Abs(value);
         int number = (int)value;
 
         return new Measure(a.Value * number);

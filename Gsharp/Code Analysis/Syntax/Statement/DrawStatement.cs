@@ -16,9 +16,16 @@ public class DrawStatement : Statement
 
     public override void BindStatement(Dictionary<string, GType> visibleVariables)
     {
-        if(!Figure.Bind(visibleVariables).IsFigure())
+        var figureOrSequence = Figure.Bind(visibleVariables);
+        
+        if(!figureOrSequence.IsFigure() && figureOrSequence != GType.Sequence)
         {
-            throw new Exception("! SEMMANTIC ERROR : Expected figure is not a figure");
+            throw new Exception($"! SEMMANTIC ERROR : Expected figure instead of {figureOrSequence}");
+        }
+        if(figureOrSequence == GType.Sequence && Figure is NameExpression identifier)
+        {
+            if(!identifier.SequenceType.IsFigure())
+                throw new Exception($"! SEMANTIC ERROR : Expected figure sequence instead of {identifier.SequenceType}");
         }
         if (Message is not null)
         {
@@ -32,15 +39,26 @@ public class DrawStatement : Statement
 
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)
     {
-        
-        var boundFigure = Figure.GetBoundExpression(visibleVariables);
-
-        if (Message is not null)
+        BoundExpression boundMessage;
+        if(Message is not null)
         {
-            var boundMessage = Message.GetBoundExpression(visibleVariables);
-            return new BoundDrawStatement(boundFigure, boundMessage);
+            boundMessage = Message.GetBoundExpression(visibleVariables);
         }
+        else boundMessage = null;
 
-        return new BoundDrawStatement(boundFigure);
+        var boundFigure = Figure.GetBoundExpression(visibleVariables);
+        if (boundFigure is BoundVariableExpression variable)
+        {
+            return new BoundDrawStatement(variable, boundMessage);
+        }
+        if (boundFigure.Type is GType.Sequence && boundFigure is BoundSequenceLiteralExpression literal)
+        {
+            if (!literal.SequenceType.IsFigure())
+            {
+                throw new Exception($"! SEMANTIC ERROR : Expected figure sequence instead of {literal.SequenceType}");
+            }
+            return new BoundDrawStatement(literal.BoundElements, boundMessage);
+        }
+        return new BoundDrawStatement(boundFigure,boundMessage);
     }
 }

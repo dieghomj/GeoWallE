@@ -1,28 +1,29 @@
 public class DeclarationSequenceStatement : Statement
 {
-    private SyntaxToken KeywordToken;
-    private SyntaxToken NameToken;
 
     public DeclarationSequenceStatement(SyntaxToken keywordToken, SyntaxToken nameToken)
     {
         KeywordToken = keywordToken;
         NameToken = nameToken;
     }
+    private SyntaxToken KeywordToken { get; } 
+    private SyntaxToken NameToken { get; }
 
     public override void BindStatement(Dictionary<string, GType> visibleVariables)
     {
         var name = NameToken.Text;
-        var kind = KeywordToken.Kind;
+        var kind = SyntaxFacts.DeclarationKeywordsTypes[KeywordToken.Kind];
         if(visibleVariables.Keys.FirstOrDefault(k => k == name) != null)
         {
             throw new Exception($"! SEMANTIC ERROR : Constant {name} is already defined");
         }
-        visibleVariables[name] = SyntaxFacts.DeclarationKeywordsTypes[kind];
+        Binder.AddSequenceVariable(name,kind);
+        visibleVariables[name] = GType.Sequence;
     }
 
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)
     {
         var type = SyntaxFacts.DeclarationKeywordsTypes[KeywordToken.Kind];
-        return new BoundSequenceDeclarationStatement(new VariableSymbol(NameToken.Text,type));
+        return new BoundSequenceDeclarationStatement(new VariableSymbol(NameToken.Text,GType.Sequence),type);
     }
 }
