@@ -12,30 +12,31 @@ public class BoundMatchStatement : BoundStatement
     public override void EvaluateStatement(Dictionary<string, GObject> visibleVariables)
     {
         if (BoundSequence.Type == GType.Undefined)
+        {
             foreach (var variable in BoundVariables)
                 visibleVariables[variable.Name] = new Undefined();
-        else
-        {
-            Sequence<GObject> sequence =(Sequence<GObject>)BoundSequence.Evaluate(visibleVariables);
-            IEnumerator<GObject> sequenceEnumerator = sequence.GetEnumerator();
-
-            for (int i = 0; i < BoundVariables.Count - 1; ++i)
-            {
-                if (sequenceEnumerator.MoveNext())
-                    visibleVariables[BoundVariables[i].Name] = sequenceEnumerator.Current;
-                else
-                    visibleVariables[BoundVariables[i].Name] = new Undefined();
-            }
-
-            int count = sequence.Count;
-            if (!sequence.IsInfinite())
-                count = Math.Max(0, count - BoundVariables.Count + 1);
-
-            visibleVariables[BoundVariables[BoundVariables.Count - 1].Name] = new Sequence<GObject>(
-                GetRemainderEnumerable(sequenceEnumerator),
-                count
-            );
+            return;
         }
+
+        dynamic sequence = BoundSequence.Evaluate(visibleVariables);
+        IEnumerator<GObject> sequenceEnumerator = sequence.GetEnumerator();
+
+        for (int i = 0; i < BoundVariables.Count - 1; ++i)
+        {
+            if (sequenceEnumerator.MoveNext())
+                visibleVariables[BoundVariables[i].Name] = sequenceEnumerator.Current;
+            else
+                visibleVariables[BoundVariables[i].Name] = new Undefined();
+        }
+
+        int count = sequence.Count;
+        if (!sequence.IsInfinite())
+            count = Math.Max(0, count - BoundVariables.Count + 1);
+
+        visibleVariables[BoundVariables[BoundVariables.Count - 1].Name] = new Sequence<GObject>(
+            GetRemainderEnumerable(sequenceEnumerator),
+            count
+        );
     }
 
     private IEnumerable<GObject> GetRemainderEnumerable(IEnumerator<GObject> sequenceEnumerator)
