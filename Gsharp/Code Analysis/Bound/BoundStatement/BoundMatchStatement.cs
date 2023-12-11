@@ -38,7 +38,6 @@ public class BoundMatchStatement : BoundStatement
                 count
             );
         }
-    }
 
     private IEnumerable<GObject> GetRemainderEnumerable(IEnumerator<GObject> sequenceEnumerator,int ignore)
     {
