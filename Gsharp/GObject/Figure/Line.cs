@@ -7,6 +7,12 @@ public class Line : Figure
         EndPoint =  (-Random.Shared.Next(0,100),-Random.Shared.Next(0,100));
     }
 
+    public Line(Point a, Point b)
+    {
+        StartPoint = (a.Position.x, a.Position.y);
+        EndPoint = (b.Position.x, b.Position.y);
+    }
+
     public override GFigureKind Kind => GFigureKind.Line;
     private float Slope 
     {
