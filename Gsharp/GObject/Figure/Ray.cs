@@ -13,7 +13,7 @@ public class Ray : Line
     }
 
     public override GFigureKind Kind => GFigureKind.Ray;
-
+    public override GType GetGType() => GType.Ray;
     public override (float x, float y) StartPoint { get; }
     public override (float x, float y) EndPoint { get; }
     public override (float x, float y) Position => StartPoint;

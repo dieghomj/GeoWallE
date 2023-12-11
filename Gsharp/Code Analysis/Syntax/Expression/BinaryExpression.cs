@@ -19,12 +19,14 @@ public abstract class BinaryExpression : Expression
         var rightType = Right.Bind(visibleVariables);
         //  op => Operator
         var op = BoundBinaryOperator.Bind(OperatorKind, leftType, rightType);
-        ResultType = op.ResultType;
         if (op == null)
         {
-            throw new Exception("! SEMANTIC ERROR: Binary operator not defined");
+            throw new Exception($"! SEMANTIC ERROR: Binary operator <{OperatorKind}> not defined between {leftType} and {rightType}");
         }
         else
+        {
+            ResultType = op.ResultType;
             return op.ResultType;
+        }
     }
 }
