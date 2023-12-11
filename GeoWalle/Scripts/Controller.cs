@@ -35,6 +35,7 @@ public partial class Controller : Control
 			DebugConsole.AddThemeColorOverride("font_readonly_color",Godot.Color.Color8(230,100,100));
 			DebugConsole.Text =
 				e.Message + "\n" + e.InnerException + "\n" + e.StackTrace + "\n" + e.Source;
+			GD.PrintErr(e.Message + "\n" + e.InnerException + "\n" + e.StackTrace + "\n" + e.Source);
 			return;
 		}
 		RunButton.Disabled = false;
@@ -54,6 +55,8 @@ public partial class Controller : Control
 			DebugConsole.Text =
 				e.Message + "\n" + e.InnerException + "\n" + e.StackTrace + "\n" + e.Source;
 			;
+			GD.PrintErr(e.Message + "\n" + e.InnerException + "\n" + e.StackTrace + "\n" + e.Source);
+			RunButton.Disabled = true;
 			return;
 		}
 	}
@@ -62,7 +65,6 @@ public partial class Controller : Control
 	{
 		var currentCode = (CodeEdit)TabContainer.GetCurrentTabControl();
 		GD.Print(currentCode.Name);
-		GD.Print(currentCode.Text);
 		foreach (var keyword in SyntaxFacts.Keywords.Keys)
 		{
 			currentCode.AddCodeCompletionOption(
