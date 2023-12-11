@@ -1,5 +1,10 @@
 public class BoundFunctionDeclarationStatement : BoundStatement
 {
+    public BoundFunctionDeclarationStatement(FunctionSymbol functionSymbol)
+    {
+        FunctionSymbol = functionSymbol;
+    }
+
     public BoundFunctionDeclarationStatement(FunctionSymbol functionSymbol, BoundExpression boundExpression)
     {
         FunctionSymbol = functionSymbol;
@@ -11,6 +16,5 @@ public class BoundFunctionDeclarationStatement : BoundStatement
 
     public override void EvaluateStatement(Dictionary<string, GObject> visibleVariables)
     {
-        throw new NotImplementedException();
     }
 }

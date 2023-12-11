@@ -29,4 +29,5 @@ public class DeclarationStatement : Statement
         var type = SyntaxFacts.DeclarationKeywordsTypes[KeywordToken.Kind];
         return new BoundDeclarationStatement(new VariableSymbol(NameToken.Text,type));
     }
+
 }
