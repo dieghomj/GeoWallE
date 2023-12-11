@@ -11,17 +11,18 @@ public partial class Controller : Control
 	private SplitContainer Workspace;
 	private TextEdit DebugConsole;
 
-	public override void _Ready()
-	{
-		DebugConsole = (TextEdit)GetNode("Workspace/Draw and Debug/DebugConsole/TextEdit");
-		Workspace = (SplitContainer)GetNode("Workspace");
-		TabContainer = (TabContainer)GetNode("Workspace/Editor/EditorsTabs");
-		RunButton = (Button)GetNode("Buttons/ButtonContainer/RunButton");
-		Editor = (PanelContainer)GetNode("Workspace/Editor");
-		DrawAndDebug = (SplitContainer)GetNode("Workspace/Draw and Debug");
-	}
-
-	public override void _Process(double delta) { }
+    public override void _Ready()
+    {
+        DebugConsole = (TextEdit)GetNode("Workspace/Draw and Debug/DebugConsole/TextEdit");
+        Workspace = (SplitContainer)GetNode("Workspace");
+        TabContainer = (TabContainer)GetNode("Workspace/Editor/EditorsTabs");
+        RunButton = (Button)GetNode("Buttons/ButtonContainer/RunButton");
+        Editor = (PanelContainer)GetNode("Workspace/Editor");
+        DrawAndDebug = (SplitContainer)GetNode("Workspace/Draw and Debug");
+        CodeEdit codeEdit = (CodeEdit)TabContainer.GetTabControl(0);
+        codeEdit.DelimiterComments.Add("//");
+    }
+    public override void _Process(double delta) { }
 
     public void OnCompileButtonButtonDown()
     {
@@ -63,6 +64,7 @@ public partial class Controller : Control
     {
         var currentCode = (CodeEdit)TabContainer.GetCurrentTabControl();
         GD.Print(currentCode.Name);
+        GD.Print(currentCode.Text);
         foreach (var keyword in SyntaxFacts.Keywords.Keys)
         {
             currentCode.AddCodeCompletionOption(
