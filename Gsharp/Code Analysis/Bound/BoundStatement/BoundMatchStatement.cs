@@ -16,7 +16,8 @@ public class BoundMatchStatement : BoundStatement
                 visibleVariables[variable.Name] = new Undefined();
         else
         {
-            Sequence<GObject> sequence =(Sequence<GObject>)BoundSequence.Evaluate(visibleVariables);
+            Sequence<GObject> sequence =
+                (Sequence<GObject>)BoundSequence.Evaluate(visibleVariables);
             IEnumerator<GObject> sequenceEnumerator = sequence.GetEnumerator();
 
             for (int i = 0; i < BoundVariables.Count - 1; ++i)
@@ -32,15 +33,25 @@ public class BoundMatchStatement : BoundStatement
                 count = Math.Max(0, count - BoundVariables.Count + 1);
 
             visibleVariables[BoundVariables[BoundVariables.Count - 1].Name] = new Sequence<GObject>(
-                GetRemainderEnumerable(sequenceEnumerator),
+                GetRemainderEnumerable(sequenceEnumerator, BoundVariables.Count - 1),
                 count
             );
         }
     }
 
-    private IEnumerable<GObject> GetRemainderEnumerable(IEnumerator<GObject> sequenceEnumerator)
+    private IEnumerable<GObject> GetRemainderEnumerable(IEnumerator<GObject> sequenceEnumerator,int ignore)
     {
+        sequenceEnumerator.Reset();
+
+        while (ignore > 0)
+        {
+            sequenceEnumerator.MoveNext();
+            ignore--;
+        }
+
         while (sequenceEnumerator.MoveNext())
             yield return sequenceEnumerator.Current;
+
+        sequenceEnumerator.Reset();
     }
 }
