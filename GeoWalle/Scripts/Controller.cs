@@ -19,8 +19,6 @@ public partial class Controller : Control
         RunButton = (Button)GetNode("Buttons/ButtonContainer/RunButton");
         Editor = (PanelContainer)GetNode("Workspace/Editor");
         DrawAndDebug = (SplitContainer)GetNode("Workspace/Draw and Debug");
-        CodeEdit codeEdit = (CodeEdit)TabContainer.GetTabControl(0);
-        codeEdit.DelimiterComments.Add("//");
     }
     public override void _Process(double delta) { }
 

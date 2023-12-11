@@ -191,7 +191,7 @@ public class Parser
                 nameTokens.Add(Match(SyntaxKind.IdentifierToken));
 
             if (Current.Kind != SyntaxKind.EqualsToken)
-                nameTokens.Add(Match(SyntaxKind.CommaToken));
+                Match(SyntaxKind.CommaToken);
         }
 
         Match(SyntaxKind.EqualsToken);

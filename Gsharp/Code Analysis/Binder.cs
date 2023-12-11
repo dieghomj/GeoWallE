@@ -19,6 +19,9 @@ public class Binder
     public IEnumerable<BoundStatement> Bind(Dictionary<string, GType> visibleVariables)
     {
         foreach (var statement in Roots)
+        {
+            statement.BindStatement(visibleVariables);
             yield return statement.GetBoundStatement(visibleVariables);
+        }
     }
 }
