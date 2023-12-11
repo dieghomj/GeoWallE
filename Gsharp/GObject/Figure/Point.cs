@@ -10,6 +10,11 @@ public class Point : Figure
         Position = (x, y);
     }
 
+    public Point((float x, float y) position)
+    {
+        Position = position;
+    }
+
     public override GFigureKind Kind => GFigureKind.Point;
 
     public override (float x, float y) Position { get; }
