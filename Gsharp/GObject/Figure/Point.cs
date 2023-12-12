@@ -2,7 +2,7 @@ public class Point : Figure
 {
     public Point()
     {
-        Position = (Random.Shared.Next(0,100),Random.Shared.Next(0,100));
+        Position = (Random.Shared.Next(0,1000),Random.Shared.Next(0,1000));
     }
 
     public Point(float x, float y)

@@ -2,8 +2,8 @@ public class Circle : Figure
 {
     public Circle()
     {
-        Position = (Random.Shared.Next(0, 100), Random.Shared.Next(0, 100));
-        Radius = Random.Shared.Next(0, 100);
+        Position = (Random.Shared.Next(0, 1000), Random.Shared.Next(0, 1000));
+        Radius = Random.Shared.Next(0, 200);
     }
 
     public Circle(float x, float y, float radius)
@@ -27,7 +27,10 @@ public class Circle : Figure
 
     public override (float x, float y) GetPoint()
     {
-        throw new NotImplementedException();
+        Random random = new Random();
+        var x = random.Next(0, 1000);
+        var y = MathF.Sqrt(Radius*Radius - ((x-Position.x)*(x-Position.x)))+Position.y;
+        return (x,y);
     }
 
     public override object GetValue()

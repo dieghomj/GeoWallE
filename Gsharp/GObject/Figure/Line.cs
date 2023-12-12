@@ -3,13 +3,13 @@ public class Line : Figure
     //y = mx+b
     public Line() 
     { 
-        StartPoint = (Random.Shared.Next(100,200),Random.Shared.Next(100,200));
-        EndPoint =  (-Random.Shared.Next(0,100),-Random.Shared.Next(0,100));
+        StartPoint = (Random.Shared.Next(1000,2000),Random.Shared.Next(1000,2000));
+        EndPoint =  (-Random.Shared.Next(0,1000),-Random.Shared.Next(0,1000));
     }
 
     public Line(Point a, Point b)
     {
-        StartPoint = (a.Position.x, a.Position.y);
+        StartPoint = (a.Position.x , a.Position.y);
         EndPoint = (b.Position.x, b.Position.y);
     }
 
@@ -38,7 +38,7 @@ public class Line : Figure
     public override (float x, float y) GetPoint()
     {
         Random random = new Random();
-        var x = random.Next(0,100);
+        var x = random.Next(0,1000);
         return (x,Slope*x+Intercept);
     }
 

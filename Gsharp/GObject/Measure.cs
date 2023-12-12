@@ -2,22 +2,22 @@ public class Measure : GObject
 {
     public Measure(float value)
     {
-        this.value = float.Abs(value);
+        this.value = value;
     }
 
     public Measure(Point a, Point b)
     {
-        double x = a.Position.x - b.Position.x;
-        double y = a.Position.y - b.Position.y;
-        this.value = float.Abs((float)Math.Sqrt(x * x + y * y));
+        float x = a.Position.x - b.Position.x;
+        float y = a.Position.y - b.Position.y;
+        value = MathF.Sqrt(x * x + y * y);
     }
 
     private GType Type = GType.Measure;
     private float value;
-    public float Value => float.Abs(value);
+    public float Value => float.Round(value);
     public override GType GetGType() => Type;
 
-    public override object GetValue() => float.Abs(Value);
+    public override object GetValue() => value;
 
     public override bool IsTrue()
     {
