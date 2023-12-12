@@ -36,14 +36,14 @@ script = ExtResource("1_q7a7x")
 
 [node name="Buttons" type="PanelContainer" parent="."]
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 10.0
-offset_top = 7.0
-offset_right = -9.0
-offset_bottom = 57.0
+anchors_preset = -1
+anchor_left = 0.00976563
+anchor_top = 0.00911458
+anchor_right = 0.991211
+anchor_bottom = 0.0742188
 grow_horizontal = 2
 size_flags_horizontal = 3
+metadata/_edit_use_anchors_ = true
 
 [node name="ButtonContainer" type="HBoxContainer" parent="Buttons"]
 layout_mode = 2
@@ -97,15 +97,14 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Workspace" type="HSplitContainer" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 66.0
-offset_right = -9.0
-offset_bottom = -9.0
+anchors_preset = -1
+anchor_left = 0.00976563
+anchor_top = 0.0859375
+anchor_right = 0.991211
+anchor_bottom = 0.988281
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Editor" type="PanelContainer" parent="Workspace"]
 layout_mode = 2
@@ -165,15 +164,18 @@ layout_mode = 2
 theme_override_colors/font_readonly_color = Color(0.956863, 0.956863, 0.956863, 1)
 context_menu_enabled = true
 
-[node name="Label" type="Label" parent="."]
+[node name="Name" type="Label" parent="."]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 16.0
-offset_right = 166.0
-offset_bottom = 47.0
+anchor_left = 0.0175781
+anchor_top = 0.0208333
+anchor_right = 0.179688
+anchor_bottom = 0.0611979
+offset_right = -18.0
 theme_override_fonts/font = ExtResource("9_dnf4n")
 theme_override_font_sizes/font_size = 25
 text = "GeoWall - E"
+uppercase = true
+metadata/_edit_use_anchors_ = true
 
 [connection signal="button_down" from="Buttons/ButtonContainer/SaveButton" to="." method="OnSaveButtonButtonDown"]
 [connection signal="text_submitted" from="Buttons/ButtonContainer/SaveButton/LineEdit" to="." method="OnLineEditTextSubmitted"]

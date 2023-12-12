@@ -13,7 +13,9 @@ config_version=5
 config/name="GeoWallE"
 run/main_scene="res://Scenes/Main.tscn"
 config/features=PackedStringArray("4.2", "C#", "Mobile")
-config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0.113725, 0.133333, 0.160784, 1)
+boot_splash/image="res://splash.png"
+boot_splash/fullsize=false
 
 [display]
 
