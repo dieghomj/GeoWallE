@@ -1,6 +1,7 @@
 using Godot;
 using Gsharp;
 using System;
+using System.IO;
 
 public partial class Controller : Control
 {
@@ -75,6 +76,28 @@ public partial class Controller : Control
 		}
 
 		currentCode.UpdateCodeCompletionOptions(true);
+	}
+
+	private string saveCode;
+	public void OnSaveButtonButtonDown()
+	{
+		var lineEdit = GetNode<LineEdit>("Buttons/ButtonContainer/SaveButton/LineEdit");
+		var code = (CodeEdit)TabContainer.GetCurrentTabControl();
+		saveCode = code.Text;
+		lineEdit.Visible = true;
+	}
+
+	public void OnLineEditTextSubmitted(string fileName)
+	{
+		var file = File.Create($"{fileName}");
+		using (StreamWriter writer = new StreamWriter(file))
+		{
+			writer.Write(saveCode);
+		}
+		var lineEdit = GetNode<LineEdit>("Buttons/ButtonContainer/SaveButton/LineEdit");
+		var code = TabContainer.GetCurrentTabControl();
+		code.Name = fileName;
+		lineEdit.Visible = false;
 	}
 
 	public void _OnCodeEditTextChanged()

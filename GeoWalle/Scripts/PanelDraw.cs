@@ -30,11 +30,6 @@ public partial class PanelDraw : Panel
     public override void _Process(double delta)
     {
 
-        if(Input.IsMouseButtonPressed(MouseButton.WheelDown))
-            Scale*=2;
-        if(Input.IsMouseButtonPressed(MouseButton.WheelUp))
-            Scale/=2;
-
         if (Compiler.IsModified)
         {
             QueueRedraw();
@@ -57,7 +52,7 @@ public partial class PanelDraw : Panel
     {
         var circle = (Circle)figure;
 
-        var radius = circle.Radius * GetNorm()/100;
+        var radius = circle.Radius * GetNorm()/1000;
         GD.Print(radius);
         var position = GetViewportPosition(circle.Position);
         panelDraw.DrawArc(position, radius, 0, 360, 50, GetColor(color));
@@ -67,7 +62,7 @@ public partial class PanelDraw : Panel
 
     private static float GetNorm()
     {
-        float v = panelDraw.Size.Length();
+        float v = panelDraw.Size.X;
         GD.Print(v);
         return v;  
     }
@@ -76,10 +71,10 @@ public partial class PanelDraw : Panel
     private static void GDrawArc(Figure figure, Color color, string message)
     {
         var arc = (Arc)figure;
-        var radius = arc.Radius * GetNorm()/100;
+        var radius = arc.Radius * GetNorm()/1000;
         var center = GetViewportPosition(arc.Position);
-        var startAngle = arc.StartAngle * 180 / (float)(2 * Math.PI);
-        var endAngle = arc.EndAngle * 180 / (float)(2 * Math.PI);
+        var startAngle = arc.StartAngle;
+        var endAngle = arc.EndAngle;
         GD.Print($"radius : {radius}, start angle : {startAngle}, endAngle : {endAngle}");
 
         panelDraw.DrawArc(center, radius, startAngle, endAngle, 50, GetColor(color));
@@ -135,7 +130,7 @@ public partial class PanelDraw : Panel
     private static Vector2 GetViewportPosition((float x, float y) position)
     {
         var size = panelDraw.Size;
-        return new Vector2(position.x*size.X/100, position.y * size.Y/100);
+        return new Vector2(position.x*size.X/1000, position.y * size.Y/1000);
     }
 
     private static void DrawMessage(string message, Vector2 position)

@@ -2,8 +2,8 @@ public class Segment : Line
 {
     public Segment()
     {
-        StartPoint = (Random.Shared.Next(0, 100), Random.Shared.Next(0, 100));
-        EndPoint = (Random.Shared.Next(0, 100), Random.Shared.Next(0, 100));
+        StartPoint = (Random.Shared.Next(0, 1000), Random.Shared.Next(0, 1000));
+        EndPoint = (Random.Shared.Next(0, 1000), Random.Shared.Next(0, 1000));
     }
 
     public Segment(Point a, Point b)

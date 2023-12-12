@@ -24,7 +24,7 @@ public class DrawStatement : Statement
         }
         if(figureOrSequence == GType.Sequence && Figure is NameExpression identifier)
         {
-            if(!identifier.SequenceType.IsFigure())
+            if(!identifier.SequenceType.IsFigure() && identifier.SequenceType != GType.Undefined)
                 throw new Exception($"! SEMANTIC ERROR : Expected figure sequence instead of {identifier.SequenceType}");
         }
         if (Message is not null)
