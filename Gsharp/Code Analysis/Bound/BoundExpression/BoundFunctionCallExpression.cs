@@ -8,7 +8,7 @@ public class BoundFunctionCallExpression : BoundExpression
         BoundFunctionExpression = boundFunctionExpression;
     }
 
-    public override GType Type => throw new NotImplementedException();
+    public override GType Type => BoundFunctionExpression.Type;
 
     public List<BoundExpression> BoundArguments { get; }
     public BoundExpression BoundFunctionExpression { get; }

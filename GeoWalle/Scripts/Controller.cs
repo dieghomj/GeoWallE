@@ -84,7 +84,7 @@ public partial class Controller : Control
 		var lineEdit = GetNode<LineEdit>("Buttons/ButtonContainer/SaveButton/LineEdit");
 		var code = (CodeEdit)TabContainer.GetCurrentTabControl();
 		saveCode = code.Text;
-		lineEdit.Visible = true;
+		lineEdit.Visible = !lineEdit.Visible;
 	}
 
 	public void OnLineEditTextSubmitted(string fileName)
