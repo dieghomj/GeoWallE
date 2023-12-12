@@ -14,7 +14,7 @@ public class Line : Figure
     }
 
     public override GFigureKind Kind => GFigureKind.Line;
-    private float Slope 
+    public float Slope 
     {
         get
         {
@@ -24,7 +24,7 @@ public class Line : Figure
         }
     }
 
-    private float Intercept
+    public float Intercept
     {
         get
         {
