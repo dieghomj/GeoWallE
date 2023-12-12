@@ -135,7 +135,18 @@ public class Parser
                 switch (LookAhead.Kind)
                 {
                     case SyntaxKind.OpenParenthesisToken:
-                        return ParseFunctionDeclarationStatement();
+                    {
+                        for (int pnt = 0; Peek(pnt).Kind != SyntaxKind.EndOfFileToken; ++pnt)
+                        {
+                            if (Peek(pnt).Kind == SyntaxKind.EqualsToken)
+                                return ParseFunctionDeclarationStatement();
+
+                            if (Peek(pnt).Kind == SyntaxKind.EndOfStatementToken)
+                                break;
+                        }
+
+                        return ParseFunctionCallExpression();
+                    }
                     case SyntaxKind.EqualsToken:
                         return ParseAssignmentStatement();
                     case SyntaxKind.CommaToken:
