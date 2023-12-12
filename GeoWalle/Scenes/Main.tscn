@@ -50,13 +50,6 @@ layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 2
 
-[node name="MenuButton" type="MenuButton" parent="Buttons/ButtonContainer"]
-layout_mode = 2
-text = "Options
-"
-icon = ExtResource("2_p3hwv")
-flat = false
-
 [node name="SaveButton" type="Button" parent="Buttons/ButtonContainer"]
 layout_mode = 2
 text = "  Save  "
@@ -65,14 +58,21 @@ icon = ExtResource("3_fs7n8")
 [node name="LineEdit" type="LineEdit" parent="Buttons/ButtonContainer/SaveButton"]
 visible = false
 layout_mode = 1
-offset_left = -25.0
-offset_top = 42.0
-offset_right = 123.0
-offset_bottom = 74.0
+offset_left = -287.0
+offset_top = 5.0
+offset_right = -123.0
+offset_bottom = 44.0
 placeholder_text = "FileName.geo"
 expand_to_text_length = true
 right_icon = ExtResource("4_5t4lk")
 select_all_on_focus = true
+
+[node name="MenuButton" type="MenuButton" parent="Buttons/ButtonContainer"]
+layout_mode = 2
+text = "Options
+"
+icon = ExtResource("2_p3hwv")
+flat = false
 
 [node name="CompileButton" type="Button" parent="Buttons/ButtonContainer"]
 layout_mode = 2
