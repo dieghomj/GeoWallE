@@ -52,7 +52,7 @@ public partial class PanelDraw : Panel
     {
         var circle = (Circle)figure;
 
-        var radius = circle.Radius * GetNorm()/1000;
+        var radius = circle.Radius * GetNorm() / 1000;
         GD.Print(radius);
         var position = GetViewportPosition(circle.Position);
         panelDraw.DrawArc(position, radius, 0, 360, 50, GetColor(color));
@@ -64,20 +64,20 @@ public partial class PanelDraw : Panel
     {
         float v = panelDraw.Size.X;
         GD.Print(v);
-        return v;  
+        return v;
     }
 
 
     private static void GDrawArc(Figure figure, Color color, string message)
     {
         var arc = (Arc)figure;
-        var radius = arc.Radius * GetNorm()/1000;
+        var radius = arc.Radius * GetNorm() / 1000;
         var center = GetViewportPosition(arc.Position);
         var startAngle = arc.StartAngle;
         var endAngle = arc.EndAngle;
         GD.Print($"radius : {radius}, start angle : {startAngle}, endAngle : {endAngle}");
 
-        panelDraw.DrawArc(center, radius, startAngle, endAngle, 50, GetColor(color));
+        panelDraw.DrawArc(center, radius, startAngle, endAngle, 100, GetColor(color));
         DrawMessage(message, center);
 
     }
@@ -87,7 +87,7 @@ public partial class PanelDraw : Panel
         var line = (Line)figure;
         var start = GetViewportPosition(line.StartPoint);
         var end = GetViewportPosition(line.EndPoint);
-        panelDraw.DrawLine(start, end,GetColor(color),-1,true);
+        panelDraw.DrawLine(start, end, GetColor(color), -1, true);
         DrawMessage(message, start);
 
     }
@@ -95,10 +95,10 @@ public partial class PanelDraw : Panel
     private static void GDrawPoint(Figure figure, Color color, string message)
     {
         var position = GetViewportPosition(figure.Position);
-        
-        panelDraw.DrawCircle(position,3,GetColor(color));
 
-        DrawMessage(message,position);
+        panelDraw.DrawCircle(position, 3, GetColor(color));
+
+        DrawMessage(message, position);
     }
     private static Godot.Color GetColor(Color color)
     {
@@ -130,13 +130,13 @@ public partial class PanelDraw : Panel
     private static Vector2 GetViewportPosition((float x, float y) position)
     {
         var size = panelDraw.Size;
-        return new Vector2(position.x*size.X/1000, position.y * size.Y/1000);
+        return new Vector2(position.x * size.X / 1000, position.y * size.Y / 1000);
     }
 
     private static void DrawMessage(string message, Vector2 position)
     {
         if (!string.IsNullOrEmpty(message))
-            panelDraw.DrawString(font, position + 10 * Vector2.Right, message,HorizontalAlignment.Left,-1,16,GetColor(Color.Black));
+            panelDraw.DrawString(font, position + 10 * Vector2.Right, message, HorizontalAlignment.Left, -1, 16, GetColor(Color.Black));
     }
 }
 
