@@ -24,18 +24,18 @@ public class BoundDrawStatement : BoundStatement
         if (Message is not null)
             message = (string)Message.Evaluate(visibleVariables).GetValue();
 
-        if(Figures is not null)
+        if (Figures is not null)
         {
             foreach (var figure in Figures)
                 Compiler.AddFigure((Figure)figure.Evaluate(visibleVariables), message);
-            return ;
+            return;
         }
-        
-        if(Figure.Type == GType.Sequence)
+
+        if (Figure.Type == GType.Sequence)
         {
             dynamic sequence = Figure.Evaluate(visibleVariables);
-            foreach (var figure in sequence) 
-                Compiler.AddFigure((Figure)figure,message);
+            foreach (var figure in sequence)
+                Compiler.AddFigure((Figure)figure, message);
             return;
         }
 
