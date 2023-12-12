@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://biatmdd116wge"]
+[gd_scene load_steps=13 format=3 uid="uid://biatmdd116wge"]
 
 [ext_resource type="Script" path="res://Scripts/Controller.cs" id="1_q7a7x"]
 [ext_resource type="Texture2D" uid="uid://bdwcshdmn5mht" path="res://Icons/settings_white_24dp.svg" id="2_p3hwv"]
 [ext_resource type="PackedScene" uid="uid://cfyss5chxpq18" path="res://Scenes/draw_zone.tscn" id="3_2rmp0"]
 [ext_resource type="Texture2D" uid="uid://dfdut3qli0me2" path="res://Icons/build_white_24dp.svg" id="3_d2rhw"]
+[ext_resource type="Texture2D" uid="uid://bkvicp8002du3" path="res://Icons/save_white_24dp.svg" id="3_fs7n8"]
+[ext_resource type="Texture2D" uid="uid://b7ohjp07g4fwr" path="res://Icons/edit_white_24dp.svg" id="4_5t4lk"]
 [ext_resource type="PackedScene" uid="uid://tj1v0qdgvdb1" path="res://Scenes/debug_console.tscn" id="4_c4put"]
 [ext_resource type="Script" path="res://Scripts/TabController.cs" id="4_jod3n"]
 [ext_resource type="Texture2D" uid="uid://064hroai5ei8" path="res://Icons/play_arrow_white_24dp.svg" id="4_r2msu"]
@@ -42,7 +44,6 @@ offset_right = -9.0
 offset_bottom = 57.0
 grow_horizontal = 2
 size_flags_horizontal = 3
-metadata/_edit_group_ = true
 
 [node name="ButtonContainer" type="HBoxContainer" parent="Buttons"]
 layout_mode = 2
@@ -55,6 +56,23 @@ text = "Options
 "
 icon = ExtResource("2_p3hwv")
 flat = false
+
+[node name="SaveButton" type="Button" parent="Buttons/ButtonContainer"]
+layout_mode = 2
+text = "  Save  "
+icon = ExtResource("3_fs7n8")
+
+[node name="LineEdit" type="LineEdit" parent="Buttons/ButtonContainer/SaveButton"]
+visible = false
+layout_mode = 1
+offset_left = -25.0
+offset_top = 42.0
+offset_right = 123.0
+offset_bottom = 74.0
+placeholder_text = "FileName.geo"
+expand_to_text_length = true
+right_icon = ExtResource("4_5t4lk")
+select_all_on_focus = true
 
 [node name="CompileButton" type="Button" parent="Buttons/ButtonContainer"]
 layout_mode = 2
@@ -129,10 +147,14 @@ layout_mode = 2
 [node name="Draw and Debug" type="SplitContainer" parent="Workspace"]
 layout_mode = 2
 size_flags_horizontal = 3
-split_offset = 150
+split_offset = 200
 vertical = true
 
-[node name="DrawZone" parent="Workspace/Draw and Debug" instance=ExtResource("3_2rmp0")]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Workspace/Draw and Debug"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DrawZone" parent="Workspace/Draw and Debug/AspectRatioContainer" instance=ExtResource("3_2rmp0")]
 layout_mode = 2
 Font = ExtResource("7_aelpk")
 
@@ -153,6 +175,8 @@ theme_override_fonts/font = ExtResource("9_dnf4n")
 theme_override_font_sizes/font_size = 25
 text = "GeoWall - E"
 
+[connection signal="button_down" from="Buttons/ButtonContainer/SaveButton" to="." method="OnSaveButtonButtonDown"]
+[connection signal="text_submitted" from="Buttons/ButtonContainer/SaveButton/LineEdit" to="." method="OnLineEditTextSubmitted"]
 [connection signal="button_down" from="Buttons/ButtonContainer/CompileButton" to="." method="OnCompileButtonButtonDown"]
 [connection signal="button_down" from="Buttons/ButtonContainer/RunButton" to="." method="_OnRunButtonButtonDown"]
 [connection signal="dragged" from="Workspace" to="." method="_OnWorkspaceDragged"]
