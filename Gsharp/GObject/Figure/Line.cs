@@ -50,4 +50,11 @@ public class Line : Figure
     {
         throw new NotImplementedException();
     }
+
+    public override bool Contain(Point p)
+    {
+        // if(Math.Abs(Slope * p.Position.x + Intercept - p.Position.y) < 1e-9)
+            return true;
+        // return false;
+    }
 }

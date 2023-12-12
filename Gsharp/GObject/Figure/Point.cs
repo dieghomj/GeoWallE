@@ -1,8 +1,10 @@
+using System.Security.Cryptography.X509Certificates;
+
 public class Point : Figure
 {
     public Point()
     {
-        Position = (Random.Shared.Next(0,1000),Random.Shared.Next(0,1000));
+        Position = (Random.Shared.Next(0, 1000), Random.Shared.Next(0, 1000));
     }
 
     public Point(float x, float y)
@@ -29,5 +31,12 @@ public class Point : Figure
     public override object GetValue()
     {
         throw new NotImplementedException();
+    }
+
+    public override bool Contain(Point p)
+    {
+        if(p.Position.x == Position.x && p.Position.y == Position.y)
+            return true;
+        return false;
     }
 }

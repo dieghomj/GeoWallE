@@ -1,4 +1,4 @@
-public class Arc : Figure
+public class Arc : Circle
 {
     public Arc() { }
 
@@ -12,14 +12,13 @@ public class Arc : Figure
         var deltaYP2 = p2.Position.y - Position.y;
         var hP1 = Math.Sqrt(deltaXP1 * deltaXP1 + deltaYP1 * deltaYP1);
         var hP2 = Math.Sqrt(deltaXP2 * deltaXP2 + deltaYP2 * deltaYP2);
-        StartAngle = (float)Math.Acos(deltaXP1/hP1);
-        EndAngle = (float)Math.Acos(deltaXP2/hP2);
+        StartAngle = (float)Math.Acos(deltaXP1 / hP1);
+        EndAngle = (float)Math.Acos(deltaXP2 / hP2);
     }
 
     public override GFigureKind Kind => GFigureKind.Arc;
 
-    public float Radius { get; }
-    public float StartAngle { get;}
+    public float StartAngle { get; }
     public float EndAngle { get; }
     public override (float x, float y) Position { get; }
 

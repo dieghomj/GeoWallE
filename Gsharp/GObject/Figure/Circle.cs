@@ -3,7 +3,7 @@ public class Circle : Figure
     public Circle()
     {
         Position = (Random.Shared.Next(0, 1000), Random.Shared.Next(0, 1000));
-        Radius = Random.Shared.Next(0, 200);
+        Radius = Random.Shared.Next(0, 100);
     }
 
     public Circle(float x, float y, float radius)
@@ -29,12 +29,23 @@ public class Circle : Figure
     {
         Random random = new Random();
         var x = random.Next(0, 1000);
-        var y = MathF.Sqrt(Radius*Radius - ((x-Position.x)*(x-Position.x)))+Position.y;
-        return (x,y);
+        var y = MathF.Sqrt(Radius * Radius - ((x - Position.x) * (x - Position.x))) + Position.y;
+        return (x, y);
     }
 
     public override object GetValue()
     {
         throw new NotImplementedException();
+    }
+
+    public override bool Contain(Point p)
+    {
+        double dist = Math.Sqrt(
+            (p.Position.x - Position.x) * (p.Position.x - Position.x)
+                + (p.Position.y - Position.y) * (p.Position.y - Position.y)
+        );
+        // if (Math.Abs(dist - Radius) < 1e-5)
+            return true;
+        // return false;
     }
 }
