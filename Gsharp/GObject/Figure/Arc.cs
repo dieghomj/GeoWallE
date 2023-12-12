@@ -53,6 +53,39 @@ public class Arc : Circle
     public float EndAngle { get; }
     public override (float x, float y) Position { get; }
 
+    public override bool Contains(Point p)
+    {
+        double dist = Math.Sqrt(
+            (p.Position.x - Position.x) * (p.Position.x - Position.x)
+                + (p.Position.y - Position.y) * (p.Position.y - Position.y)
+        );
+        
+        if (Math.Abs(dist - Radius) < 1e-3)
+        {
+            var deltaY = p.Position.y - Position.y;
+            var deltaX = p.Position.x - Position.x;
+            var h = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+
+            float angle = (float)Math.Acos(Math.Abs(deltaX) / h);
+
+            if (deltaX < 0)
+            {
+                if (deltaY < 0)
+                    angle += (float)Math.PI;
+                else
+                    angle = (float)Math.PI - angle;
+            }
+            else
+            {
+                if (deltaY < 0)
+                    angle = (float)Math.PI * 2 - angle;
+            }
+            if (StartAngle < angle && angle < EndAngle)
+                return true;
+        }
+        return false;
+    }
+
     public override GType GetGType()
     {
         throw new NotImplementedException();

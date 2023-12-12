@@ -3,7 +3,7 @@ public class Circle : Figure
     public Circle()
     {
         Position = (Random.Shared.Next(0, 1000), Random.Shared.Next(0, 1000));
-        Radius = Random.Shared.Next(0, 100);
+        Radius = Random.Shared.Next(0, 200);
     }
 
     public Circle(float x, float y, float radius)
