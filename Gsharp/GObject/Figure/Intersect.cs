@@ -6,8 +6,10 @@ public static class IntersectFigures
     {
         double h1 = a.Position.x;
         double k1 = a.Position.y;
+
         double h2 = b.Position.x;
         double k2 = b.Position.y;
+
         double r1 = a.Radius;
         double r2 = b.Radius;
 
@@ -24,10 +26,10 @@ public static class IntersectFigures
 
         List<Point> points = new();
         double x = Px + H * (k2 - k1) / D;
-        double y = Px - H * (h2 - h1) / D;
+        double y = Py - H * (h2 - h1) / D;
         points.Add(new Point((float)x, (float)y));
         x = Px - H * (k2 - k1) / D;
-        y = Px + H * (h2 - h1) / D;
+        y = Py + H * (h2 - h1) / D;
         points.Add(new Point((float)x, (float)y));
 
         return new Sequence<Point>(points, 2);

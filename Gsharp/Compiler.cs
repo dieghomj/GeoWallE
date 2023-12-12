@@ -24,8 +24,6 @@ public static class Compiler
 
         GetSyntaxStatements(code);
         
-        ColorStack.Push(Color.Black);
-
         Dictionary<string, GType> visibleVariables = new Dictionary<string, GType>();
 
         Binder binder = new Binder(syntaxStatements);
@@ -35,6 +33,8 @@ public static class Compiler
     public static void Evaluate()
     {
         figures.Clear();
+        ColorStack.Clear();
+        ColorStack.Push(Color.Black);
         debugLog = "";
         Dictionary<string, GObject> visibleVariables = new Dictionary<string, GObject>();
 
