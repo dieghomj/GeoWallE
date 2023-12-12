@@ -16,8 +16,6 @@ public static class Compiler
     private static readonly System.Timers.Timer timer = new System.Timers.Timer();
     private static Dictionary<string, NodeState> GraphState = new Dictionary<string, NodeState>();
     private static Dictionary<FunctionSymbol, Expression> syntaxFunctionDefinitions = new Dictionary<FunctionSymbol, Expression>();
-    private static Dictionary<FunctionSymbol, BoundExpression> boundFunctionDefinitions = new Dictionary<FunctionSymbol, BoundExpression>();
-
 
     public static void Compile(string code)
     {

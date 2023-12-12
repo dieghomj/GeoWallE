@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 public class Segment : Line
 {
     public Segment()
@@ -21,10 +23,19 @@ public class Segment : Line
         get => throw new NotImplementedException();
     }
 
-    public override GType GetGType()
+    public override bool Contains(Point p)
     {
-        throw new NotImplementedException();
+        if (Math.Abs(Slope * p.Position.x + Intercept - p.Position.y) < 1e-3)
+        {
+            float s = Math.Min(StartPoint.x, EndPoint.x);
+            float e = Math.Max(StartPoint.x, EndPoint.x);
+            if (s <= p.Position.x && p.Position.x <= e)
+                return true;
+        }
+        return false;
     }
+
+    public override GType GetGType() => GType.Segment;
 
     public override object GetValue()
     {
