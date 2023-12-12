@@ -33,9 +33,11 @@ public class Point : Figure
         throw new NotImplementedException();
     }
 
-    public override bool Contain(Point p)
+    public override bool Contains(Point p)
     {
-        if(p.Position.x == Position.x && p.Position.y == Position.y)
+        if (
+            Math.Abs(p.Position.x - Position.x) < 1e-3 && Math.Abs(p.Position.y - Position.y) < 1e-3
+        )
             return true;
         return false;
     }

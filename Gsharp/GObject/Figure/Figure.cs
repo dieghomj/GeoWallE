@@ -5,7 +5,7 @@ public abstract class Figure : GObject
     public abstract GFigureKind Kind { get; }
     public abstract (float x, float y) Position { get; }
     public abstract (float x, float y) GetPoint();
-    public abstract bool Contain(Point p);
+    public abstract bool Contains(Point p);
 
     public void DrawFigure() => Compiler.AddFigure(this, "");
 

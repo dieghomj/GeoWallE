@@ -7,7 +7,7 @@ public static class IntersectFigures
         List<Point> intersectPoints = new();
         foreach (Point point in points)
         {
-            if (a.Contain(point) && b.Contain(point))
+            if (a.Contains(point) && b.Contains(point))
                 intersectPoints.Add(point);
         }
         return new Sequence<Point>(intersectPoints, intersectPoints.Count);

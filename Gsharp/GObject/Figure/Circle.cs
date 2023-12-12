@@ -38,14 +38,14 @@ public class Circle : Figure
         throw new NotImplementedException();
     }
 
-    public override bool Contain(Point p)
+    public override bool Contains(Point p)
     {
         double dist = Math.Sqrt(
             (p.Position.x - Position.x) * (p.Position.x - Position.x)
                 + (p.Position.y - Position.y) * (p.Position.y - Position.y)
         );
-        // if (Math.Abs(dist - Radius) < 1e-5)
+        if (Math.Abs(dist - Radius) < 1e-3)
             return true;
-        // return false;
+        return false;
     }
 }
