@@ -50,7 +50,7 @@ public class FunctionDeclarationStatement : Statement
             parameters.Add(parameter.Text);
         }
         var functionSymbol = new FunctionSymbol(functionName, parameters);
-        Compiler.AddFunctionDefinition(functionSymbol,FunctionExpression);
+        Compiler.AddFunctionDefinition(functionSymbol, FunctionExpression);
         return new BoundFunctionDeclarationStatement(functionSymbol);
     }
 

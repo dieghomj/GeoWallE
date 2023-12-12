@@ -19,6 +19,7 @@ public class BoundMatchStatement : BoundStatement
         }
 
         dynamic sequence = BoundSequence.Evaluate(visibleVariables);
+        System.Console.WriteLine(BoundSequence);
         IEnumerator<GObject> sequenceEnumerator = sequence.GetEnumerator();
 
         for (int i = 0; i < BoundVariables.Count - 1; ++i)

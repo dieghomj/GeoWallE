@@ -16,7 +16,7 @@ public class MatchStatement : Statement
         {
             var variableName = nameToken.Text;
 
-            if (variableName == "_")
+            if (variableName == "_") 
                 continue;
 
             if (visibleVariables.Keys.FirstOrDefault(k => k == variableName) != null)
@@ -24,12 +24,11 @@ public class MatchStatement : Statement
                 throw new Exception($"Constant {variableName} is already defined");
             }
 
-            visibleVariables[variableName] = sequenceType;
+            visibleVariables[variableName] = sequenceType.ToSingleType();
         }
         var lastVariable = NameTokens.Last().Text;
-        
-        Binder.AddSequenceVariable(lastVariable,sequenceType);
-        visibleVariables[lastVariable] = GType.Sequence;
+        if(lastVariable != "_")
+            visibleVariables[lastVariable] = sequenceType.GetSequenceType();
     }
 
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)

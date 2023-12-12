@@ -17,13 +17,13 @@ public class DeclarationSequenceStatement : Statement
         {
             throw new Exception($"! SEMANTIC ERROR : Constant {name} is already defined");
         }
-        Binder.AddSequenceVariable(name,kind);
-        visibleVariables[name] = GType.Sequence;
+        // Binder.AddSequenceVariable(name,kind);
+        visibleVariables[name] = kind.GetSequenceType();
     }
 
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)
     {
-        var type = SyntaxFacts.DeclarationKeywordsTypes[KeywordToken.Kind];
-        return new BoundSequenceDeclarationStatement(new VariableSymbol(NameToken.Text,GType.Sequence),type);
+        var type = SyntaxFacts.DeclarationKeywordsTypes[KeywordToken.Kind].GetSequenceType();
+        return new BoundSequenceDeclarationStatement(new VariableSymbol(NameToken.Text,type));
     }
 }

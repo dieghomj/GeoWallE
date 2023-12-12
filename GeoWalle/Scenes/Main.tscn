@@ -68,6 +68,7 @@ right_icon = ExtResource("4_5t4lk")
 select_all_on_focus = true
 
 [node name="MenuButton" type="MenuButton" parent="Buttons/ButtonContainer"]
+visible = false
 layout_mode = 2
 text = "Options
 "

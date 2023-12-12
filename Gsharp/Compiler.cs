@@ -15,15 +15,16 @@ public static class Compiler
     private static bool isModified = false;
     private static readonly System.Timers.Timer timer = new System.Timers.Timer();
     private static Dictionary<string, NodeState> GraphState = new Dictionary<string, NodeState>();
-    private static Dictionary<FunctionSymbol, Expression> syntaxFunctionDefinitions =
-        new Dictionary<FunctionSymbol, Expression>();
+    private static Dictionary<FunctionSymbol, Expression> syntaxFunctionDefinitions = new Dictionary<FunctionSymbol, Expression>();
+    private static Dictionary<FunctionSymbol, BoundExpression> boundFunctionDefinitions = new Dictionary<FunctionSymbol, BoundExpression>();
+
 
     public static void Compile(string code)
     {
         Reset();
 
         GetSyntaxStatements(code);
-        
+
         Dictionary<string, GType> visibleVariables = new Dictionary<string, GType>();
 
         Binder binder = new Binder(syntaxStatements);
@@ -44,12 +45,13 @@ public static class Compiler
 
     public static void Reset()
     {
+        Binder.Reset();
         ColorStack.Clear();
         debugLog = "";
         errors = new List<Error>();
         syntaxStatements = new List<Statement>();
         boundStatements = new List<BoundStatement>();
-        syntaxFunctionDefinitions = new Dictionary<FunctionSymbol,Expression>();
+        syntaxFunctionDefinitions = new Dictionary<FunctionSymbol, Expression>();
         GraphState = new Dictionary<string, NodeState>();
         figures = new List<(Figure, Color, string)>();
     }
@@ -128,11 +130,11 @@ public static class Compiler
 
     public static string Print(string print)
     {
-        debugLog += print+"\n";
+        debugLog += print + "\n";
         return debugLog;
     }
 
-    internal static void ColorRestore() => ColorStack.Pop();    
+    internal static void ColorRestore() => ColorStack.Pop();
 
     public static Color CurrentColor
     {

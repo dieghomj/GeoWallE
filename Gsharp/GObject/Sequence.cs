@@ -10,11 +10,10 @@ public class Sequence<T> : GObject, IEnumerable<T>
         Count = count;
     }
 
-    private readonly GType Type = GType.Sequence;
     private IEnumerable<T> Elements { get; }
     public int Count { get; private set; }
 
-    public override GType GetGType() => Type;
+    public override GType GetGType() => Elements.First().GetGType().GetSequenceType();
 
     public override object GetValue() => this;
 

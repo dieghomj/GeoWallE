@@ -18,14 +18,9 @@ public class DrawStatement : Statement
     {
         var figureOrSequence = Figure.Bind(visibleVariables);
         
-        if(!figureOrSequence.IsFigure() && figureOrSequence != GType.Sequence)
+        if(!figureOrSequence.IsFigure() && !figureOrSequence.IsFigureSequence())
         {
-            throw new Exception($"! SEMMANTIC ERROR : Expected figure instead of {figureOrSequence}");
-        }
-        if(figureOrSequence == GType.Sequence && Figure is NameExpression identifier)
-        {
-            if(!identifier.SequenceType.IsFigure() && identifier.SequenceType != GType.Undefined)
-                throw new Exception($"! SEMANTIC ERROR : Expected figure sequence instead of {identifier.SequenceType}");
+            throw new Exception($"! SEMMANTIC ERROR : Expected figure or figure sequence, instead of <{figureOrSequence}>");
         }
         if (Message is not null)
         {
@@ -47,18 +42,6 @@ public class DrawStatement : Statement
         else boundMessage = null;
 
         var boundFigure = Figure.GetBoundExpression(visibleVariables);
-        if (boundFigure is BoundVariableExpression variable)
-        {
-            return new BoundDrawStatement(variable, boundMessage);
-        }
-        if (boundFigure.Type is GType.Sequence && boundFigure is BoundSequenceLiteralExpression literal)
-        {
-            if (!literal.SequenceType.IsFigure())
-            {
-                throw new Exception($"! SEMANTIC ERROR : Expected figure sequence instead of {literal.SequenceType}");
-            }
-            return new BoundDrawStatement(literal.BoundElements, boundMessage);
-        }
         return new BoundDrawStatement(boundFigure,boundMessage);
     }
 }

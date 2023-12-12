@@ -37,4 +37,11 @@ public class Binder
     {
         return sequenceVariables.FirstOrDefault(x => x.Key == name).Value;
     }
+
+    public static void Reset()
+    {
+        BoundFunction.Reset();
+        sequenceVariables.Clear();
+    }
+
 }

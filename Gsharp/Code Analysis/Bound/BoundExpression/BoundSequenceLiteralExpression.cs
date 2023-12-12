@@ -16,8 +16,7 @@ public class BoundSequenceLiteralExpression : BoundExpression
         BoundElements = null;
     }
 
-    public GType SequenceType => Start.Type;
-    public override GType Type => GType.Sequence;
+    public override GType Type => Start.Type.GetSequenceType();
 
     public BoundExpression Start { get; }
     public BoundExpression? End { get; }

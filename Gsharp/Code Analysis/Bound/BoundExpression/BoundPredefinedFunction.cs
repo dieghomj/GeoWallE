@@ -12,10 +12,10 @@ public class BoundPredefinedFunction
 
     private static BoundPredefinedFunction[] _Functions =
     {
-        new BoundPredefinedFunction( "randoms", 0, new GType[] {}, GType.Sequence, Randoms),
-        new BoundPredefinedFunction( "samples", 0, new GType[] {}, GType.Sequence, Samples),
+        new BoundPredefinedFunction( "randoms", 0, new GType[] {}, GType.NumberSequence, Randoms),
+        new BoundPredefinedFunction( "samples", 0, new GType[] {}, GType.PointSequence, Samples),
 
-        new BoundPredefinedFunction( "points", 1, new GType[] {GType.Figure}, GType.Sequence, Points),
+        new BoundPredefinedFunction( "points", 1, new GType[] {GType.Figure}, GType.PointSequence, Points),
         new BoundPredefinedFunction( "count", 1, new GType[] {GType.Sequence}, GType.Number, Count),
 
         new BoundPredefinedFunction( "line", 2, new GType[] {GType.Point,GType.Point}, GType.Line, CreateLine),
@@ -24,7 +24,7 @@ public class BoundPredefinedFunction
         new BoundPredefinedFunction( "circle", 2, new GType[] {GType.Point,GType.Measure}, GType.Circle, CreateCircle),
 
         new BoundPredefinedFunction( "measure", 2, new GType[] {GType.Figure,GType.Figure}, GType.Measure, CreateMeasure),
-        new BoundPredefinedFunction( "intersect", 2, new GType[] {GType.Figure,GType.Figure}, GType.Sequence, Intersect),
+        new BoundPredefinedFunction( "intersect", 2, new GType[] {GType.Figure,GType.Figure}, GType.PointSequence, Intersect),
 
         new BoundPredefinedFunction( "arc", 4, new GType[] {GType.Point,GType.Point,GType.Point,GType.Measure}, GType.Arc, CreateArc),
     };
@@ -43,7 +43,10 @@ public class BoundPredefinedFunction
             {
                 if(predefFunction.ArgumentsType[i] == GType.Figure)
                     if(argumentsType[i].IsFigure())
-                    continue;
+                        continue;
+                if(predefFunction.ArgumentsType[i] == GType.Sequence)
+                    if(argumentsType[i].IsSequence())
+                        continue;
                 if (predefFunction.ArgumentsType[i] == argumentsType[i])
                     continue;
                 equalArguments = false;
