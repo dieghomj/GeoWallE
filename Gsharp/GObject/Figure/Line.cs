@@ -11,6 +11,8 @@ public class Line : Figure
     {
         StartPoint = (a.Position.x , a.Position.y);
         EndPoint = (b.Position.x, b.Position.y);
+        StartPoint = (-1000 , this.Slope * -1000 + Intercept);
+        EndPoint = (1000 , this.Slope * 1000 + Intercept);
     }
 
     public override GFigureKind Kind => GFigureKind.Line;
