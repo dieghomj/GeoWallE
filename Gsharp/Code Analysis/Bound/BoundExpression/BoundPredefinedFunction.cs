@@ -64,7 +64,9 @@ public class BoundPredefinedFunction
     #region Predefined Functions Evaluation
     private static GObject Intersect(GObject[] args)
     {
-        throw new NotImplementedException();
+        dynamic a = args[0];
+        dynamic b = args[1];
+        return IntersectFigures.Get(a,b);
     }
     private static GObject CreateMeasure(GObject[] args)
     {
