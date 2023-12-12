@@ -27,8 +27,7 @@ public class IfElseExpression : Expression
 
         if(trueExpressionType != falseExpressionType)
         {
-            System.Console.WriteLine($"! SEMANTIC ERROR: <then> is of type {trueExpressionType} and <else> is of type {falseExpressionType}, must be the same");;
-            return GType.Undefined;
+            throw new Exception($"! SEMANTIC ERROR: <then> is of type {trueExpressionType} and <else> is of type {falseExpressionType}, must be the same");;
         }
 
         return trueExpressionType;

@@ -4,12 +4,24 @@ public enum GType
     Number,
     Measure,
     String,
+    //Sequence
     Sequence,
+    NumberSequence,
+    MeasureSequence,
+    StringSequence,
+    FigureSequence,
+    PointSequence,
+    LineSequence,
+    SegmentSequence,
+    RaySequence,
+    ArcSequence,
+    CircleSequence,
     Figure,
     Point,
     Line,
     Segment,
     Ray,
     Arc,
-    Circle
+    Circle,
+    Any
 }

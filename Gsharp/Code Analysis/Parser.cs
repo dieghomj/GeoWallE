@@ -61,8 +61,7 @@ public class Parser
 
         NextToken();
 
-        Console.WriteLine($"Error: Unexpected token <{Current.Text}>");
-        return new SyntaxToken(kind, Current.Position, Current.Text);
+        throw new Exception($"! Syntax Error: Unexpected token <{Current.Text}>");
     }
 
     /// <summary>
@@ -74,10 +73,15 @@ public class Parser
         List<ImportStatement> importStatements = new List<ImportStatement>();
         while (Current.Kind == SyntaxKind.ImportKeyword)
         {
+            if (Current.Kind == SyntaxKind.CommentaryToken)
+            {
+                NextToken();
+                continue;
+            }
             Match(SyntaxKind.ImportKeyword);
             importStatements.Add(new ImportStatement(ParseStringLiteral()));
+            Match(SyntaxKind.EndOfStatementToken);
         }
-
         return importStatements;
     }
 
@@ -91,6 +95,11 @@ public class Parser
 
         while (Current.Kind != SyntaxKind.EndOfFileToken)
         {
+            if (Current.Kind == SyntaxKind.CommentaryToken)
+            {
+                NextToken();
+                continue;
+            }
             statementsList.Add(ParseStatement());
 
             Match(SyntaxKind.EndOfStatementToken);
@@ -126,7 +135,18 @@ public class Parser
                 switch (LookAhead.Kind)
                 {
                     case SyntaxKind.OpenParenthesisToken:
-                        return ParseFunctionDeclarationStatement();
+                    {
+                        for (int pnt = 0; Peek(pnt).Kind != SyntaxKind.EndOfFileToken; ++pnt)
+                        {
+                            if (Peek(pnt).Kind == SyntaxKind.EqualsToken)
+                                return ParseFunctionDeclarationStatement();
+
+                            if (Peek(pnt).Kind == SyntaxKind.EndOfStatementToken)
+                                break;
+                        }
+
+                        return ParseFunctionCallExpression();
+                    }
                     case SyntaxKind.EqualsToken:
                         return ParseAssignmentStatement();
                     case SyntaxKind.CommaToken:
@@ -181,7 +201,7 @@ public class Parser
                 nameTokens.Add(Match(SyntaxKind.IdentifierToken));
 
             if (Current.Kind != SyntaxKind.EqualsToken)
-                nameTokens.Add(Match(SyntaxKind.CommaToken));
+                Match(SyntaxKind.CommaToken);
         }
 
         Match(SyntaxKind.EqualsToken);
@@ -253,9 +273,7 @@ public class Parser
         if (SyntaxFacts.ColorList.ContainsKey(Current.Kind))
             return new ColorStatement(SyntaxFacts.ColorList[NextToken().Kind]);
 
-        System.Console.WriteLine("!SYNTAX ERROR: Expected color");
-        NextToken();
-        return null!;
+        throw new Exception("! Syntax Error: Expected color");
     }
 
     #endregion
@@ -328,8 +346,7 @@ public class Parser
                 return ParseSequenceLiteral();
 
             default:
-                System.Console.WriteLine("! SYNTAX ERROR : ");
-                return ParseNumberLiteral();
+                throw new Exception("! Syntax Error : Token not recognized ");
         }
     }
 

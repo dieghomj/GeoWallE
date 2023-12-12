@@ -15,6 +15,8 @@ public class FunctionCallExpression : Expression
 
     protected override GType BindExpression(Dictionary<string, GType> visibleVariables)
     {
+        var localVariables = new Dictionary<string,GType>(visibleVariables);
+
         var functionName = FunctionToken.Text;
         var parametersCount = Arguments.Count;
         var functionSymbol = Compiler.GetFunctionSymbol(k => k.FunctionName == functionName && k.Parameters.Count() == parametersCount);
@@ -25,15 +27,17 @@ public class FunctionCallExpression : Expression
         
         var functionExpression = Compiler.GetFunctionDefinition(functionSymbol);
         var parameters = functionSymbol.Parameters.ToList();
+        var parametersType = new List<GType>();
 
         for (int i = 0; i < parametersCount; i++)
         {
             var variableName = parameters[i];
-            var argumentType = Arguments[i].Bind(visibleVariables);
-            visibleVariables[variableName] = argumentType;
+            var argumentType = Arguments[i].Bind(localVariables);
+            parametersType.Add(argumentType);
+            localVariables[variableName] = argumentType;
         }
 
-        return functionExpression.Bind(visibleVariables);
+        return BoundFunction.BindFunction(functionName,parametersType,this,localVariables);
     }
 
     protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)
@@ -42,7 +46,9 @@ public class FunctionCallExpression : Expression
         var parametersCount = Arguments.Count;
         var functionSymbol = Compiler.GetFunctionSymbol(k => k.FunctionName == functionName);
 
+        // var boundFunctionExpression = BoundFunction.GetBoundFunction(Compiler.GetFunctionDefinition(functionSymbol));
         var boundFunctionExpression = Compiler.GetFunctionDefinition(functionSymbol).GetBoundExpression(visibleVariables);
+    
 
         List<BoundExpression> boundArguments = new List<BoundExpression>();
         foreach (var argument in Arguments)

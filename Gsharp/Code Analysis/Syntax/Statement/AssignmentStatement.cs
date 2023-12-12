@@ -16,8 +16,7 @@ public class AssignmentStatement : Statement
 
         if (visibleVariables.ContainsKey(variableName))
         {
-            System.Console.WriteLine($"Constant {variableName} is already defined");
-            return;
+            throw new Exception($"Constant {variableName} is already defined");
         }
         visibleVariables[variableName] = rightType;
     }

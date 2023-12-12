@@ -1,8 +1,6 @@
-
-
 public class BoundPredefinedFunction
 {
-    public delegate GObject PredefinedFunctionEvaluation (params object[]  args);
+    public delegate GObject PredefinedFunctionEvaluation (params GObject[]  args);
     private BoundPredefinedFunction(string function, int argumentsCount, GType[] argumentsType, GType resultType,  PredefinedFunctionEvaluation evaluate)
     {
         Function = function;
@@ -14,39 +12,41 @@ public class BoundPredefinedFunction
 
     private static BoundPredefinedFunction[] _Functions =
     {
-            new BoundPredefinedFunction( "randoms", 0, new GType[] {}, GType.Number, Randoms),
-            new BoundPredefinedFunction( "samples", 0, new GType[] {}, GType.Sequence, Samples),
+        new BoundPredefinedFunction( "randoms", 0, new GType[] {}, GType.NumberSequence, Randoms),
+        new BoundPredefinedFunction( "samples", 0, new GType[] {}, GType.PointSequence, Samples),
 
-            new BoundPredefinedFunction( "points", 1, new GType[] {GType.Figure}, GType.Sequence, Points),
+        new BoundPredefinedFunction( "points", 1, new GType[] {GType.Figure}, GType.PointSequence, Points),
+        new BoundPredefinedFunction( "count", 1, new GType[] {GType.Sequence}, GType.Number, Count),
 
-            new BoundPredefinedFunction( "line", 2, new GType[] {GType.Point,GType.Point}, GType.Line, CreateLine),
-            new BoundPredefinedFunction( "segment", 2, new GType[] {GType.Point,GType.Point}, GType.Segment, CreateSegment),
-            new BoundPredefinedFunction( "ray", 2, new GType[] {GType.Point,GType.Point}, GType.Ray, CreateRay),
-            new BoundPredefinedFunction( "circle", 2, new GType[] {GType.Point,GType.Measure}, GType.Circle, CreateCircle),
+        new BoundPredefinedFunction( "line", 2, new GType[] {GType.Point,GType.Point}, GType.Line, CreateLine),
+        new BoundPredefinedFunction( "segment", 2, new GType[] {GType.Point,GType.Point}, GType.Segment, CreateSegment),
+        new BoundPredefinedFunction( "ray", 2, new GType[] {GType.Point,GType.Point}, GType.Ray, CreateRay),
+        new BoundPredefinedFunction( "circle", 2, new GType[] {GType.Point,GType.Measure}, GType.Circle, CreateCircle),
 
-            //TODO: FIX THIS measure y intersect van a dar error cuando no se le pasen expresiones que sean explicitamente figuras
-            new BoundPredefinedFunction( "measure", 2, new GType[] {GType.Figure,GType.Figure}, GType.Measure, CreateMeasure),
-            new BoundPredefinedFunction( "intersect", 2, new GType[] {GType.Figure,GType.Figure}, GType.Sequence, Intersect),
+        new BoundPredefinedFunction( "measure", 2, new GType[] {GType.Figure,GType.Figure}, GType.Measure, CreateMeasure),
+        new BoundPredefinedFunction( "intersect", 2, new GType[] {GType.Figure,GType.Figure}, GType.PointSequence, Intersect),
 
-            new BoundPredefinedFunction( "count", 1, new GType[] {GType.Sequence}, GType.Number, Count),
-
-            new BoundPredefinedFunction( "arc", 4, new GType[] {GType.Point,GType.Point,GType.Point,GType.Measure}, GType.Arc, CreateArc),
+        new BoundPredefinedFunction( "arc", 4, new GType[] {GType.Point,GType.Point,GType.Point,GType.Measure}, GType.Arc, CreateArc),
     };
 
     public static BoundPredefinedFunction Bind(string function, int argumentsCount, GType[] argumentsType)
     {
         foreach (var predefFunction in _Functions)
-        {   
-            bool equalArguments = false;
-            
-            if(predefFunction.Function != function)
+        {
+            if (predefFunction.Function != function)
                 continue;
             if(predefFunction.ArgumentsCount != argumentsCount)
                 continue;
-            
-            equalArguments = true;
+
+            bool equalArguments = true;
             for (int i = 0; i < predefFunction.ArgumentsType.Length; i++)
             {
+                if(predefFunction.ArgumentsType[i] == GType.Figure)
+                    if(argumentsType[i].IsFigure())
+                        continue;
+                if(predefFunction.ArgumentsType[i] == GType.Sequence)
+                    if(argumentsType[i].IsSequence())
+                        continue;
                 if (predefFunction.ArgumentsType[i] == argumentsType[i])
                     continue;
                 equalArguments = false;
@@ -56,7 +56,7 @@ public class BoundPredefinedFunction
             if(equalArguments)
                 return predefFunction;
         }
-        return null;
+        return null!;
     }
     public string Function { get; }
     public int ArgumentsCount { get; }
@@ -65,60 +65,100 @@ public class BoundPredefinedFunction
     public PredefinedFunctionEvaluation Evaluate { get; }
 
     #region Predefined Functions Evaluation
-
-    private static GObject Count(object[] args)
+    private static GObject Intersect(GObject[] args)
     {
-        throw new NotImplementedException();
+        dynamic a = args[0];
+        dynamic b = args[1];
+        return IntersectFigures.Get(a,b);
+    }
+    private static GObject CreateMeasure(GObject[] args)
+    {
+        Point a = (Point)args[0];
+        Point b = (Point)args[1];
+        return new Measure(a, b);
+    }
+    private static GObject CreateArc(GObject[] args)
+    {
+        Point center = (Point)args[0];
+        Point p1 = (Point)args[1];
+        Point p2 = (Point)args[2];
+        Measure m = (Measure)args[3];
+        return new Arc(center, p1, p2, m);
     }
 
-    private static GObject CreateArc(object[] args)
+    private static GObject CreateCircle(GObject[] args)
     {
-        throw new NotImplementedException();
+        Point a = (Point)args[0];
+        Measure m = (Measure)args[1];
+        return new Circle(a,m);
     }
 
-    private static GObject Intersect(object[] args)
+    private static GObject CreateRay(GObject[] args)
     {
-        throw new NotImplementedException();
+        Point a = (Point)args[0];
+        Point b = (Point)args[1];
+        return new Ray(a,b);
     }
 
-    private static GObject CreateMeasure(object[] args)
+    private static GObject CreateSegment(GObject[] args)
     {
-        throw new NotImplementedException();
+        Point a = (Point)args[0];
+        Point b = (Point)args[1];
+        return new Segment(a,b);
     }
 
-    private static GObject CreateCircle(object[] args)
+    private static GObject CreateLine(GObject[] args)
     {
-        throw new NotImplementedException();
+        Point a = (Point)args[0];
+        Point b = (Point)args[1];
+        return new Line(a,b);
     }
 
-    private static GObject CreateRay(object[] args)
+    private static GObject Points(GObject[] args)
     {
-        throw new NotImplementedException();
+        dynamic figure = args[0];
+        Random random = new Random();
+        List<Point> points = new List<Point>();
+        var count = random.Next(2,10);
+        if(figure.Kind == GFigureKind.Point)
+            count = 1;
+        for( int i = 0; i < count; i++)
+        {
+            var point = new Point(figure.GetPoint());
+            points.Add(point);
+        }
+        return new Sequence<Point>(points,count);
     }
 
-    private static GObject CreateSegment(object[] args)
+    private static GObject Samples(GObject[] args)
     {
-        throw new NotImplementedException();
+        Random random = new Random();
+        List<Point> sequence = new List<Point>();
+        var count = random.Next(2,10);
+        for(int i = 0; i < count; i++)
+        {
+            var point = new Point();
+            sequence.Add(point);
+        }
+        return new Sequence<Point>(sequence,count);
+    }
+    private static GObject Count(GObject[] args) 
+    {
+        dynamic s = args[0];
+        return new Number(s.Count);
     }
 
-    private static GObject CreateLine(object[] args)
+    private static GObject Randoms(GObject[] args)
     {
-        throw new NotImplementedException();
-    }
-
-    private static GObject Points(object[] args)
-    {
-        throw new NotImplementedException();
-    }
-
-    private static GObject Samples(object[] args)
-    {
-        throw new NotImplementedException();
-    }
-
-    private static GObject Randoms(object[] args)
-    {
-        throw new NotImplementedException();
+        Random random = new Random();
+        List<Number> sequence = new List<Number>();
+        var count = random.Next(2,10);
+        for(int i = 0; i < count; i++)
+        {
+            var number = new Number(random.NextDouble());
+            sequence.Add(number);
+        }
+        return new Sequence<Number>(sequence,count);
     }
 
     #endregion

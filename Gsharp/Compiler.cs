@@ -10,16 +10,12 @@ public static class Compiler
     private static List<Error> errors = new List<Error>();
     private static List<Statement> syntaxStatements = new List<Statement>();
     private static List<BoundStatement> boundStatements = new List<BoundStatement>();
-
-    private static Stack<Color>ColorStack = new Stack<Color>();
-    private static List<(Figure figure, Color color, string message)> figures =
-        new List<(Figure, Color, string)>();
-    private static Color currentColor = Color.Black;
+    private readonly static Stack<Color> ColorStack = new Stack<Color>();
+    private static List<(Figure figure, Color color, string message)> figures = new List<(Figure, Color, string)>();
     private static bool isModified = false;
     private static readonly System.Timers.Timer timer = new System.Timers.Timer();
     private static Dictionary<string, NodeState> GraphState = new Dictionary<string, NodeState>();
-    private static Dictionary<FunctionSymbol, Expression> syntaxFunctionDefinitions =
-        new Dictionary<FunctionSymbol, Expression>();
+    private static Dictionary<FunctionSymbol, Expression> syntaxFunctionDefinitions = new Dictionary<FunctionSymbol, Expression>();
 
     public static void Compile(string code)
     {
@@ -30,12 +26,15 @@ public static class Compiler
         Dictionary<string, GType> visibleVariables = new Dictionary<string, GType>();
 
         Binder binder = new Binder(syntaxStatements);
-        boundStatements = binder.Bind(visibleVariables).ToList<BoundStatement>();
+        boundStatements = binder.Bind(visibleVariables).ToList();
     }
 
     public static void Evaluate()
     {
         figures.Clear();
+        ColorStack.Clear();
+        ColorStack.Push(Color.Black);
+        debugLog = "";
         Dictionary<string, GObject> visibleVariables = new Dictionary<string, GObject>();
 
         foreach (BoundStatement boundStatement in boundStatements)
@@ -44,11 +43,13 @@ public static class Compiler
 
     public static void Reset()
     {
+        Binder.Reset();
+        ColorStack.Clear();
         debugLog = "";
         errors = new List<Error>();
         syntaxStatements = new List<Statement>();
         boundStatements = new List<BoundStatement>();
-        syntaxFunctionDefinitions = new Dictionary<FunctionSymbol,Expression>();
+        syntaxFunctionDefinitions = new Dictionary<FunctionSymbol, Expression>();
         GraphState = new Dictionary<string, NodeState>();
         figures = new List<(Figure, Color, string)>();
     }
@@ -84,9 +85,9 @@ public static class Compiler
 
     public static void Update()
     {
-        //Esto aparentemente funciona
+        //Esto aparentemente funciona o no
         var time = timer.Interval;
-        if (time >= 3000)
+        if (time >= 1500)
             isModified = false;
     }
 
@@ -127,11 +128,11 @@ public static class Compiler
 
     public static string Print(string print)
     {
-        debugLog += print+"\n";
+        debugLog += print + "\n";
         return debugLog;
     }
 
-    internal static void ColorRestore() => ColorStack.Pop();    
+    internal static void ColorRestore() => ColorStack.Pop();
 
     public static Color CurrentColor
     {

@@ -19,36 +19,39 @@ public class FunctionDeclarationStatement : Statement
 
     public override void BindStatement(Dictionary<string, GType> visibleVariables)
     {
-        var functionName = FunctionToken.Text;
-        if(Compiler.GetFunctionSymbol(k => k.FunctionName == functionName) != null)
-        {
-            throw new Exception($"! SEMANTIC ERROR : Function {functionName} is already defined");
-        }
+        Bind(new Dictionary<string, GType>(visibleVariables));
 
-        foreach (var parameter in Parameters)
+        void Bind(Dictionary<string, GType> visibleVariables)
         {
-            var variableName = parameter.Text;
-            if(visibleVariables.Keys.FirstOrDefault(k => k == variableName) != null)
+            var functionName = FunctionToken.Text;
+            if (Compiler.GetFunctionSymbol(k => k.FunctionName == functionName) != null)
             {
-                throw new Exception("! SEMANTIC ERROR : Cant use a constant already defined as a parameter");
+                throw new Exception($"! SEMANTIC ERROR : Function {functionName} is already defined");
             }
-            var symbol = new VariableSymbol(variableName,GType.Undefined);
-            visibleVariables.Add(variableName,symbol.Type);
+
+            foreach (var parameter in Parameters)
+            {
+                var variableName = parameter.Text;
+                if (visibleVariables.Keys.FirstOrDefault(k => k == variableName) != null)
+                {
+                    throw new Exception("! SEMANTIC ERROR : Cant use a constant already defined as a parameter");
+                }
+                visibleVariables.Add(variableName, GType.Undefined);
+            }
+            // FunctionExpression.Bind(visibleVariables);
         }
-        FunctionExpression.Bind(visibleVariables);
     }
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)
     {
         List<string> parameters = new List<string>();
-        var boundExpression = FunctionExpression.GetBoundExpression(visibleVariables);
         var functionName = FunctionToken.Text;
         foreach (var parameter in Parameters)
         {
             parameters.Add(parameter.Text);
         }
         var functionSymbol = new FunctionSymbol(functionName, parameters);
-        Compiler.AddFunctionDefinition(functionSymbol,FunctionExpression);
-        return new BoundFunctionDeclarationStatement(functionSymbol,boundExpression);
+        Compiler.AddFunctionDefinition(functionSymbol, FunctionExpression);
+        return new BoundFunctionDeclarationStatement(functionSymbol);
     }
 
 

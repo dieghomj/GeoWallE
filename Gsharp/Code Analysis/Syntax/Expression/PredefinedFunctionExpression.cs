@@ -1,6 +1,6 @@
 public class PredefinedFunctionExpression : Expression
 {
-    private BoundPredefinedFunction function;
+    private BoundPredefinedFunction? function;
     public PredefinedFunctionExpression(SyntaxToken functionToken, List<Expression> arguments)
     {
         FunctionToken = functionToken;
@@ -13,9 +13,13 @@ public class PredefinedFunctionExpression : Expression
 
     protected override GType BindExpression(Dictionary<string, GType> visibleVariables)
     {
+        var argumentsLog = ""; 
         var argumentsType = new List<GType>();
         foreach (var argument in Arguments)
+        {
             argumentsType.Add(argument.Bind(visibleVariables));
+            argumentsLog += argumentsType.Last() + " ";
+        }
 
 
         var name = FunctionToken.Text;
@@ -23,7 +27,7 @@ public class PredefinedFunctionExpression : Expression
 
         if (predefinedFunction == null)
         {
-            throw new Exception("Predefined function not found");
+            throw new Exception($"! SEMANTIC ERROR : Predefined function {name} with {Arguments.Count} argument(s) of type {argumentsLog}not found");
         }
 
         function = predefinedFunction;

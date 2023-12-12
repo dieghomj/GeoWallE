@@ -16,32 +16,32 @@ public class DrawStatement : Statement
 
     public override void BindStatement(Dictionary<string, GType> visibleVariables)
     {
-        if(Figure.Bind(visibleVariables).IsFigure())
+        var figureOrSequence = Figure.Bind(visibleVariables);
+        
+        if(!figureOrSequence.IsFigure() && !figureOrSequence.IsFigureSequence())
         {
-            System.Console.WriteLine("! SEMMANTIC ERROR : Expected figure is not a figure");
-            return;
+            throw new Exception($"! SEMMANTIC ERROR : Expected figure or figure sequence, instead of <{figureOrSequence}>");
         }
         if (Message is not null)
         {
             var messageType = Message.Bind(visibleVariables);
             if (messageType != GType.String)
             {
-                System.Console.WriteLine("! SEMANTIC ERROR: Expected message of type <string>");
-                return;
+                throw new Exception("! SEMANTIC ERROR: Expected message of type <string>");
             }
         }
     }
 
     public override BoundStatement GetBoundStatement(Dictionary<string, GType> visibleVariables)
     {
-        var boundFigure = Figure.GetBoundExpression(visibleVariables);
-
-        if (Message is not null)
+        BoundExpression boundMessage;
+        if(Message is not null)
         {
-            var boundMessage = Message.GetBoundExpression(visibleVariables);
-            return new BoundDrawStatement(boundFigure, boundMessage);
+            boundMessage = Message.GetBoundExpression(visibleVariables);
         }
+        else boundMessage = null;
 
-        return new BoundDrawStatement(boundFigure);
+        var boundFigure = Figure.GetBoundExpression(visibleVariables);
+        return new BoundDrawStatement(boundFigure,boundMessage);
     }
 }

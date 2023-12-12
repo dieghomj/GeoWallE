@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://biatmdd116wge"]
+[gd_scene load_steps=13 format=3 uid="uid://biatmdd116wge"]
 
 [ext_resource type="Script" path="res://Scripts/Controller.cs" id="1_q7a7x"]
 [ext_resource type="Texture2D" uid="uid://bdwcshdmn5mht" path="res://Icons/settings_white_24dp.svg" id="2_p3hwv"]
 [ext_resource type="PackedScene" uid="uid://cfyss5chxpq18" path="res://Scenes/draw_zone.tscn" id="3_2rmp0"]
 [ext_resource type="Texture2D" uid="uid://dfdut3qli0me2" path="res://Icons/build_white_24dp.svg" id="3_d2rhw"]
+[ext_resource type="Texture2D" uid="uid://bkvicp8002du3" path="res://Icons/save_white_24dp.svg" id="3_fs7n8"]
+[ext_resource type="Texture2D" uid="uid://b7ohjp07g4fwr" path="res://Icons/edit_white_24dp.svg" id="4_5t4lk"]
 [ext_resource type="PackedScene" uid="uid://tj1v0qdgvdb1" path="res://Scenes/debug_console.tscn" id="4_c4put"]
 [ext_resource type="Script" path="res://Scripts/TabController.cs" id="4_jod3n"]
 [ext_resource type="Texture2D" uid="uid://064hroai5ei8" path="res://Icons/play_arrow_white_24dp.svg" id="4_r2msu"]
@@ -17,7 +19,9 @@ function_color = Color(0.862745, 0.862745, 0.666667, 1)
 member_variable_color = Color(0.337255, 0.611765, 0.839216, 1)
 color_regions = {
 "\" \"": Color(0.807843, 0.568627, 0.470588, 1),
-"' '": Color(0.807843, 0.568627, 0.470588, 1)
+"' '": Color(0.807843, 0.568627, 0.470588, 1),
+"//": Color(0.505882, 0.505882, 0.505882, 0.686275),
+"\\\\ \\\\": Color(0, 0, 0, 1)
 }
 
 [node name="Control" type="Control"]
@@ -32,22 +36,39 @@ script = ExtResource("1_q7a7x")
 
 [node name="Buttons" type="PanelContainer" parent="."]
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_left = 10.0
-offset_top = 7.0
-offset_right = -9.0
-offset_bottom = 57.0
+anchors_preset = -1
+anchor_left = 0.00976563
+anchor_top = 0.00911458
+anchor_right = 0.991211
+anchor_bottom = 0.0742188
 grow_horizontal = 2
 size_flags_horizontal = 3
-metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
 
 [node name="ButtonContainer" type="HBoxContainer" parent="Buttons"]
 layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 2
 
+[node name="SaveButton" type="Button" parent="Buttons/ButtonContainer"]
+layout_mode = 2
+text = "  Save  "
+icon = ExtResource("3_fs7n8")
+
+[node name="LineEdit" type="LineEdit" parent="Buttons/ButtonContainer/SaveButton"]
+visible = false
+layout_mode = 1
+offset_left = -287.0
+offset_top = 5.0
+offset_right = -123.0
+offset_bottom = 44.0
+placeholder_text = "FileName.geo"
+expand_to_text_length = true
+right_icon = ExtResource("4_5t4lk")
+select_all_on_focus = true
+
 [node name="MenuButton" type="MenuButton" parent="Buttons/ButtonContainer"]
+visible = false
 layout_mode = 2
 text = "Options
 "
@@ -77,15 +98,14 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Workspace" type="HSplitContainer" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 66.0
-offset_right = -9.0
-offset_bottom = -9.0
+anchors_preset = -1
+anchor_left = 0.00976563
+anchor_top = 0.0859375
+anchor_right = 0.991211
+anchor_bottom = 0.988281
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Editor" type="PanelContainer" parent="Workspace"]
 layout_mode = 2
@@ -103,7 +123,7 @@ theme_override_colors/brace_mismatch_color = Color(0.988235, 0.254902, 0.219608,
 theme_override_colors/line_number_color = Color(1, 1, 1, 0.360784)
 theme_override_colors/word_highlighted_color = Color(1, 1, 1, 0.266667)
 theme_override_font_sizes/font_size = 15
-text = "point p1;
+placeholder_text = "point p1;
 draw p1 \"Hello World!\";
 num = 1;"
 scroll_smooth = true
@@ -112,7 +132,6 @@ syntax_highlighter = SubResource("CodeHighlighter_bhwpd")
 highlight_all_occurrences = true
 highlight_current_line = true
 draw_tabs = true
-draw_spaces = true
 symbol_lookup_on_click = true
 line_folding = true
 gutters_draw_line_numbers = true
@@ -128,26 +147,39 @@ layout_mode = 2
 [node name="Draw and Debug" type="SplitContainer" parent="Workspace"]
 layout_mode = 2
 size_flags_horizontal = 3
-split_offset = 150
+split_offset = 200
 vertical = true
 
-[node name="DrawZone" parent="Workspace/Draw and Debug" instance=ExtResource("3_2rmp0")]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="Workspace/Draw and Debug"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DrawZone" parent="Workspace/Draw and Debug/AspectRatioContainer" instance=ExtResource("3_2rmp0")]
 layout_mode = 2
 Font = ExtResource("7_aelpk")
 
 [node name="DebugConsole" parent="Workspace/Draw and Debug" instance=ExtResource("4_c4put")]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="."]
+[node name="TextEdit" parent="Workspace/Draw and Debug/DebugConsole" index="0"]
+theme_override_colors/font_readonly_color = Color(0.956863, 0.956863, 0.956863, 1)
+context_menu_enabled = true
+
+[node name="Name" type="Label" parent="."]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 16.0
-offset_right = 166.0
-offset_bottom = 47.0
+anchor_left = 0.0175781
+anchor_top = 0.0208333
+anchor_right = 0.179688
+anchor_bottom = 0.0611979
+offset_right = -18.0
 theme_override_fonts/font = ExtResource("9_dnf4n")
 theme_override_font_sizes/font_size = 25
 text = "GeoWall - E"
+uppercase = true
+metadata/_edit_use_anchors_ = true
 
+[connection signal="button_down" from="Buttons/ButtonContainer/SaveButton" to="." method="OnSaveButtonButtonDown"]
+[connection signal="text_submitted" from="Buttons/ButtonContainer/SaveButton/LineEdit" to="." method="OnLineEditTextSubmitted"]
 [connection signal="button_down" from="Buttons/ButtonContainer/CompileButton" to="." method="OnCompileButtonButtonDown"]
 [connection signal="button_down" from="Buttons/ButtonContainer/RunButton" to="." method="_OnRunButtonButtonDown"]
 [connection signal="dragged" from="Workspace" to="." method="_OnWorkspaceDragged"]

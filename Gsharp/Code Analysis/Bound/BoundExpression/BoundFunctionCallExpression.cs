@@ -8,7 +8,7 @@ public class BoundFunctionCallExpression : BoundExpression
         BoundFunctionExpression = boundFunctionExpression;
     }
 
-    public override GType Type => throw new NotImplementedException();
+    public override GType Type => BoundFunctionExpression.Type;
 
     public List<BoundExpression> BoundArguments { get; }
     public BoundExpression BoundFunctionExpression { get; }
@@ -16,6 +16,15 @@ public class BoundFunctionCallExpression : BoundExpression
 
     public override GObject Evaluate(Dictionary<string, GObject> visibleVariables)
     {
-        throw new NotImplementedException();
+        Dictionary<string, GObject> localVariables = new Dictionary<string, GObject>();
+
+        var enumerator = Parameters.GetEnumerator();
+        foreach(BoundExpression argument in BoundArguments)
+        {
+            enumerator.MoveNext();
+            localVariables[enumerator.Current] = argument.Evaluate(visibleVariables);
+        }
+
+        return BoundFunctionExpression.Evaluate(localVariables);
     }
 }

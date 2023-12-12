@@ -21,6 +21,10 @@ public class SequenceLiteralExpression : Expression
     protected override GType BindExpression(Dictionary<string, GType> visibleVariables)
     {
         var startType = Start.Bind(visibleVariables);
+        
+        if(Start == null && End == null)
+            return GType.Undefined;
+
         if (Elements is null)
         {
             if (End is null)
@@ -29,10 +33,9 @@ public class SequenceLiteralExpression : Expression
             var endType = End.Bind(visibleVariables);
             if (endType != startType)
             {
-                System.Console.WriteLine(
+                throw new Exception(
                     $"! SEMANTIC ERROR: Element of type {endType} in sequence of type {startType}"
                 );
-                return GType.Undefined;
             }
         }
         else
@@ -42,13 +45,12 @@ public class SequenceLiteralExpression : Expression
                 var elementType = element.Bind(visibleVariables);
                 if (elementType == startType)
                     continue;
-                System.Console.WriteLine(
+                throw new Exception(
                     $"! SEMANTIC ERROR: Element of type {elementType} in sequence of type {startType}"
                 );
-                return GType.Undefined;
             }
         }
-        return startType;
+        return startType.GetSequenceType();
     }
 
     protected override BoundExpression InstantiateBoundExpression(Dictionary<string, GType> visibleVariables)

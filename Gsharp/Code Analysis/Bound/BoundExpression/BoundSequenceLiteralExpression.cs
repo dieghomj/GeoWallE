@@ -6,7 +6,7 @@ public class BoundSequenceLiteralExpression : BoundExpression
     {
         BoundElements = boundElements;
         Start = boundElements.FirstOrDefault()!;
-        End = null;
+        End = boundElements.LastOrDefault()!;
     }
 
     public BoundSequenceLiteralExpression(BoundExpression start, BoundExpression? end = null)
@@ -16,7 +16,7 @@ public class BoundSequenceLiteralExpression : BoundExpression
         BoundElements = null;
     }
 
-    public override GType Type => Start.Type;
+    public override GType Type => Start.Type.GetSequenceType();
 
     public BoundExpression Start { get; }
     public BoundExpression? End { get; }
@@ -41,8 +41,8 @@ public class BoundSequenceLiteralExpression : BoundExpression
         else
         {
             List<GObject> elements = new List<GObject>();
-            foreach (BoundExpression boundelement in BoundElements)
-                elements.Add(boundelement.Evaluate(visibleVariables));
+            foreach (BoundExpression boundElement in BoundElements)
+                elements.Add(boundElement.Evaluate(visibleVariables));
 
             return new Sequence<GObject>(elements, elements.Count);
         }

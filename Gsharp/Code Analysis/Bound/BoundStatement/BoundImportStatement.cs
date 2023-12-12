@@ -20,33 +20,24 @@ public class BoundImportStatement : BoundStatement
                 Compiler.AddState(directory, NodeState.Processing);
                 break;
             case NodeState.Processing:
-                System.Console.WriteLine("Compilation Error: There is a cycle in file imports");
-                return;
+                throw new Exception("Circular import detected");
             case NodeState.Processed:
                 return;
         }
+        StreamReader file = new StreamReader(directory);
 
-        try
+        string? line = file.ReadLine();
+
+        while (line != null)
         {
-            StreamReader file = new StreamReader(directory);
-
-            string? line = file.ReadLine();
-
-            while (line != null)
-            {
-                code += line + " ";
-                line = file.ReadLine();
-            }
-
-            file.Close();
-
-            Compiler.GetSyntaxStatements(code);
-
-            Compiler.AddState(directory, NodeState.Processed);
+            code += line + "\n";
+            line = file.ReadLine();
         }
-        catch (Exception e)
-        {
-            Console.WriteLine("Exception: " + e.Message);
-        }
+
+        file.Close();
+
+        Compiler.GetSyntaxStatements(code);
+
+        Compiler.AddState(directory, NodeState.Processed);
     }
 }
